@@ -1,0 +1,38 @@
+# Archive 1 or more files:
+rar a path/to/archive_name.rar path/to/file1 path/to/file2 path/to/file3
+
+# Archive a directory:
+rar a path/to/archive_name.rar path/to/directory
+
+# Split the archive into parts of equal size (50M):
+rar a -v50M -R path/to/archive_name.rar path/to/file_or_directory
+
+# Password protect the resulting archive:
+rar a -ppassword path/to/archive_name.rar path/to/file_or_directory
+
+# Encrypt file data and headers with password:
+rar a -hppassword path/to/archive_name.rar path/to/file_or_directory
+
+# Use a specific compression level (0-5):
+rar a -mcompression_level path/to/archive_name.rar path/to/file_or_directory
+
+# Update archiv with new file
+rar u archiv.rar test.txt
+
+# Extract a RAR
+unrar e foo.rar
+
+# Extract a RAR extract a RAR file with its original directory structure
+unrar x foo.rar
+
+# To list files inside an archive file
+unrar l foo.rar
+
+#To test the integrity of an archive file
+unrar t foo.rar
+
+#To delete a file from an archive file
+rar d foo.rar
+
+# Set Password to Archives
+rar a -p foo.rar

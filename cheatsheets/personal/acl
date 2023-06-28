@@ -1,0 +1,45 @@
+# Get ACL
+getfacl <file>
+
+# Shows that acl is used ls (file
+ls -ld /path
+drwxr-xr-x(+) += indicates that acl is used
+
+#Example
+setfacl -dRm u:apache:rwX,g:www:rwX /var/www
+
+# The -d flag specifies the operations apply to the Default ACL.
+# The -R flag sets operations to apply recursively
+# The -m indicates it will be a modification operation
+# The X permission (note: it's uppercase) means it will only be applied to directories and not files
+
+# Add or modify ACL for user read premission only on dirs not files
+setfacl -m u:username:rX <file>
+
+# Add acl to group (g) : read write premission
+setfacl -m g:groupname:rw <file>
+
+# Add acl to others
+setfacl -m o::- <file>
+
+# or provide all permissions at once
+setfacl -m u::rwx,g:groupname:rX,o::- <file>
+
+# Copy ACL from file-A to file-B
+getfacl file-A | setfacl -M - file-B
+
+# Apply ACL recursivelly to directory
+setfacl -R -m u:username:rX <directory>
+
+# Delete ACL
+setfacl -x u:username,g:groupname <file>
+
+# Delete all ACL on file, including default
+setfacl -b <file>
+
+# Same operations works for default ACLs
+setfacl -m d:u:username:rx <directory>
+setfacl -x d:u:username <directory>
+
+# Delete only default ACLs
+setfacl -k <directory>

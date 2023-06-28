@@ -1,0 +1,347 @@
+---
+tags: [ansible, ansible_example, example]
+---
+
+###################################
+#    Playbook example with task   #
+###################################
+Example 1
+--
+- name: update web servers
+  hosts: webservers
+  remote_user: root
+
+  tasks:
+  - name: ensure apache is at the latest version
+    yum:
+      name: httpd
+      state: latest
+  - name: write the apache config file
+    template:
+      src: /srv/httpd.j2
+      dest: /etc/httpd.conf
+
+- name: update db servers
+  hosts: databases
+  remote_user: root
+
+  tasks:
+  - name: ensure postgresql is at the latest version
+    yum:
+      name: postgresql
+      state: latest
+  - name: ensure that postgresql is started
+    service:
+      name: postgresql
+      state: started
+
+Example 2______________________________________________
+---
+  - name: Playbook
+    hosts: webservers
+    become: yes
+    become_user: root
+    tasks:
+      - name: ensure apache is at the latest version
+        yum:
+          name: httpd
+          state: latest
+      - name: ensure apache is running
+        service:
+          name: httpd
+          state: started
+
+Example 3______________________________________________
+
+---
+- hosts: all
+  # Create and configure client for ansible use
+  gather_facts: true
+  vars_files:
+   - ~/.ansible/roles/ansible-roles-ansible_client_configuration/vars/vault
+  vars:
+    users:
+      - username: ansible
+        password: "{{ ansible_secret | password_hash('sha512') }}"
+      - username: supervisor
+        password: "{{ ansible_secret2 | password_hash('sha512') }}"
+  roles:
+    - role: {'ansible-roles-ansible_client_configuration', tags: 'wireguard'}
+
+
+_____________________________Example vars_________________________
+https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html
+
+## Example vars in vars/main.yml (dict)
+---
+users:
+  - username: user1
+    password: "password"
+  - username: user2
+    password: "{{ secret2 | password_hash('sha512') }}"
+
+## Example vars (items)
+---
+- name: more complex items to add several users
+  user:
+    name: "{{ item.name }}"
+    uid: "{{ item.uid }}"
+    groups: "{{ item.groups }}"
+    state: present
+  with_items:
+     - { name: testuser1, uid: 1002, groups: "wheel, staff" }
+     - { name: testuser2, uid: 1003, groups: staff }
+
+## Example vars /default/main.yml or vars/main.yml
+variable = value
+
+## Example 
+---
+- hosts: all
+  remote_user: root
+  vars:
+    favcolor: blue
+  vars_files:
+    - /vars/external_vars.yml
+
+  tasks:
+
+  - name: This is just a placeholder
+    ansible.builtin.command: /bin/echo foo
+
+## Example vars in playbook
+- hosts: webservers
+  vars:
+    http_port: 80
+
+## Example 1 vars in Playbook Roles
+roles:
+   - role: apache
+     vars:
+        http_port: 8080
+
+## Example 2 vars in Playbook Roles
+
+roles:
+   - role: app_user
+     vars:
+        myname: Ian
+   - role: app_user
+     vars:
+       myname: Terry
+   - role: app_user
+     vars:
+       myname: Graham
+   - role: app_user
+     vars:
+       myname: John
+
+## Example 3 vars in Playbook Roles
+
+roles:
+   - role: common_settings
+   - role: something
+     vars:
+       foo: 12
+   - role: something_else
+
+
+
+## Example
+## Conditional in with_items (loops)
+
+variables:
+
+item1_enabled: true
+item2_enabled: false
+item3_enabled: false
+
+- name: Configure
+  template:
+    src: "{{ item.src }}"
+    dest: "/usr/local/etc"
+  when: "item.when"
+  with_items:
+    - { src: item1, when: "{{ item1_enabled }}" }
+    - { src: item2, when: "{{ item2_enabled }}" }
+    - { src: item3, when: "{{ item3_enabled }}" }
+
+## Example vars in Playbook Roles
+## create variables from the output of an Ansible task with the task keyword register
+
+- hosts: web_servers
+
+  tasks:
+
+     - name: Run a shell command and register its output as a variable
+       ansible.builtin.shell: /usr/bin/foo
+       register: foo_result
+       ignore_errors: true
+
+     - name: Run a shell command using output of the previous task
+       ansible.builtin.shell: /usr/bin/bar
+       when: foo_result.rc == 5
+
+
+## Example 
+Defining variables as lists
+
+You can define variables with multiple values using YAML lists. For example:
+
+region:
+  - northeast
+  - southeast
+  - midwest
+
+Referencing list variables
+
+When you use variables defined as a list (also called an array), you can use individual, specific fields from that list.
+The first item in a list is item 0, the second item is item 1. For example:
+
+region: "{{ region[0] }}"
+The value of this expression would be “northeast”.
+
+## Example
+Defining variables as key:value dictionaries
+
+You can define more complex variables using YAML dictionaries. A YAML dictionary maps keys to values. For example:
+
+foo:
+  field1: one
+  field2: two
+
+Referencing key:value dictionary variables
+
+When you use variables defined as a key:value dictionary (also called a hash), you can use individual, 
+specific fields from that dictionary using either bracket notation or dot notation:
+
+foo['field1']
+foo.field1
+
+Both of these examples reference the same value (“one”). Bracket notation always works. 
+Dot notation can cause problems because some keys collide with attributes and methods of python dictionaries. 
+Use bracket notation if you use keys which start and end with two underscores (which are reserved for special meanings in python) or are any of the known public attributes:
+
+
+
+
+###################################
+#          Roles example     	  #
+###################################
+Example 1
+---
+- name: add ansible user
+  ansible.builtin.user:
+    name: "{{ item.username }}"
+    create_home: true             
+    update_password: on_create   
+    password: "{{ item.password }}"
+  with_items: "{{ users }}"
+
+
+###################################
+#        Module  Example     	  #
+###################################
+
+# Delagte task to master; Run task on localhost; Without become: false the task stucks
+- name: Show QR-Code
+  ansible.builtin.shell: "cat /etc/fstab"
+  delegate_to: localhost
+  become: false
+
+___________________________ Nested loops_________________________________________
+Example 1
+
+# nested – composes a list with nested elements of other lists
+- name: give users access to multiple databases
+  mysql_user:
+    name: "{{ item[0] }}"
+    priv: "{{ item[1] }}.*:ALL"
+    append_privs: yes
+    password: "foo"
+  with_nested:
+    - [ 'alice', 'bob' ]
+    - [ 'clientdb', 'employeedb', 'providerdb' ]
+# As with the case of 'with_items' above, you can use previously defined variables.:
+gives alice and bob acces to clientdb, employeedb and providerdb
+
+- name: here, 'users' contains the above list of employees
+  mysql_user:
+    name: "{{ item[0] }}"
+    priv: "{{ item[1] }}.*:ALL"
+    append_privs: yes
+    password: "foo"
+  with_nested:
+    - "{{ users }}"
+    - [ 'clientdb', 'employeedb', 'providerdb' ]
+
+Example 2______________________________________________
+
+# You can create nested loops using with_nested.
+from vars/main.yml
+keys:
+  - key1
+  - key2
+  - key3
+  - key4
+then the loop:
+
+- name: Distribute SSH keys among multiple users
+  lineinfile: dest=/home/{{ item[0] }}/.ssh/authorized_keys line={{ item[1] }} state=present
+  with_nested:
+    - [ 'calvin', 'josh', 'alice' ]
+    - '{{ keys }}'
+This task will loop over each user and populate their authorized_keys file with the 4 keys defined in the list.
+
+___________________________ Select/attribute/value _________________________________________
+Example 1
+
+- hosts: localhost
+    gather_facts: True
+    vars:
+       path: /var/lib/cache
+    tasks:
+    - name: The mount point for {{path}}, found using the Ansible mount facts, [-1] is the same as the 'last' filter
+      ansible.builtin.debug:
+       msg: "{{(ansible_facts.mounts | selectattr('mount', 'in', path) | list | sort(attribute='mount'))[-1]['mount']}}"
+      register: test
+    
+    - name: The mount point for {{path}}, found using the Ansible mount facts, [-1] is the same as the 'last' filter
+      ansible.builtin.debug:
+        msg: "{{ test | select( 'match', 'msg') | list}}"
+
+    - name: The mount point for {{path}}, found using the Ansible mount facts, [-1] is the same as the 'last' filter
+      ansible.builtin.debug:
+        msg: "{{ test | select( 'seclect', 'msg') | list}}"
+
+    - name: gather Sub fact (ids) # show only ids
+      ansible.builtin.debug:
+        msg: "{{ ansible_facts['devices']['sda']['links']['ids'] }}"
+
+___________________________ Select specific value ____________________________________________
+Example 1
+
+- hosts: localhost
+    gather_facts: True
+    vars:
+       path: /var/lib/cache
+    tasks:
+    - name: The mount point for {{path}}, found using the Ansible mount facts, [-1] is the same as the 'last' filter
+      ansible.builtin.debug:
+       msg: "{{(ansible_facts.mounts | selectattr('mount', 'in', path) | list | sort(attribute='mount'))[-1]['mount']}}"
+      register: test
+    
+    - name: The mount point for {{path}}, found using the Ansible mount facts, [-1] is the same as the 'last' filter
+      ansible.builtin.debug:
+        msg: "{{ test.msg}}"
+OUTPUT:
+
+TASK [The mount point for /var/lib/cache, found using the Ansible mount facts, [-1] is the same as the 'last' filter] 
+ok: [localhost] => {
+    "msg": "/"
+}
+
+TASK [The mount point for /var/lib/cache, found using the Ansible mount facts, [-1] is the same as the 'last' filter] 
+ok: [localhost] => {
+    "msg": "/"
+}

@@ -1,0 +1,84 @@
+# Explanation of /etc/shadow
+
+mandar  :  $6$5H0QpwprRiJQR19h7sYOvetc.  :  16431  :  0  :  99999  :  7  :   :   :
+|---1---|--------------------------2-----|----3----|--4--|----5----|--6--|-7-|-8-|
+
+1. Username field
+2. encrypted password field
+3. Last password change
+4. Minimum days between password changes
+5. Password validity :This field denoted the maximum number of days for which password is valid
+6. Warning threshold
+7. Account inactive :Number of days after which the account will be disabled, when the password is expired.
+8. Time since account is disabled
+
+##############################################
+
+Details of hash_algorithm:
+
+$6$sTgBhfj0$pkzz/JpVTl8ZAmk./d4SDarRyWsGSZHguljywUHQMP4DWo8/TgNzL5rMpejqNWuyxtFlISxdyIqPmpsIsyi.i1
+ - -------- --------------------------------------------------------------------------------------
+ 1    2                                             3
+
++------+------------------------+
+| Code |        Algorithm       |
++------+------------------------+
+|  $1  | MD5 hashing algorithm  |
+|  $2  | Blowfish Algorithm     |
+|  $3  | Eksblowfish Algorithm  |
+|  $4  | NT hashing algorithm   |
+|  $5  | SHA-256 Algorithm      |
+|  $6  | SHA-512 Algorithm      |
++------+------------------------+
+#############################################
+
+# provides additional detail (UID GUDs)
+id user
+
+# user account information in /etc/shadow (encrypted passwords )
+cat /etc/shadow
+
+# user account information in /etc/passwd (Accoutn information)
+cat /etc/passwd
+
+# List Usernames using cut
+cat /etc/passwd | cut -d: -f1
+
+# List Usernames using awk
+cat /etc/passwd | awk -F: '{print $1}'
+
+# Show current user
+whoami
+
+# display users who are logged on the system
+who -u
+
+# Shows all users who are logged on the system and what they are doing.
+w 
+
+# Shows all id of the user
+id username
+
+# Shows the id of the user
+id -u
+
+# Shows the gid (gruppe)
+id -g
+
+# Shows all gruppe ids
+id -G
+
+# list of last logged in users on the system
+last
+
+# show all the users who were present at a specified time,
+last -ap now
+
+# Shows information of known users
+lslogins -u
+
+# find the details of a recent login of all users or of a given user as follows
+lastlog
+
+# show lastlog records for specific Username
+lastlog -u Username

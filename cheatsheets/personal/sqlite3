@@ -1,0 +1,35 @@
+---
+tags: [ database ]
+---
+https://www.sqlitetutorial.net/sqlite-cheat-sheet/ 
+TODO
+
+# to create database and launch interactive shell:
+sqlite3 <database>
+
+# to quit sqlite3
+.quit
+
+# to create table:
+sqlite3 <database> "create table os(id integer primary key, name text, year integer);"
+
+# to insert data:
+sqlite3 <database> "insert into 'os' values(1,'linux',1991);"
+
+# Drop a table and its data:
+DROP TABLE [IF EXISTS] table_name;
+
+# to list tables:
+sqlite3 <database> ".tables"
+
+# to describe table:
+sqlite3 <database> ".schema 'os'"
+
+# to view records in table:
+sqlite3 <database> "select * from 'os';"
+
+# to view records in table conditionally:
+sqlite3 <database> "select * from 'os' where year='1991';"
+
+# to view records with fuzzy matching:
+sqlite3 <database> "select * from 'os' where year like '19%';"

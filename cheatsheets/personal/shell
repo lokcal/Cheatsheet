@@ -1,0 +1,5 @@
+# Show which shell is used
+echo $SHELL
+
+# Change shell
+chsh -s /bin/bash <user>

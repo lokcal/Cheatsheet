@@ -1,0 +1,9 @@
+# Start stream
+ streamlink -p your_player url stream
+
+# Start stream with spezific player
+streamlink -p mpv dailymotion.com/embed/video/x1b1h6o
+streamlink -p /usr/bin/mpv dailymotion.com/embed/video/x1b1h6o
+
+# Start strean with quality
+streamlink -p mpv dailymotion.com/embed/video/x1b1h6o best

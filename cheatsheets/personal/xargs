@@ -1,0 +1,160 @@
+# {} = (placeholder) output of cmd
+
+# xargs -t tell wich commands used to executed
+cmd | xargs -t
+
+# Prompt commands before running commands
+ls|xargs -L1 -p head
+
+# Prompt before execution
+echo a b c |xargs -p -n 3
+
+Print command along with output
+xargs -t abcd
+# bin/echo abcd
+# abcd
+
+# Remove delte file With find
+find . -name "*.html"|xargs rm
+
+# when using a backtick
+rm `find . -name "*.html"`
+
+
+# To Find all file name ending with .pdf and remove them
+find -name *.pdf | xargs rm -rf
+
+# if file name contains spaces you should use this instead
+find -name *.pdf | xargs -I{} rm -rf '{}'
+
+# Will show every .pdf like:
+#	&toto.pdf=
+#	&titi.pdf=
+# -n1 => One file by one file. ( -n2 => 2 files by 2 files )
+
+find -name *.pdf | xargs -I{} -n1 echo '&{}='
+
+# If find returns no result, do not run rm
+# This option is a GNU extension.
+find -name "*.pdf" | xargs --no-run-if-empty rm
+
+# Delete files with whitespace in filename (e.g. "hello 2001")
+find . -name "*.c" -print0|xargs -0 rm -rf
+
+##### Move #####
+# Move files to folder
+find . -name "*.bak" -print 0|xargs -0 -I {} mv {} ~/old
+# or
+find . -name "*.bak" -print 0|xargs -0 -I file mv file ~/old
+
+# copy file with xarg
+find . -type -f -name boo | cp $(xargs) /path
+
+# Move first 100th files to a directory (e.g. d1)
+ls |head -100|xargs -I {} mv {} d1
+
+# Use xargs to copy a list of files to a different directory:
+ find . -name "*.txt" | xargs -I {} cp {} /destination/directory/
+
+# copy a file to multiple directories at once; in this example we are trying to copy the file.
+echo ./Templates/ ./Documents/ | xargs -n 1 cp -v ./Downloads/SIC_Template.xlsx
+
+# Copy all files from A to B
+find /dir/to/A -type f -name "*.py" -print 0| xargs -0 -r -I file cp -v -p file --target-directory=/path/to/B
+# v: verbose|
+# p: keep detail (e.g. owner)
+
+# find out all the .png images and archive them using the tar utility
+find Pictures/tecmint/ -name "*.png" -type f -print0 | xargs -0 tar -cvzf images.tar.gz
+
+# convert muti-line output from ls command into single line using xargs
+ls -1 Pictures/tecmint/ | xargs
+
+# To generate a compact list of all Linux user accounts on the system
+cut -d: -f1 < /etc/passwd | sort | xargs
+
+# you wish to know the number of lines/words/characters in each file in the list
+ls *upload* | xargs wc
+
+# allows you to find and recursively remove a directory
+find Downloads -name "DomTerm" -type d -print0 | xargs -0 /bin/rm -v -rf "{}"
+
+# shows how to delete all files within a directory except one or few files with a given extension.
+find . -type f -not -name '*gz' -print0 | xargs -0 -I {} rm -v {}
+
+# you can instruct xargs to read items from a file instead of standard input using the -a flag as shown.
+xargs -a rss_links.txt
+
+# Use xargs to split a long string into multiple lines:
+echo "apple banana cherry" | xargs -n 1
+
+# Use xargs to process a list of input values with a custom delimiter:
+echo "apple:banana:cherry" | xargs -d : -n 1
+
+>>>> gucken ob die unteren doppelt sind mit den oberen
+
+# find and delete all file with txt
+find . -type f -name "*.txt" | xargs rm
+
+# Delete a list of files:
+find . -name "*.bak" | xargs rm
+
+# Delete all files in a directory except those with a specific extension:
+ls | grep -v ".txt" | xargs rm
+
+# Find all file names ending with .pdf, then remove them.
+find -name \*.pdf | xargs rm
+
+# The above, however, is better-written without xargs:
+find -name \*.pdf -exec rm {} \+
+
+# Although it's best to use find's own functionality, in this situation.
+find -name \*.pdf -delete
+
+# Find all file names ending with '.pdf' and remove them. This approach also
+# handles filenames with '\n' and skips '*.pdf' directories. The xargs(1) flag
+# `-r` is equivalent to `--no-run-if-empty`, and the use of `-n` will in this
+# case group execution by 10 files.
+find -name \*.pdf -type f -print0 | xargs -0 -r -n 10 rm
+
+# If file names may contains spaces, you can use the xargs(1) flag `-I` and its
+# proceeding argument to specify the filename placeholder, as in find(1)'s use
+# of `{}` in `-exec`. Although find(1)'s `{}` needs not be cuddled by quotes, -
+# xargs(1) does.
+find -name \*.pdf | xargs -I {} rm -r '{}'
+
+# Print a list of files in the format of `*FILE=`. The use of xargs(1) flag
+# `-n` here with its argument of `1` means to process the files one-by-one.
+find -name \*.pdf | xargs -I {} -n 1 echo '&{}='
+
+# The above is, however, much faster, more efficient, and easier without xargs.
+find -name \*.pdf -printf '&%f=\n'
+
+# Group words by three in a string.
+seq 1 10 | xargs -n 3
+
+# Alternatively, and more efficiently, use Bash brace expansion, if available.
+printf '%d ' {1..10} | xargs -n 3
+
+# show all directories via ls with path
+ls | xargs -I {} echo "home/lokman/{}"
+
+# Turn output into a single line
+ls -l| xargs
+
+# Count all files
+ls |xargs -n1 wc -l
+
+# Create 1000 emtpy file
+seg 1000 | xargs -I {} touch home/lokman/{}.txt
+
+# Display 3 items per line
+echo 1 2 3 4 5 6| xargs -n 3
+# 1 2 3
+# 4 5 6
+
+# Xargs and sed (replace all old ip address with new ip address under /etc directory)
+grep -rl '192.168.1.111' /etc | xargs sed -i 's/192.168.1.111/192.168.2.111/g'
+
+# Xargs and grep
+cat grep_list |xargs -I{} grep {} filename

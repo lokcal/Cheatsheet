@@ -1,0 +1,60 @@
+############## Basic #######################
+
+# Unit file locations
+Default unit configuration files		/usr/lib/systemd/system  units provided by installed packages
+
+Run-time unit configuration files		/run/systemd/system 
+
+System specific unit configuration files	/etc/systemd/system   units installed by the system administrator
+
+User Unit Search Path
+~/.config/systemd/user.control/*
+$XDG_RUNTIME_DIR/systemd/user.control/*
+$XDG_RUNTIME_DIR/systemd/transient/*
+$XDG_RUNTIME_DIR/systemd/generator.early/*
+~/.config/systemd/user/*
+$XDG_CONFIG_DIRS/systemd/user/*
+/etc/systemd/user/*
+$XDG_RUNTIME_DIR/systemd/user/*
+/run/systemd/user/*
+$XDG_RUNTIME_DIR/systemd/generator/*
+/usr/lib/systemd/user/*
+$XDG_RUNTIME_DIR/systemd/generator.late
+
+# Display process startup time
+systemd-analyze
+
+# Display process startup time at service level
+systemd-analyze blame
+
+########### security ########################
+# Security option/info in manpages for service file hardening
+man systemd.exec
+
+# get a security audit of all your systemd services
+systemd-analyze security
+
+# get a security audit of ur specific service
+systemd-analyze security foo.service
+
+# Editing the service file for sercurity reasons in this cheat
+sudo systemctl edit --full nginx.service
+
+###################################################
+
+# Print time-c­ritical Chain for Default Target
+systemd-analyze critical-chain
+
+# stdout boot analyze to file
+systemd-analyze plot > file.svg
+
+# Flush Chache
+systemd-resolve --flush-cache
+ 
+# Show Chache Statistic
+systemd-resolve --statistic  
+
+# systemd version
+/usr/lib/systemd/systemd --version
+
+#############################################

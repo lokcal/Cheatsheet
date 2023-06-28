@@ -1,0 +1,26 @@
+############### Basic #######################
+#Info
+    sudo: x : 24 : devonnected,bob
+      |   |    |         |
+groupname |    |         |
+          |   GID    Users in group
+       password
+
+# Display group membership of user
+groups username
+
+# List Groupnames using the /etc/group
+cat /etc/group
+
+# view members of group
+getent group
+getent group <groupname>
+
+# List only Groupnames using the /etc/group with cut
+cat /etc/group | cut -d: -f1
+
+# List only Groupnames using the /etc/group with awk
+cat /etc/group | awk -F: '{print $1}'
+
+#############################################
+#############################################

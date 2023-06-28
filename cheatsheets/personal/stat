@@ -1,0 +1,20 @@
+########## Basic ##################
+
+# Display file status, creation date, last modification date, etc
+stat foo
+
+# Status of an entire file system
+stat -f /dev/sda
+
+# Will show the premission of the data only (-rw-r-----)
+stat --format "%A" /var/log/syslog
+
+# display numerical values for file permissions
+stat -c '%a %n' *
+
+# Display only the octal permissions for the given directory. Great for tests.
+stat --format='%a' /boot
+
+# show stat with seatching for bin
+stat "$(which lvim)"
+

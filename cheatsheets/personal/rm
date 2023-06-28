@@ -1,0 +1,20 @@
+# Remove files and subdirs
+rm -rf path/to/the/target/
+
+# Ignore non existent files
+rm -f path/to/the/target
+
+# Remove everthing with filetype (example .txt)
+rm *.txt
+
+# Remove file1.txt to file9.txt 
+rm file?.txt
+
+# Remove everyfile name file1 - file10  
+rm file[1-10]
+
+# Remove everyfile name file1 - file4 dont touch 6-9
+rm file[!6-9].txt  
+
+# Remove a file with his inode
+find /tmp/ -inum 6666 -exec rm -i '{}' \;

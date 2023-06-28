@@ -1,0 +1,45 @@
+# Create PrivateKey
+wg genkey > PrivateKey
+
+# Create PublicKey
+wg pubkey < PrivateKey > PublicKey
+
+Create Key-Pair in one Command
+wg genkey | tee privatekey | wg pubkey > publickey
+
+# create systemd srevice
+systemctl start wg-quick@interface
+
+# Start Wireguard interface
+wg-quick up <interfacename>
+
+# Stop Wireguard interface
+wg-quick down <interfacename>
+
+# Server config file
+[Interface]
+Address = 10.66.66.1/24,fd42:42:42::1/64
+PostUp = iptables -t nat -A POSTROUTING -o ens3 -j MASQUERADE; ip6tables -t nat -A POSTROUTING -o ens3 -j MASQUERADE
+PostDown = iptables -t nat -D POSTROUTING -o ens3 -j MASQUERADE; ip6tables -t nat -D POSTROUTING -o ens3 -j MASQUERADE
+ListenPort = 53
+PrivateKey = <server private key>
+
+[Peer]
+PublicKey = <client 1 public key>
+AllowedIPs = 10.66.66.2/32, fd42:42:42::2/128
+
+[Peer]
+PublicKey = <client 2 public key>
+AllowedIPs = 10.66.66.3/32, fd42:42:42::3/128
+
+
+# client config file
+[Interface]
+PrivateKey = <client 1 private key>
+Address = 10.66.66.2/24,fd42:42:42::2/64
+DNS = 176.103.130.130,176.103.130.131
+
+[Peer]
+PublicKey = <server public key>
+Endpoint = <server public IP>:53
+AllowedIPs = 0.0.0.0/0,::/0

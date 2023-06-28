@@ -1,0 +1,4 @@
+######### Basic #################
+
+# Change group of file recusivily
+chgrp -R Group /opt/musik

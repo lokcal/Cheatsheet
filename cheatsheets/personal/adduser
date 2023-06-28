@@ -1,0 +1,13 @@
+################# Basic ######################
+
+# Creates user with home/f­older and other configs
+adduser USERNAME
+
+# Adding user to group
+adduser USERNAME GROUP
+
+# creates pw for user
+passwd USERNAME
+
+#############################################
+#############################################

@@ -1,0 +1,152 @@
+#Headings
+Headings from h1 through h6 are constructed with a # for each level:
+
+# h1 Heading
+## h2 Heading
+### h3 Heading
+#### h4 Heading
+##### h5 Heading
+###### h6 Heading
+
+# Paragraphs
+Body copy written as normal plain-text will be wrapped with <p></p> tags in the rendered HTML.
+
+So this:
+Lorem ipsum dolor sit amet, graecis denique ei vel,
+
+# Breaks
+\n
+
+#Horizontal Rule
+The HTML <hr> element is for creating a "thematic break" between paragraph-level elements. In markdown, you can use of the following for this purpose:
+
+___: three consecutive underscores
+---: three consecutive dashes
+***: three consecutive asterisks
+
+#Emphasis
+##Bold
+**rendered as bold text**
+##Italics
+_rendered as italicized text_
+
+# formatting
+*em* _em_
+**strong** __strong__
+~~strikethrough~~
+
+# Blockquotes
+> first level and paragraph
+>> second level and first paragraph
+>
+> first level and second paragraph
+
+# lists
+## unordered - use *, +, or -
+        * Red
+        * Green
+          - Yellow
+        * Blue
+
+## ordered
+        1. First
+        2. Second
+        3. Third
+
+# Todo List
+- [ ] Lorem ipsum dolor sit amet
+- [ ] Consectetur adipiscing elit
+- [ ] Integer molestie lorem at massa
+## Links in todo lists
+- [ ] [foo](#bar)
+- [ ] [baz](#qux)
+- [ ] [fez](#faz)
+
+# Footnotes
+This is some text[^1] with a footnote reference link.
+
+The accompanying text for the footnote can be added elsewhere in the document using the following syntax:
+[^1]: "This is a footnote"
+##Inline footnotes
+Some markdown parsers like Remarkable also support inline footnotes.
+Inline footnotes are written using the following syntax: [^2 "This is an inline footnote"].
+
+#Code
+Wrap inline snippets of code with a single backtick: `.
+
+# Folds
+<details>
+ <summary>Summary Goes Here</summary>
+ ...this is hidden, collapsable content...
+</details>
+
+## "Fenced" code block
+```html
+Example text here...
+```
+##Indented code
+You may also indent several lines of code by at least four spaces, but this is not recommended as it is harder to read,
+harder to maintain, and doesn't support syntax highlighting
+  // Some comments
+    line 1 of code
+    line 2 of code
+    line 3 of code
+
+# Links
+##Autolinks
+<http://foo.bar.baz>
+##Inline links
+[Assemble](http://assemble.io)
+##Link titles
+[Assemble](https://github.com/assemble/ "Visit Assemble!")
+##Named Anchors
+Named anchors enable you to jump to the specified anchor point on the same page.
+Table of Contents
+  * [Chapter 1](#chapter-1)
+  * [Chapter 2](#chapter-2)
+  * [Chapter 3](#chapter-3)
+
+# Images
+![Minion](http://octodex.github.com/images/minion.png)
+![Alt Text](/path/to/file.png)
+##images also have a footnote style syntax
+![Alt text][id]
+
+# Table
+| Option | Description |
+| --- | --- |
+| data   | path to data files to supply the data that will be passed into templates. |
+| engine | engine to be used for processing templates. Handlebars is the default. |
+| ext    | extension to be used for dest files. |
+##Aligning cells
+| Option | Description |
+| -:- | -:- |
+| data   | path to data files to supply the data that will be passed into templates. |
+| engine | engine to be used for processing templates. Handlebars is the default. |
+| ext    | extension to be used for dest files. |
+##Right-align the text in a column
+| Option | Description |
+| --: | --:|
+| data   | path to data files to supply the data that will be passed into templates. |
+| engine | engine to be used for processing templates. Handlebars is the default. |
+| ext    | extension to be used for dest files. |
+
+# Html syntax Center
+<center>Centered text</center>
+
+# Html Syntax color text
+<span style="color:blue">some *This is Blue italic.* text</span>
+
+#YouTube Videos
+They can't be added directly but you can add an image with a link to the video like this:
+
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=YOUTUBE_VIDEO_ID_HERE
+" target="_blank"><img src="http://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg"
+alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" /></a>
+Or, in pure Markdown, but losing the image sizing and border:
+
+[![IMAGE ALT TEXT HERE](http://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg)](http://www.youtube.com/watch?v=YOUTUBE_VIDEO_ID_HERE)
+
+#  centerd scaled picture
+<img src="assets/portfoliowatcher_logo.png" alt="portfoliowatcher" width="40%" style="display: block; margin: 0 auto">
+

@@ -1,0 +1,95 @@
+CODE   MEANING       DESCRIPTION
+
+# Informational Requests: 1XX
+100    Continue      The server has received the request headers, and the client should proceed to send the request body.
+101    Switching     Protocols	The requester has asked the server to change protocols using a protocol upgrade mechanism, and the server has agreed.
+102    Processing    The server has accepted the entire request but is still processing it.
+103    Early Hints   Use it with the Link header to preload resources while the server prepares a response.
+
+# Success Requests: 2XX
+
+200     OK                 The request succeeded.
+201     Created            The server acknowledged a newly created resource.
+202     Accepted           The server has received the client’s request but is still processing it.
+203     Non-Authoritative  The server’s response to the client differs from the initial response that the server sent.
+        Information
+204     No Content         The server has processed the request but isn’t returning any content.
+205     Reset Content      The client should refresh the document sample.
+206     Partial Content    The server is sending only part of the resource.
+207     Multi-Status       The server response may contain multiple response codes.
+208     Already Reported   The server response highlights duplicate internal contents with this status code.
+226     IM Used            IM stands for “instance manipulation” in HTTP Delta Coding. The server has fulfilled a GET request, and the server response involves IMs.
+
+# Redirection Requests: 3XX
+300     Multiple Choices   The client must choose among several possible responses for the server request.
+301     Moved Permanently  The server tells the client the requested resource is now at another URI permanently.
+302     Found              The server tells the client that the requested resource is temporarily at another URI.
+303     See Other          The server doesn’t redirect the client to the requested resource but to another page.
+304     Not Modified       The server response is the same as in the past, so the client can continue to use the client’s cached version of the server response.
+305     Use Proxy (deprecated) The client could only access the requested resource through a proxy given in the response. Deprecation was because in-band configuration of a proxy is insecure.
+306     (unused/reserved)   A previous version of the HTTP/1.1 specification used this response code.
+307     Temporary Redirect  The server tells the client that the resource they are looking for is temporarily at another URI.
+                            Unlike 302, the client must access the new URI using the same HTTP method as the original URI.
+308     Permanent Redirect  The server tells the client that the resource they are looking for is now at another URI permanently.
+                            Unlike 301, the client must access the new URI using the same HTTP method as the original URI.
+
+# Client Errors: 4XX
+400     Bad Request          The client has sent a request with incomplete, ill-constructed, or invalid data.
+401     Unauthorized         The client lacks the authorization needed to access the requested resource.
+402     Payment Required     A rare status code reserved for digital payment systems.
+403     Forbidden            The server prohibits the client from accessing the resource.
+404     Not Found            This code denotes a nonexistent resource on a working server.
+405     Method Not Allowed   The server has received and recognized the request but has rejected the specific request method.
+406     Not Acceptable       The website or web application doesn’t support the client’s request with a particular protocol.
+407     Proxy Authentication Similar to 401 Unauthorized, but the server requires authorization via a proxy.
+        Required
+408	Request Timeout	The request the client sent to the server has expired.
+409	Conflict	The request transmitted conflicts with the server’s internal operations.
+410	Gone	The resource sought by the client is permanently unavailable.
+411	Length Required	The server requires the Content-Length header field, but it was missing in the request, so the server rejected it.
+412	Precondition Failed	The server does not meet the conditions indicated by the client.
+413	Payload Too Large	Request entity exceeds server limits.
+414	URI Too Long	The URI requested by the client is longer than the server is willing to interpret.
+415	Unsupported Media Type	The server doesn’t support the media format of the requested data and thus rejects the request.
+416	Requested Range Not Satisfiable	The server response cannot fulfill the range specified by the Range header field in the request.
+417	Expectation Failed	The server cannot meet the expectation indicated by the Expect request header field.
+418	I’m a teapot	The server sends this response to undesirable requests, such as automated queries.
+421	Misdirected Request	The request went to a server unable to produce a response.
+422	Unprocessable Entity	Semantic errors in the request prevented the server from sending the expected response.
+423	Locked	The requested resource is locked.
+424	Failed Dependency	The failure of a previous request doomed this request to failure.
+425	Too Early	The server aborted a request that might be part of an (intentional or unintentional) replay attack.
+426	Upgrade Required	The server would only perform the request after the client upgrades to one or more different protocols specified in its Upgrade header in a 426 response.
+428	Precondition Required	The origin server requires the request to satisfy certain conditions.
+429	Too Many Requests	The client has sent too many requests in a given amount of time.
+431	Request Header Fields Too Large	The server is unwilling to process the request because of oversized header fields.
+451	Unavailable for Legal Reasons	The server cannot legally provide the requested resource, such as a government-censored page.
+
+# Server Errors: 5XX
+500	Internal Server Error	The server has run into problems while processing the client’s request.
+501	Not Implemented	The server can’t resolve the client’s HTTP request method.
+502	Bad Gateway	The server, acting as a gateway or proxy, received an invalid message from an inbound server.
+503	Service Unavailable	The server appears non-functional and can’t process the client’s request.
+504	Gateway Timeout	The server, acting as a gateway, fails to produce a response in time.
+505	HTTP Version Not Supported	The server doesn’t support the HTTP version used in the request.
+506	Variant Also Negotiates	The server has an internal configuration error that leads to content conflicts.
+507	Insufficient Storage	The server doesn’t have enough storage to perform the HTTP method of the request.
+508	Loop Detected	The server detected an infinite loop while processing the request.
+510	Not Extended	The server requires further extensions to the request before fulfilling it.
+511	Network Authentication Required	The client needs to get authenticated on the network to access the resource.
+
+# Codes for Web Application Security Testing
+200	OK
+301	Moved Permanently
+302	Found
+400	Bad Request
+401	Unauthorized
+403	Forbidden
+404	Not Found
+405	Method Not Allowed
+500	Internal Server Error
+502	Bad Gateway
+503	Service Unavailable
+504	Gateway Timeout
+
+https://www.stationx.net/http-status-codes-cheat-sheet/

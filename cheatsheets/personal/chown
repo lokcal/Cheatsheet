@@ -1,0 +1,31 @@
+---
+syntax: bash
+tags: [ chown, permission ]
+---
+
+# Change file owner
+chown user file
+
+# Change file owner and group
+chown user:group file
+
+# Change owner recursively
+chown -R user directory
+
+# Change owner & group recursively
+chown -R user:group directory
+
+# Change the owner/group of the files by traveling the directories recursively
+chown -R [user_name]:[group_name] [directory_name]/
+
+# Change ownership to match another file
+chown --reference=/path/to/ref_file file
+
+# Change owner only if a file is owned by a particular user
+chown --from=[owner_name] [new_owner_name] [file_name]
+
+# Copy the owner/group settings from one file to another
+chown --reference=[source_file] [destination_file]
+
+# List all the changes made by the chown command
+chown -v -R [user_name]:[group_name] [file_name]

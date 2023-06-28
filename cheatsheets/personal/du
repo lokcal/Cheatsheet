@@ -1,0 +1,33 @@
+############ bearbeiten ##################
+
+# To sort directories/files by size
+du -sk *| sort -rn
+
+# To show cumulative humanreadable size
+du -sh
+
+# grand total usage disk space at the last line
+du -ch
+
+# disk usage of all the files and directories
+du -ah
+
+# disk usage of a directory tree with its subtress in Kilobyte blcoks
+du -kh
+
+# Display output in bytes using -b
+du -bh
+
+# disk usage of directory tree along with its subtrees in Megabytes
+du -mh
+
+# calculates and displays the disk usage of all files and directories, but excludes the files that matches given pattern
+du -ah --exclude="*.txt"
+
+# Display the disk usage based on modification of time, use the flag
+du -ha --time
+
+# Alternativ to du
+1. ncdu
+2. duf
+3. dust

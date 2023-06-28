@@ -1,0 +1,89 @@
+############### Basic #######################
+
+# Add execute for all (myscript.sh)
+chmod a+x myscript.sh
+
+# Set user to read/write/execute, group/global to read only (myscript.sh), symbolic mode
+chmod u=rwx, go=r myscript.sh 
+
+# Remove write from user/group/global (myscript.sh), symbolic mode
+chmod a-w myscript.sh
+
+# Remove read/write/execute from user/group/global (myscript.sh), symbolic mode
+chmod = myscript.sh
+
+# Set user to read/write and group/global read (myscript.sh), octal notation
+chmod 644 myscript.sh
+
+# Set user to read/write/execute and group/global read/execute (myscript.sh), octal notation
+chmod 755 myscript.sh
+
+# Set user/group/global to read/write (myscript.sh), octal notation
+chmod 666 myscript.sh
+
+# Set Recursivly
+chmod -R 755 Example
+
+############### Stickybit SGID SGUID ###############
+
+# Add Sticky User
+chmod u+s dirname
+
+# Remove Sicky User
+chmod u-s dirname
+
+# Add Sticky Group
+chmod g+s directory_name
+
+# Remove Sticky Group
+chmod g-s directory_name
+
+
+# Roles
+u - user (owner of the file)
+g - group (members of file's group)
+o - global (all users who are not owner and not part of group)
+a - all (all 3 roles above)
+
+chmod -v u+rwx meinedatei.txt
+         ││└└└ Rechte
+         │└─── Operator
+         └──── Benutzerkategorie
+
+# Numeric representations
+7 - full (rwx)
+6 - read and write (rw-)
+5 - read and execute (r-x)
+4 - read only (r--)
+3 - write and execute (-wx)
+2 - write only (-w-)
+1 - execute only (--x)
+0 - none (---)
+
+chmod -v 777 meinedatei.txt
+         ││└── Andere
+         │└─── Gruppe
+         └──── Besitzer
+
+ drwxrwxrwx  1 username    users    2525 Feb 18 09:17 index.htm
+  ^\ /\ /\ /    \      /    \   /
+  | V  V  V      ''|'''      '|'
+  | |  |  |        |          `-- group the file belongs to
+  | |  |  |        `-- user who owns the file
+  | |  |  |
+  | |  |  `-- others (users who are neither you or in the group)
+  | |  `-- group (people in the group)
+  | `-- user (you)
+  |
+  `-- d=directory, -=file, l=link, etc
+
+
+Setting     Code  Use Case
+----------  000   Locking even yourself out. Use chmod again, if this happens.
+-r--------  400   An auto-generated password file (e.g. ~/.google_authenticator).
+-rw-------  600   ~/.history, all the ssh keys in your ~/.ssh folder.
+-rwx------  700   Your ~/.ssh folder.
+-r--r--r--  444   A textfile, that others should see as well, but nobody should modify it.
+-r-xr-xr-x  555   A folder, that others should be able to cd into as well, but nobody should modify it.
+-rwxr-xr-x  755   Files and folders you want other people to see.
+-rwxrwxrwx  777   Files and folders you want other people to see and modify. The most open permission.

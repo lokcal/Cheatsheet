@@ -1,0 +1,42 @@
+# Systeminfo tool
+inxi 
+lshw
+hwinfo
+hardinfo
+sudo dmidecode -t 2
+
+# Detected Hardware and boot messages
+dmesq
+
+# CPU Info
+cat /proc/cpuinfo
+
+# Memory info
+cat /proc/meminfo
+free -h
+
+#List Block device info
+lsblk
+
+# Show USB devices
+lsusb
+
+# Show PCI devices
+lspci
+
+# Einzelne systeminfo zum anzeigen
+cat /sys/.....
+
+# show info with proc (see cheatsheet proc)
+cat /proc/meminfo
+
+# Get Disply information
+xdpyinfo
+xdypinfo | grep dimensions
+xrandr
+
+# show file infos (stat cheat)
+stat <file>    
+
+# trace system calls and signals (strace cheat)
+strace

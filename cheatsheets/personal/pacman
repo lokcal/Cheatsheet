@@ -1,0 +1,204 @@
+################ Basic ####################################
+# All the following command work as well with multiple package names
+###################### Install/update ############################
+# To check updates for packages without -Syu
+checkupdates
+
+# To search for a package
+pacman -Ss <package name>
+
+# To search for a already installed package
+pacman -Qs <package name>
+
+# Search for a package containing a file
+pacman -Fs <package name>
+
+# To install a package
+pacman -S <package name>
+
+# To update the database/local package base and upgrade all out of date packages
+pacman -Syu
+
+# To update the database/local package base and upgrade all out of date packages without confirm
+pacman -Syu --noconfirm
+
+# To update system ignoring VLC package
+pacman -Syu --ignore=vlc
+
+# Install packages from a list 
+pacman -S --needed - < pkglist.txt
+
+# Overwriite (force) package 
+pacman -S package-name --overwrite '*'
+pacman -S package-name --overwrite /usr/bin/statio
+sudo pacman -S --overwrite \* <package_name>
+
+# Download a package without installing it
+pacman -Sw package_name
+
+# Reinstalling all packages 
+pacman -Qqn | pacman -S -
+
+# To install a package from builded package file (.tar.xz) (manually)
+pacman -U <file name/file url>
+
+######################## Cache #############################
+
+# To remove all the cached packages that are not currently installed, and the unused sync database.
+pacman -Sc
+
+# To remove all files from the cache, use the clean switch twice
+pacman -Scc
+
+# To remove Package cache
+paccache -r
+
+######################## Remove ############################
+
+# To uninstall a package
+pacman -R <package name>
+
+# To uninstall a package and his depedencies it´s not used by other packages
+pacman -Rs <package name>
+
+# To uninstall a package and his depedencies, removing all new orphans
+pacman -Rcs <package name>
+
+# To uninstall a package and his depedencies, removing all new orphans and backup files
+pacman -Rncs <package name>
+
+# To remove a package, which is required by another package, without removing the dependent package:
+pacman -Rdd <package name>
+
+# For recursively removing orphans and their configuration files
+pacman -Rns $(pacman -Qtdq)
+
+# To uninstall a package and his depedencies also if its needed by another packages
+pacman -Rss
+
+# For recursively removing orphans and their configuration files:
+pacman -Qtdq | pacman -Rns -
+
+# Removing everything but base group (remove everthing; requires pacman-contirb)
+pacman -R $(comm -23 <(pacman -Qq | sort) <((for i in $(pacman -Qqg base); do pactree -ul "$i"; done) | sort -u))
+
+###################### gather information ###########################
+
+# list package info
+pacinfo packagename
+
+# list all packages from given repo (core,extra, etc)
+paclist reponame
+
+# List package with dependecies tree view
+pactree <package>
+
+# To list explicitly (selected from repo + AUR) installed packages
+pacman -Qe
+pacman -Qe | awk '{print $1}'
+pacman -Qqe # without version nr
+
+# List all native packages (installed from the sync database(s)) with dependecies
+pacman -Qn
+
+# List all foreign packages (typically manually downloaded and installed or packages removed from the repositories):
+pacman -Qm
+pacman -Qqm    # Without version nr
+
+# To get a list of the packages wich use this file
+pacman -Qoq /usr/lib/python3.9
+
+# List all packages in the group named group
+pacman -Sg group
+
+# To get informations about a package (dependecies)
+pacman -Si <package name>
+
+# To list orphan packages (installed as dependencies and not required anymore)
+pacman -Qdt
+
+# To list orphan packages (installed as dependencies and not required anymore with optionally required by another package)
+pacman -Qdtt
+
+# To list all packages explicitly installed and not required as dependencies:
+pacman -Qet
+
+# To retrieve a list of the files installed by a package: 
+pacman -Ql <package name> 
+
+# To list the commands provided by an installed package
+pacman -Ql <package name> | sed -n -e 's/.*\/bin\///p' | tail -n +2
+
+# To list the top-most recent explicitly installed packages (not in the base groups)
+expac --timefmt='%Y-%m-%d %T' '%l\t%n' $(comm -23 <(pacman -Qeq|sort) <(pacman -Qqg base base-devel|sort)) | sort -r | head -20
+
+# Most systems will slowly collect several ghost files such as state files, logs, indexes, etc. through the course of usual operation.#
+pacreport
+
+# To list of install packages with list of details (backup files and modification state)
+pacman -Qii
+
+# Listing changed backup files (list modified conf files)
+pacman -Qii | awk '/^MODIFIED/ {print $2}'
+
+# To list installed packages sorted by size
+pacman -Qi | awk '/^Name/ {name=$3} /^Installed Size/ {print name, $4 substr($5,1,1)}' | column -t | sort -rhk2 | cat -n | tac
+
+# To browse all installed packages with an instant preview of each package; requires fzf
+pacman -Qq | fzf --preview 'pacman -Qil {}' --layout=reverse --bind 'enter:execute(pacman -Qil {} | less)'
+
+# To get a list of last installed packages, you can run:
+grep -i installed /var/log/pacman.log
+
+# To get a list of last upgraded packages, you can run:
+grep -i upgraded /var/log/pacman.log
+
+# To get a list of last installed or upgraded packages, you can run:
+grep -iE 'installed|upgraded' /var/log/pacman.log
+
+# Pacdiff (merge,view,edit) pacnew files
+pacdiff
+
+#################################################################################
+
+# You can't directly install packages from the Arch User Database (AUR) with pacman.
+# You need yaourt to perform that. But considering yaourt itself is in the AUR, here is how to build a package from its tarball.
+# Installing a package from AUR is a relatively simple process:
+# - Retrieve the archive corresponding to your package from AUR website
+# - Extract the archive (preferably in a folder for this purpose)
+# - Run makepkg in the extracted directory. (makepkg-s allows you to install any dependencies automatically from deposits.)
+# - Install the package created using pacman
+# Assuming $pkgname contains the package name.
+wget "https://aur.archlinux.org/packages/${pkgname::2}/$pkgname/$pkgname.tar.gz"
+tar zxvf "$pkgname.tar.gz"
+cd "$pkgname"
+# Build the package
+makepkg -s
+# Install
+sudo pacman -U <package file (.pkg.tar.xz)>
+
+
+############ TIPS and Tricks #####
+
+# To list the 20 last installed packages with expac, run:
+And to rebuild them all at once with an AUR helper such as yay, you can do:
+
+yay -S $(pacman -Qoq /usr/lib/python3.9) --answerclean Allexpac --timefmt='%Y-%m-%d %T' '%l\t%n' | sort | tail -n 20
+
+# or, with seconds since the epoch (1970-01-01 UTC):
+expac --timefmt=%s '%l\t%n' | sort -n | tail -n 20And to rebuild them all at once with an AUR helper such as yay, you can do:
+
+# List explicitly installed packages not in the base meta package:
+comm -23 <(pacman -Qqe | sort) <(expac -l '\n' '%E' base | sort)
+
+# List explicitly installed packages not in the base meta package or base-devel package group:
+comm -23 <(pacman -Qqe | sort) <({ pacman -Qqg base-devel; expac -l '\n' '%E' base; } | sort -u)
+
+# List all installed packages unrequired by other packages, and which are not in the base meta package or base-devel package group:
+comm -23 <(pacman -Qqt | sort) <({ pacman -Qqg base-devel; expac -l '\n' '%E' base; } | sort -u)
+
+# As above, but with descriptions:
+expac -H M '%-20n\t%10d' $(comm -23 <(pacman -Qqt | sort) <({ pacman -Qqg base-devel; expac -l '\n' '%E' base; } | sort -u))
+
+# To rebuild them all at once with an AUR helper such as yay, you can do:
+yay -S $(pacman -Qoq /usr/lib/python3.9) --answerclean All

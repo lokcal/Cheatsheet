@@ -1,0 +1,18 @@
+---
+syntax: bash
+tags: [ip link, networking ]
+---
+# Take down / up the wireless adapter
+ip link set dev {interface} {up|down}
+
+# check if link disabled with Json Output
+ip -j -p link show {interface} | grep operstate
+
+# Change your mac address 
+ip link set dev {interface} address aa:bb:cc:dd:ee:ff
+
+# Set the MTU on em1 to 9000
+ip link set em1 mtu 9000
+
+# Enable promiscuous mode for em1
+ip link set em1 promisc on

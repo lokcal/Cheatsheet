@@ -1,0 +1,57 @@
+Repair a broken Ext4 Superblock
+
+This has happened to me a few times, and it’s not a nice problem to find yourself in. You computer
+won’t boot, all your filesystem checks tell you you’ve a bad superblock, but you cant seem to find
+how to fix it. Well, here goes
+
+This guide is for ext4 , though I’ll explain how other filesystems can be cured along the way. The
+easiest way to carry all this out, seeing as your computer probably won’t boot at this stage, is to
+download and burn a copy of Parted Magic. Boot from that, and you’ll access to a number of useful
+tools.
+
+First, figure out what partition we’re dealing with.
+
+sudo fdisk -l
+
+The above will list all the partitions on all the drives in your computer. To recover a lost partition,
+your going to need Testdisk. Testdisk is included in Parted Magic, and there’s a great guide on their
+site. For this though, we just need the partition number, such as /dev/sda3 or /dev/hdb1.
+Now, make sure your superblock is the problem, by starting a filesystem check, replacing xxx with
+your partition name. Here, you can change ext4 to ext3, or ext2 to suit the filesystem.
+
+sudo fsck.ext4 -v /dev/xxx
+
+If your superblock is corrupt, the output will look like this
+–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+fsck /dev/sda5
+fsck 1.41.4 (27-Jan-2009)
+e2fsck 1.41.4 (27-Jan-2009)
+fsck.ext4: Group descriptors look bad... trying backup blocks...
+fsck.ext4: Bad magic number in super-block while trying to open
+/dev/sda5
+The superblock could not be read or does not describe a correct ext4
+filesystem.
+If the device is valid and it really contains an ext4
+filesystem (and not swap or ufs or something else), then the
+superblock
+is corrupt, and you might try running e2fsck with an alternate
+superblock:
+e2fsck -b 8193 <device>
+–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+Now lets find where your superblock backups are kept.
+
+sudo mke2fs -n /dev/xxx
+
+Down at the bottom of this output, should be a list of the backups
+
+Superblock backups stored on blocks:
+32768, 98304, 163840, 229376, 294912, 819200, 884736, 1605632,
+2654208
+
+Your almost there. Finally, restore the superblock from the backup, again replacing the x’s with
+your partition name, and block_number with the first backup superblock.
+
+sudo e2fsck -b block_number /dev/xxx
+
+Now reboot, and your superblock should be fixed. If it’s not, repeat the steps, but restore a
+different backup superblock

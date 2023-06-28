@@ -1,0 +1,8 @@
+# To load a module:
+modprobe <module>
+
+# To remove a module:
+modprobe -r <module>
+
+# To list module:
+lsmod

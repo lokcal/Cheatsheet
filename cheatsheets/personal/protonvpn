@@ -1,0 +1,59 @@
+#Initialize ProtonVPN profile.
+protonvpn init
+
+# Select a ProtonVPN server and connect to it.
+protonvpn connect, c
+
+# Connect to a specified server
+protonvpn c [servername]
+
+# Connect to a random server
+protonvpn c -r
+
+# Connect to the fastest server
+protonvpn c -f
+
+# Connect to the fastest P2P server
+protonvpn c --p2p
+
+# Connect to the fastest server in a specified country
+protonvpn c --cc [countrycode]
+
+# Connect to the fastest Secure Core server
+protonvpn c --sc
+
+# Reconnect or connect to the last server used
+protonvpn reconnect, r
+
+# Disconnect the current session
+protonvpn disconnect, d
+
+# Print connection status
+protonvpn status, s
+
+# Change CLI configuration
+protonvpn configure
+
+# Refresh OpenVPN configuration and server data
+protonvpn refresh
+
+# Print example commands
+protonvpn examples
+
+# Display version
+protonvpn --version
+
+# Show help message
+protonvpn --help
+
+####
+All connect options can be used with the -p flag to explicitly specify which transmission protocol is used for that connection (either udp or tcp).
+
+####
+To enable Kill Switch, open the configuration menu with protonvpn configure, then select 5 for Kill Switch and confirm the activation with either 1 or 2, depending on your preference.
+
+1 will block access from your directly connected network (e.g. public WiFi) and is recommended for laptops that may connect to untrusted networks.
+
+2 will allow access from your directly connected network and is for computers that don’t leave a secure and trusted LAN, like your home network.
+
+On the next connection Kill Switch will be enabled.

@@ -1,0 +1,62 @@
+# Copy the file text.txt to a folder with the path C:\schoolwork
+COPY text.txt C:\schoolwork
+
+# Delete the file text.txt
+DEL text.txtERASE text.txt
+
+# Overwrite; replace a file named hey.txt in a local folder src with another hey.txt in a local folder dest, both files sharing the same name.Warning: Don’t specify .\dest\hey.txt anywhere here.
+REPLACE .\src\hey.txt .\dest
+
+# Rename a file text.txt to script.bat
+REN text.txt script.batRENAME text.txt script.bat
+
+# Copy files and directory trees to another folder.XCOPY is similar to COPY but with additional switches to specify the source and destination paths in detail.
+XCOPY
+
+# Copy folders and subfolders of folder1 to folder2
+XCOPY /S folder1 folder2
+
+# Robust copying of files and directories: by default, such copying only occurs if the source and destination differ in time stamps or file sizes.
+ROBOCOPY
+
+# Decompresses the compressed .CAB cabinet file gameData.cab
+EXPAND gameData.cab
+
+# Compare the contents of two files (file1.ext, file2.ext) and display non-matching lines
+FC file1.ext file2.ext
+
+# Compare the contents of two files (file1.ext, file2.ext) and display non-matching items
+COMP file1.ext file2.ext
+
+# Output every line that contains a text string (which you must enclose in quotation marks) “python” in the file run.bat
+FIND "python" in run.bat
+
+# Count every line that contains a text string (which you must enclose in quotation marks) “python” in the file run.bat
+FIND /C "python" in run.bat
+
+# Print contents of a file resume.txt
+PRINT resume.txt
+
+# Query/display open files
+OPENFILES /QUERY
+
+# Disconnect files opened by network users.
+OPENFILES /DISCONNECT
+
+# Displays the contents of the file test.txt
+TYPE test.txt
+
+# Sort a file playlist.m3u and output only the unique values to a file C:\work\unique_play.m3u
+TYPE playlist.m3u | SORT /unique /o C:\work\unique_play.m3u
+
+# Display contents of one or more files, one screen at a time.
+MORE
+
+# Display or change the association between a file extension and a file type
+ASSOC
+
+# Open the Notepad application from cmdCopied
+NOTEPAD
+
+# Open a file filename.ext in Notepad
+NOTEPAD filename.ext

@@ -1,0 +1,13 @@
+---
+tags: [ whois, networking ]
+---
+explanation: A whois lookup will tell you a lot of information about who owns an internet domain
+
+# Get information about a domain name:
+whois example.com
+
+# Get information about an IP address:
+whois 8.8.8.8
+
+# Get abuse contact for an IP address:
+whois -b 8.8.8.8

@@ -1,0 +1,105 @@
+---
+tags: [ ss, networking ]
+---
+explanation: Utility to investigate sockets
+# Display all Listening and Non-Listening Sockets
+ss -a
+
+# Display Socket Memory Usages 
+ss -m
+
+# Watch TCP and UDP Open Ports in Real-Time
+watch ss -a
+
+# Display Only Listening Sockets
+ss -l
+
+# Display only TCP Listening Connections
+ss -t
+
+# Display only TCP Listening Connections
+ss -lt
+
+# List all Unix Domain Sockets
+ss -x
+
+# how All Processes Using Socket Connection
+ss -p
+
+# Show Detailed Socket Information
+ss -e
+
+# Show all listening tcp sockets including the corresponding process
+ss -tlp
+
+# Show all listening tcp sockets including 
+ss -tulpn | grep LISTEN
+
+# List all UDP Connections
+ss -ua
+
+# List all Listening UDP Connections
+ss -lu
+
+# Display PID (Process IDs) of Sockets
+ss -p
+
+# Display Summary Statistics
+ss -s
+
+# Display IPv4 and IPv6 Socket Connections
+ss -4
+ss -6
+
+# Display IPV4 Listening Connections Only
+ss -l4
+
+# List all UDP Connections
+ss -lu
+
+# Show Socket BPF Filters
+ss -b
+
+# Do not Resolve Service Names
+ss -n
+
+# Try to Resolve Numeric Address/Ports
+ss -r
+
+# Filter Connections by Port Number
+ss -at '( dport = :22 or sport = :22 )'
+alternativ: ss -at '( dport = :ssh or sport = :ssh )'
+
+# show all ssh related connection
+ss -t state established '( dport = :ssh or sport = :ssh )'
+
+# show all sockets connecting to 192.168.2.1 on port 80
+ss -t dst 192.168.2.1:80
+
+# Filter by Port Number
+ss <options> dst :<port number or name>
+example; ss dst :5228  ss dst :https
+
+# List Connections to a Specific IP Address
+ss dst <address>
+
+# Show SELinux Context
+ss -tlZ
+
+# Show Timer Information
+ss -o
+
+# same as SS (Important command)
+sudo lsof -i:22 ## see a specific port such as 22 ##
+sudo lsof -i -P -n
+sudo lsof -i -P -n | grep LISTEN
+
+Utility to investigate sockets
+
+Args
+-a all
+-4/-6 list ipv4/ipv6 sockets
+-n numeric addresses instead of hostnames
+-l list listing sockets
+-u/-t/-x list udp/tcp/unix sockets
+-p Show process(es) that using socket

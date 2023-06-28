@@ -1,0 +1,7 @@
+---
+tags: [ tldr, cheatsheet ]
+---
+explanation: Displays simple help pages for command-line tools, from the tldr-pages project.
+
+# Show cheatsheets for command
+tldr <command>

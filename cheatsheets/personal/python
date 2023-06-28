@@ -1,0 +1,70 @@
+# Basic example of server with python
+
+# Prorgramming typing at start
+#!/usr/bin/env python3 or  #!/usr/bin/python
+
+# Will start a Web Server in the current directory on port 8000
+# go to http://127.0.0.1:8000
+
+# Python v2.7
+python -m SimpleHTTPServer
+# Python 3
+python -m http.server 8000
+
+# transfer file with python web
+start python -m http.server 8000; put file where https server is running
+
+# SMTP-Server for debugging, messages will be discarded, and printed on stdout.
+python -m smtpd -n -c DebuggingServer localhost:1025
+
+# Pretty print a json
+python -m json.tool foo.json
+
+# Zen of Python
+# or just 'import this' in python
+python -m this
+
+# See also:
+#   Python language cheat sheets at /python/
+#   list of pages:      /python/:list
+#   learn python:       /python/:learn
+#   search in pages:    /python/~keyword
+
+ cheat:python
+# Basic example of server with python
+# Will start a Web Server in the current directory on port 8000
+# go to http://127.0.0.1:8000
+
+# Python v2.7
+python -m SimpleHTTPServer
+# Python 3
+python -m http.server 8000
+
+# SMTP-Server for debugging, messages will be discarded, and printed on stdout.
+python -m smtpd -n -c DebuggingServer localhost:1025
+
+# Pretty print a json
+python -m json.tool foo.json
+
+ tldr:python
+# python
+# Python language interpreter.
+# More information: <https://www.python.org>.
+
+# Call a Python interactive shell (REPL):
+python
+
+# Execute script in a given Python file:
+python script.py
+
+# Execute script as part of an interactive shell:
+python -i script.py
+
+# Execute a Python expression:
+python -c "expression"
+
+# Run library module as a script (terminates option list):
+python -m module arguments
+
+# Interactively debug a Python script:
+python -m pdb script.py

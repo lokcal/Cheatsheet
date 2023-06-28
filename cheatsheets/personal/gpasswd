@@ -1,0 +1,10 @@
+############### Basic #######################
+
+# Add User to group
+gpasswd -a USERNAME GROUP
+
+# Del User from group
+gpasswd -d USERNAME GROUP
+
+#############################################
+#############################################

@@ -1,0 +1,31 @@
+# redis
+# Redis is an open source (BSD licensed), in-memory data structure store,
+# used as a database, cache and message broker
+
+# connect to redis server (port 6397)
+nc localhost 6397
+
+# Connect to the local server using redis-cli:
+redis-cli
+
+# Connect to the local server:
+redis-cli
+
+# Connect to a remote server on the default port (6379):
+redis-cli -h host
+
+# Connect to a remote server specifying a port number:
+redis-cli -h host -p port
+
+# Specify a password:
+redis-cli -a password
+
+# Execute Redis command:
+redis-cli redis_command
+
+# List Redis keys with prefix "prefix:"
+redis-cli KEYS "prefix:*"
+
+# Delete Redis key abc
+redis-cli DEL abc
+

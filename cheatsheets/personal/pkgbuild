@@ -1,0 +1,131 @@
+# This is an example PKGBUILD file. Use this as a start to creating your own,
+# and remove these comments. For more information, see 'man PKGBUILD'.
+# NOTE: Please fill out the license field for your package! If it is unknown,
+# then please put 'unknown'.
+
+# Maintainer: Your Name <youremail@domain.com>
+pkgname=NAME
+pkgver=VERSION
+pkgrel=1
+epoch=
+pkgdesc=""
+arch=()
+url=""
+license=('GPL')
+groups=()
+depends=()
+makedepends=()
+checkdepends=()
+optdepends=()
+provides=()
+conflicts=()
+replaces=()
+backup=()
+options=()
+install=
+changelog=
+source=($pkgname-$pkgver.tar.gz
+        $pkgname-$pkgver.patch)
+noextract=()
+md5sums=() #generate with 'makepkg -g'
+
+prepare() {
+	cd "$srcdir/$pkgname-$pkgver"
+	patch -p1 -i "$srcdir/$pkgname-$pkgver.patch"
+}
+
+build() {
+	cd "$srcdir/$pkgname-$pkgver"
+	./configure --prefix=/usr
+	make
+}
+
+check() {
+	cd "$srcdir/$pkgname-$pkgver"
+	make -k check
+}
+
+package() {
+	cd "$srcdir/$pkgname-$pkgver"
+	make DESTDIR="$pkgdir/" install
+}
+
+
+##################################
+pkgname=bkt
+pkgver=0.5.0
+pkgrel=1
+pkgdesc="A subprocess caching utility"
+arch=('x86_64')
+url="https://www.bkt.rs/"
+license=('MIT')
+makedepends=('cargo')
+source=("$pkgname-$pkgver.tar.gz::https://github.com/dimo414/$pkgname/archive/refs/tags/$pkgver.tar.gz")
+sha256sums=()
+
+prepare() {
+	cd "$srcdir/$pkgname-$pkgver"
+
+	cargo fetch --locked --target "$CARCH-unknown-linux-gnu"
+}
+
+build() {
+	cd "$srcdir/$pkgname-$pkgver"
+
+	export RUSTUP_TOOLCHAIN=stable
+	export CARGO_TARGET_DIR=target
+	cargo build --frozen --release --all-features
+}
+
+check() {
+	cd "$srcdir/$pkgname-$pkgver"
+
+	export RUSTUP_TOOLCHAIN=stable
+	cargo test --frozen --all-features
+}
+
+package() {
+	cd "$srcdir/$pkgname-$pkgver"
+
+	install -Dm0755 -t "$pkgdir/usr/bin/" "target/release/$pkgname"
+	install -Dm644 LICENSE -t "$pkgdir/usr/share/licenses/$pkgname"
+}
+
+## Writing a PKGBUILD
+### Variables
+`buildarch` : This is a variable specific to the ArchStrike PKGBUILD files. You can find more information about this variable on the [contribution guide](https://archstrike.org/wiki/contributing/details)
+`pkgname` : The name of the package.
+`pkgver` : The version number of the package.
+`pkgrel` : The build iteration of the package. Updates to the PKGBUILD without updating the `pkgver` means this variable should be bumped by 1.
+`groups` : Groups the package will be in.
+`arch` : Architectures this package is supported on. This defines what the `buildarch` variable will be.
+`pkgdesc` : Short description of the package.
+`url` : URL for the package (for example the github page or the website)
+`license` : License of the package. Use `custom` for uncommon licenses.
+`depends` : Dependencies of the package.
+`makedepends` : Dependencies for making the package.
+`source` : Source file or git/svn repository link for the package.
+`sha512sums` : Checksums for the source. Use `SKIP` for -git or -svn packages. Run `updpkgsums` after adding the `source` to automatically generate and add sums.
+
+### Functions
+#### pkgver() | **Only for -git/-svn packages**
+
+This function generates the `pkgver` variable for -git/-svn packages.
+-   Leave `pkgver` empty while writing the PKGBUILD. Afterwards run `makepkg` or `makechrootpkg` to generate the real pkgver.
+-   `pkgver` cannot contain spaces or hyphens (-). Using sed to correct this is common.
+ 
+#### prepare() | **Only needed when a modification needs to be made to source**
+A preparation function. We can make changes to the files in this function. A common use is to patch files.
+
+#### build() | **Only needed when source needs to be built before installation**
+A build function. We build the package source in this function if it needs to be built.
+
+#### package() | **ESSENTIAL**
+The main function for packaging the source. Here we install the necessary files to the fakeroot.
+-   The `package()` function is the only required function in a PKGBUILD. If you must only copy files into their respective directories to install a program, do not put it in the `build()` function, put that in the `package()` function.
+
+## Tips for PKGBUILD contributors
+-   Run `namcap` on your `PKGBUILD` file and your `pkgname.tar.xz` after building it. This will uncover common errors. Such as `namcap some-package-x86_64.tar.xz` or `namcap PKGBUILD`.
+    **You can ignore warnings about the buildarch variable not starting with an underscore**
+-   Make sure your package works and installs properly by [testing your PKGBUILD in a clean chroot](https://archstrike.org/wiki/contributing/chroot).
+-   Make sure `pkgname` is the same with the folder the package is in.

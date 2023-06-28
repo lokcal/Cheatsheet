@@ -1,0 +1,115 @@
+############## Basic #######################
+
+# Enable a service to startup on boot
+systemctl enable foo.service
+
+# Start a service
+systemctl start foo.service
+
+# Stop a service
+systemctl stop foo.service
+
+# Disable a service to startup on boot
+systemctl disable foo.service
+
+# Reload a service's configuration
+systemctl reload foo.service
+
+# Restart a service
+systemctl restart foo.service
+
+# Mask Unit  					
+systemctl mask foo
+
+# Unmask Unit
+systemctl unmask foo
+
+# halt the system
+sudo systemctl halt
+
+# initiate a full shutdown
+sudo systemctl poweroff
+
+# A restart
+sudo systemctl reboot
+
+#############  Edit  #########################
+addtion to systemd-analyze security; edit the service file for changeing options or hardening
+
+# Edit service file (blank)
+sudo systemctl edit nginx.service
+
+# Edit service file
+sudo systemctl edit --full nginx.service
+
+############# Status #########################
+
+# List all loaded/active units
+systemctl list-units
+
+# Check the status of a service
+systemctl status foo.service
+
+# To list all the properties of a service
+systemctl show <service>
+
+#To check if a systemctl service is running or not use:
+systemctl show sshd --property=SubState
+
+# To check if a service is active or inactive:
+systemctl show sshd --property=ActiveState
+
+# Checks if Unit is enabled
+systemctl is-enabled foo
+
+# Check if Unit is active
+systemctl is-active foo
+
+# List unit files with status
+systemctl list-unit-files
+
+# List units with choosen status
+systemctl list-units --state=(active,runnnig,exited,disabled,masked,etc)
+
+# List units which failed
+systemctl list-units --failed
+systemctl list-units --state=failed /state=active || exited || 
+
+# List the dependencies of a service
+# when no service name is specified, lists the dependencies of default.target
+systemctl list-dependencies foo.service 
+
+# Check the current target
+systemctl get-default
+
+# List currently loaded targets
+systemctl list-units --type=target
+systemctl list-unit-files --type=service
+systemctl list-units --all --type=mount
+systemctl list-unit-files --type=service --state=enabled || disabled || enabled,disabled
+systemctl list-units --type=service --state=running
+
+# Change current target
+systemctl isolate foo.target (Ex. multi-user.target (non graphical), graphical.target (graphic)) 
+
+# Change default target
+systemctl enable foo.target
+
+# list all loaded but active services, both running and those that have exited, you can add the --state option with # a value of active, as follows.
+systemctl list-units --type=service --state=active  OR  systemctl --type=service --state=active
+
+# Just list all running services
+systemctl list-units --type=service --state=running OR systemctl --type=service --state=running
+
+
+############# Timer #########################
+
+#
+systemctl list-timer
+
+#
+systemctl list-timer -all
+
+
+####################################################################################
+Fertig

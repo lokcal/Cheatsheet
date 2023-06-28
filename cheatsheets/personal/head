@@ -1,0 +1,23 @@
+# To show the first 10 lines of <file>:
+head <file>
+
+# To show the first <number> lines of <file>:
+head -n 5 <file>
+
+# Remove Last N Lines of a File in Linux
+head -n -10 <file>
+
+# To show the first <number> bytes of <file>:
+head -c <number> <file>
+
+# Remove Last N Characters of File
+head -c -9 file-1.txt
+
+# Show File Name in Header of File
+head -n 5 -v file-1.txt
+
+# Show File Name in Header in Multiple Files
+head -n 3 file-1.txt file-2.txt
+
+# How to Disable the Display Header
+head -n 3 -q file-1.txt file-2.txt

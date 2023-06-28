@@ -1,0 +1,9 @@
+#### bash mode ######
+
+# Commenting Line
+crtl +d
+crtl +shift + /
+
+# Copy line down or up
+crtl + alt + up
+crtl + alt + down

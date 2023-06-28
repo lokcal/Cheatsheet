@@ -1,0 +1,191 @@
+#############################################
+# To start the docker daemon:
+docker -d
+
+# To build a docker image
+docker build -t <image-tag-name> <path-of-Dockerfile>
+
+# To creat and run a container (daemon)
+docker run <image> -d 
+
+# To creat and run a container (daemon) with name
+docker run <image> -d  --name
+
+# To start a container with an interactive shell:
+docker run -ti <image-name> /bin/bash
+
+# To "shell" into a running container (docker-1.3+):
+docker exec -ti <container-name> bash
+
+# Pulling an image from Dockerhub
+docker image pull [IMAGE_NAME]
+
+# To inspect a running container:
+docker inspect <container-name> (or <container-id>)
+
+# To get the process ID for a container:
+docker inspect --format {{.State.Pid}} <container-name-or-id>
+
+# To list (and pretty-print) the current mounted volumes for a container:
+docker inspect --format='{{json .Volumes}}' <container-id> | python -mjson.tool
+
+# To copy files/folders between a container and your host:
+docker cp foo.txt mycontainer:/foo.txt
+
+# List Container Images
+docker image ls
+
+# To list currently running containers:
+docker ps
+
+# To list all containers:
+docker ps -a
+
+# Stop all container
+docker kill $(docker ps -q)
+
+# To remove all stopped containers:
+docker rm $(docker ps -qa)
+
+# Remove all images
+docker rmi $(docker images -q)
+
+# To list all images:
+docker images
+
+# Creating a Docker Network
+docker network create [NETWORK_NAME]
+
+# Connecting a Container to a Network
+docker network disconnect [NETWORK_NAME] [CONTAINER_NAME]
+
+# Inspecting a Network
+docker network inspect [NETWORK_NAME]
+
+# Listing all Networks
+docker network ls
+
+# Removing a Network
+docker network rm [NETWORK_NAME]
+
+# Create a Docker Volume
+docker volume create [VOLUME_NAME]
+
+# Remove a Docker Volume
+docker volume rm [VOLUME_NAME]
+
+# To remove all untagged images:
+docker rmi $(docker images | grep "^<none>" | awk "{print $3}")
+
+# To remove all volumes not used by at least one container:
+docker volume prune
+
+ To save image as tar archive:
+docker save -o <archive-name>.tar <image-name>
+
+# To restore image from a saved tar archive:
+docker load -i <archive-name>.tar
+
+# To remove an image image
+docker image rm <image-name-or-id>
+
+# To tag an image
+docker image tag <image-name>:<tag-name> <image-name>:<new-tag-name>
+
+# To login into hub.docker.com
+docker login
+
+# To push a docker image into dockerhub repository
+docker push <image-name>:<image-tag-name>
+
+# Backup Mysql Database from Mysql Docker
+docker exec CONTAINER /usr/bin/mysqldump -u root --password=root DATABASE > backup.sql
+docker exec CONTAINER /usr/bin/mysqldump -u root -pPASSWORD DATABASE | gzip > backup.sql.gz
+docker exec CONTAINER /usr/bin/mysqldump -u root -pPASSWORD DATABASE | bzip2 > backup.sql.bz2
+
+# Restore Mysql Database from Mysql Docker
+cat backup.sql | docker exec -i CONTAINER /usr/bin/mysql -u root --password=root DATABASE
+gunzip < backup.sql.gz | docker exec -i CONTAINER /usr/bin/mysql -u root -pPASSWORD DATABASE
+bunzip2 < backup.sql.bz2 | docker exec -i CONTAINER /usr/bin/mysql -u root -pPASSWORD DATABASE
+
+# Backup all Database (pg_dumpall) in Docker with gzipped
+docker exec -t <containername> pg_dumpall -c -U <username> | gzip > ./dump_$(date +"%Y-%m-%d_%H_%M_%S").gz
+
+# Back up all Docker PostgreSQL databases
+docker exec -i postgres /usr/bin/pg_dumpall -U <postgresql_user> > postgres-backup.sql
+
+# The Docker backup command for a local or remote PostgreSQL database is:
+docker exec -i postgres /usr/bin/pg_dump -U <postgresql_user> <postgresql_database> > postgres-backup.sql 
+
+# Back up and compress a Docker PostgreSQL database with gzip
+docker exec -i postgres /usr/bin/pg_dump -U <postgresql_user> <postgresql_database> | gzip -9 > postgres-backup.sql.gz 
+
+# Example when using a PostgreSQL password
+docker exec -i -e PGPASSWORD=<postgresql_password> postgres /usr/bin/pg_dump -U <postgresql_user> <postgresql_database> | gzip -9 > postgres-backup.sql.gz 
+
+# Back up PostgreSQL inside docker container
+docker exec <postgresql_container> /bin/bash -c "/usr/bin/pg_dump -U <postgresql_user> <postgresql_database>" | gzip -9 > postgres-backup.sql.gz  
+
+# Restore Database in Docker with gzipped
+# first gunzip for unzipping
+cat your_dump.sql | docker exec -i your-db-container psql -U <username>
+
+###################
+#     Build       #
+###################
+# Building an image from Dockerfile
+docker build -f [DOCKERFILE_PATH]
+
+This method allows the users to build their own Docker images.
+
+docker build  -t ImageName:TagName dir
+
+Options
+-f - path of the file
+-t − is to mention a tag to the image
+ImageName − This is the name you want to give to your image.
+TagName − This is the tag you want to give to your image.
+Dir − The directory where the Docker File is present.
+
+## Example
+sudo docker build –t myimage:0.1. 
+
+
+# Inheritance
+FROM ruby:2.2.2
+
+# Variables
+ENV APP_HOME /myapp
+RUN mkdir $APP_HOME
+
+# Initialization
+RUN bundle install
+WORKDIR /myapp
+VOLUME ["/data"] # Specification for mount point
+ADD file.xyz /file.xyz
+COPY --chown=user:group host_file.xyz /path/container_file.xyz
+
+# Onbuild
+ONBUILD RUN bundle install
+# when used with another file
+
+# Commands
+EXPOSE 5900
+CMD    ["bundle", "exec", "rails", "server"]
+
+ # Entrypoint
+ENTRYPOINT ["executable", "param1", "param2"]
+ENTRYPOINT command param1 param2
+
+# Configures a container that will run as an executable.
+
+ENTRYPOINT exec top -b
+## This will use shell processing to substitute shell variables, and will ignore any CMD or docker run command line arguments.
+
+# Metadata
+LABEL version="1.0"
+LABEL "com.example.vendor"="ACME Incorporated"
+LABEL com.example.label-with-value="foo"
+LABEL description="This text illustrates \ 
+###that label-values can span multiple lines."
+

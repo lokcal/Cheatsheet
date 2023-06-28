@@ -1,0 +1,51 @@
+# list UID
+sudo blkid
+
+# print block device properties
+sudo blkid /dev/sda
+
+# list partitions
+sudo fdisk -l
+
+# show used filesystem + more
+mount | grep "^/dev"
+
+# To mount / partition as read-write in repair mode:
+mount -o remount,rw /
+
+# Bind mount path to a second location
+mount --bind /origin/path /destination/path
+
+# mount ntfs
+sudo mount -t ntfs /dev/sda1 /mnt/usb
+
+# To mount Usb disk as user writable:
+mount -o uid=username,gid=usergroup /dev/sdx /mnt/xxx
+
+# mount Samba manual
+mount -t cifs //SERVER/sharename /mnt/mountpoint -o username=username,password=password,workgroup=workgroup,iocharset=utf8,uid=username,gid=group
+
+# mount samba in Fstab
+//SERVER/sharename /mnt/mountpoint cifs _netdev,username=myuser,password=mypass 0 0
+
+# To mount a remote NFS directory
+mount -t nfs example.com:/remote/example/dir /local/example/dir
+
+# To mount an ISO
+mount -o loop disk1.iso /mnt/disk
+
+# resize tmp
+sudo mount -o remount,size=10G,noatime /tmp
+
+# Mount a temporary filesystem (TMPFS) of 4GB to '/mnt'. The contents will
+# vanish when you reboot, but this can be very useful when working with things
+# like bootstrap tarballs or temporary storages for sensitive data.
+mount -t tmpfs -o mode=755,size=4096M tmpfs /mnt
+
+# create a empty big file and mount
+- Create file
+fallocate -l 3000M file.img
+- format file
+mkfs.reiserfs -f -q file.img
+- mount file
+sudo mount file.img /tmp

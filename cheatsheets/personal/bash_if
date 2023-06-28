@@ -1,0 +1,49 @@
+---
+syntax: bash
+tags: [ Bash, if]
+---
+# Bash If statement syntax
+if [ expression ];
+# ^ ^          ^      please note these spaces
+then
+    statement(s)
+fi
+
+# The syntax to include multiple conditions with AND operator is
+if [ expression ] && [ expression_2 ];
+then
+    statement(s)
+fi
+
+# The syntax to include multiple conditions with OR operator is
+if [ expression ] || [ expression_2 ];
+then
+statement(s)
+fi
+
+# For compound expressions, following if syntax is allowed. Please observe that the condition has double square brackets
+if [[ expression_1 && expression_2 || expression_3 ]];
+then
+    statement(s)
+fi
+
+# Check if Two Strings are Equal
+if [ "$VAR1" = "$VAR2" ]; then
+    echo "Strings are equal."
+else
+    echo "Strings are not equal."
+fi
+
+# this example, we will use the [[ command and == operator
+read -p "Enter first string: " VAR1
+read -p "Enter second string: " VAR2
+
+if [[ "$VAR1" == "$VAR2" ]]; then
+    echo "Strings are equal."
+else
+    echo "Strings are not equal."
+fi
+
+# You can also use the logical and && and or || to compare strings:
+
+[[ "string1" == "string2" ]] && echo "Equal" || echo "Not equal"

@@ -1,0 +1,130 @@
+# convert file jpg to png
+convert file.jpg file.png
+
+# convert multiple file with for loop
+for i in *.PNG
+do convert $i $(i%.png).webp
+  rm $i
+done
+
+# Add png to all files
+for file in *; do
+  mv "$file" "${file}.png"
+done
+
+
+# To resize an image to a fixed width and proportional height:
+convert original-image.jpg -resize 100x converted-image.jpg
+
+# To resize an image to a fixed height and proportional width:
+convert original-image.jpg -resize x100 converted-image.jpg
+
+# To resize an image to a fixed width and height:
+convert original-image.jpg -resize 100x100 converted-image.jpg
+
+# To resize an image and simultaneously change its file type:
+convert original-image.jpg -resize 100x converted-image.png
+
+# To resize all of the images within a directory:
+# To implement a for loop:
+for file in `ls original/image/path/`;
+    do new_path=${file%.*};
+    new_file=`basename $new_path`;
+    convert $file -resize 150 converted/image/path/$new_file.png;
+done
+
+# Resize an image to a fixed width and proportional height.
+convert original-image.jpg -resize 100x converted-image.jpg
+
+# Resize an image to a fixed height and proportional width.
+convert original-image.jpg -resize x100 converted-image.jpg
+
+# Resize an image to a fixed width and height.
+convert original-image.jpg -resize 100x100 converted-image.jpg
+
+# Resize an image and simultaneously change its file type.
+convert original-image.jpg -resize 100x converted-image.png
+
+# Resize all of the images within a directory, using a for loop.
+for file in original/image/path/*; do
+    convert "$file" -resize 150 converted/image/path/"$file"
+done
+
+# Make text annotation, which in this example is 'Flower'.
+convert flower.jpg -font courier -fill white -pointsize 20 -annotate +50+50 'Flower' flower_annotate1.jpg
+
+# Crop an image.
+convert flower.jpg -crop 128×128+50+50 flower_crop.jpg
+
+# Rotate an image.
+convert flower.jpg -rotate 45 flower_rotate45.jpg
+
+# Add a border around an image.
+convert -border 1x1 -bordercolor "#FFFFFF" image.png new-image.png
+
+# Convert PNG to JPEG, with 70% quality.
+convert -quality 70 image.png new_image.jpg
+
+# Merge images and PDFs
+convert 1.png 2.pdf merged.pdf
+
+# convert ships with imagemagick
+## horizontal
+convert +append image_1.png image_2.png merged
+
+## vertical
+convert -append image_1.png image_2.png merged // vertical
+
+# Apply vignette & grayscale effects to all JPGs in the CWD, using a for loop.
+for FILE in *.jpg; { convert -background black -colorspace gray -vignette 200x100 "$FILE" "$FILE"; }
+
+# Convert and combine multiple images to a single PDF.
+convert image1.png image2.jpg image3.bmp output.pdf
+
+# split input.pdf into output-1.pdf output-2.pdf ... output-8.pdf etc.
+pdfseparate -f 1 -l 8 input.pdf output-%d.pdf
+
+# convert ships with imagemagick
+convert -density 150 -quality 100 -flatten -sharpen 0x1.0 -trim input.pdf output.jpg
+# 3rd page of pdf
+convert input.pdf[2] output.jpg
+# convert all pages (2 means 2 digits will show on page count)
+convert input.pdf output-%02d.jpg
+
+# pdftoppm ships with poppler
+# output is a prefix
+# 150 is DPI
+pdftoppm -jpeg -r 150 input.pdf output
+
+# SVG → WEBP
+convert -background none -density 200 input.svg output.webp
+
+# SVG → PNG
+convert -background none -density 1000 -resize 48x is_logo_location.svg is_logo_location.png
+
+# PNG → GIF
+convert -delay 5 -loop 0 *.png output.gif
+
+# JPG → PDF
+convert 1.jpg 2.jpg merged.pdf
+
+# JPG → (A4 paper size) PDF
+convert -density 80 input.jpeg -background white \
+        -page a4  # -page Letter
+        output.pdf
+
+
+# MOV/MP4 → GIF
+# convert ships with imagemagick
+mkdir frames
+# mov or m4v
+# ffmpeg -i input.mov -vf scale=320:-1,format=rgb8,format=rgb24 -r 10 frames/ffout%3d.png
+ffmpeg -i input.mov -vf scale=320:-1 -r 10 frames/ffout%3d.png
+convert -delay 8 -loop 0 frames/ffout*.png frames/output.gif
+
+# Remove transparency
+mogrify -background white -flatten input*.png
+
+# Get information from image
+identify -format '"%w %h' foo.png
+

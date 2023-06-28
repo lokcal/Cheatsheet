@@ -1,0 +1,28 @@
+---
+syntax: bash
+tags: [ networking ]
+---
+# To ping <host> with 15 packets:
+ping -c 15 <host>
+
+# To ping <host> with 15 packets, one every .5 seconds:
+ping -c 15 -i .5 <host>
+
+# To test if a packet size of 1500 bytes is supported (to check the MTU for example):
+ping -s 1500 -c 10 -M do <host>
+
+# DoS Attack with Ping Flooding aka Ping of Death
+sudo ping -f www.google.com
+
+# Ping Broadcast of a LAN
+ping -b 192.168.0.0
+
+# Set Ping TTL Value
+ping -t 10 www.google.com
+
+# Set Ping Packet Size
+ping -s 1000 www.google.com
+
+# Set Ping Timeout
+ping -W 10 www.google.com
+

@@ -1,0 +1,62 @@
+## tr - translate or delete characters
+## Translate characters: run replacements based on single characters and character sets.
+
+# To replace : with a new line:
+echo $PATH | tr ":" "\n"
+echo $PATH | tr -t ":" \n 
+
+# To remove all occurance of "ab":
+echo aabbcc | tr -d "ab"         # ouput: cc
+
+# replace syntax
+echo "ostechnix" | tr "ost" "OST"    # Output: OSTechnix
+
+# To Remove every " in line
+tr -d \" \
+
+# To complement "aa":
+# ("Complement" means to keep "aa", and replace all others with "x")
+echo aabbccd | tr -c "aa" x       # output: aaxxxxx (no newline)
+
+# To complement "ab\n":
+echo aabbccd | tr -c "ab\n" x    #output: aabbxxx (with newline)
+
+# To preserve all alpha(-c). ":-[:digit:] etc" will be translated to "\n". sequeeze mode:
+echo $PATH | tr -cs "[:alpha:]" "\n" 
+
+# To convert an ordered list to an unordered list:
+echo "1. /usr/bin\n2. /bin" | tr -cs " /[:alpha:]\n" "+"
+
+# change all lowercase a to uppercase A
+echo " This is a line of text" | tr 'a' 'A'
+
+#  delete all aeio characters
+echo " This is a line of text" | tr -d 'aeio'
+
+----------------
+# Replace all occurrences of a character in a file, and print the result:
+tr find_character replace_character < filename
+
+# Replace all occurrences of a character from another command's output:
+echo text | tr find_character replace_character
+
+# Map each character of the first set to the corresponding character of the second set:
+tr 'abcd' 'jkmn' < filename
+
+# Delete all occurrences of the specified set of characters from the input:
+tr -d 'input_characters' < filename
+
+# Compress a series of identical characters to a single character:
+tr -s 'input_characters' < filename
+
+# Translate the contents of a file to upper-case:
+tr "[:lower:]" "[:upper:]" < filename
+
+# Strip out non-printable characters from a file:
+tr -cd "[:print:]" < filename
+
+# Character sets and special characters
+echo "Ubuntu 20.04 #$%^" | tr "[:punct:]" "."  #Output Ubuntu 20.04 ...
+
+# remove both space and tabs (horizontal whitespaces) from imported file
+ tr -d "[:blank:]" < tr_test.txt

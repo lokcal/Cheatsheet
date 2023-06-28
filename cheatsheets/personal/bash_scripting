@@ -1,0 +1,15 @@
+
+# -z
+-z string True if the string is null (an empty string)
+
+# $   (https://bash.cyberciti.biz/guide/$1)
+$1 is the first command-line argument passed to the shell script. Also, know as Positional parameters. For example, $0, $1, $3, $4 and so on. If you run ./script.sh filename1 dir1, then:
+  - $0 is the name of the script itself (script.sh)
+  - $1 is the first argument (filename1)
+  - $2 is the second argument (dir1)
+  - $9 is the ninth argument
+  - ${10} is the tenth argument and must be enclosed in brackets after $9.
+  - ${11} is the eleventh argument.
+
+# $@
+https://linuxhint.com/dollar-at-in-bash-script/

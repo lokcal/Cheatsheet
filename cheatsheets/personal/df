@@ -1,0 +1,27 @@
+# Printout disk free space in a human readable format
+df -h
+
+# Display Information of File System in MB
+df -m
+
+# Display Information of all File System Disk Space Usage
+df -a
+
+# Display File System Type
+df -T
+
+# Include Certain File System Type
+df -t ext3
+
+# Exclude Certain File System Type
+df -x ext3
+
+# Display File System Inodes
+df -i
+
+# Display Information of /home File System
+df -hT /home
+
+# Fetch a grand total of disk usage.
+df --total
+

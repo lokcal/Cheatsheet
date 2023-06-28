@@ -1,0 +1,290 @@
+---
+syntax: bash
+tags: [ grep, search ]
+---
+explanation: grep, egrep, fgrep - print lines that match patterns
+
+# Search a file for a pattern
+grep pattern file
+
+# Search pattern in every file 
+grep pattern /path/*
+
+# Search pattern in every file exculde dir
+grep pattern /path/* --exculde-dir{home,/etc}
+
+# Search two file for a pattern (shows file name too)
+grep pattern file1 file2
+
+# search only for the pattern (ignore-case sensitive)
+grep -i pattern
+
+# Search and show line number
+grep -n pattern
+
+# search explicit only for the pattern the
+grep -w the /path/file
+
+# Find lines NOT containing pattern
+grep -v pattern file
+
+# Recursively grep for string <pattern> in every file in the folder:
+grep -R pattern folder
+
+# Read search patterns from a file (one per line)
+grep -f pattern_file file
+# Find process sleep and disable select non-matching lines (exclude grep line output)
+ps aux | grep sleep | grep -v grep
+
+# Shows how many lines has the pattern (number)
+grep -c pattern file
+
+# Shows the pattern and file with linenumber
+grep -Hn pattern file
+
+# search for any lines that contains aioue (Regex)
+grep [aioue] /path/file
+
+# search for any lines that contains the range a-z (Regex)
+grep [a-z] /path/file
+
+# search for any lines that begins with im  (Regex)
+grep ^im /path/file
+
+# Search mutliple word
+grep 'word1\|word2\|word3' /path/to/file
+
+# Search all text files
+grep 'word*' *.txt
+
+# Grep string starting with (e.g. 'S')
+grep -o 'S.*'
+
+# Search text and display only the word (-i case insensitive)
+grep -i text file -wo
+
+# Search text and display the count of the word
+grep -i text file -wo | wc -l
+
+# Search for pattern in the output command
+command | grep pattern
+
+# Search for the first match
+grep -m 1 'word'
+
+# grep only third match
+grep -m2 "two" in-file.txt | tail -n1
+
+# Search for pattern and output and trail 2 lines after pattern
+grep -A 2 'word'
+
+# Search for pattern and output and trail 2 lines before
+grep -B 2 'word'
+
+# Search for pattern and output and trail 2 lines before and after
+grep -C 2 'word'
+
+# Search for mp3 file with name Jayz
+find . –name “*.mp3” | grep –i JayZ
+
+# Search for files with config
+find | grep .conf$
+
+# You can grep with regular expressions
+grep "^00" file  #Match lines starting with 00
+grep -E "[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}" file  #Find IP add
+
+# Find all files which match {pattern} in {directory}
+# This will show: "file:line my research"
+grep -rnw 'directory' -e "pattern"
+
+# Exclude grep from your grepped output of ps.
+# Add [] to the first letter. Ex: sshd -> [s]shd
+ps aux | grep '[h]ttpd'
+
+# Colour in red {bash} and keep all other lines
+ps aux | grep -E --color 'bash|$'
+
+# Grep only IP address
+ip -a | grep -Eo '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}'
+
+
+
+
+
+
+
+#  ╭──────╮
+#  │ EDIT │
+#  ╰──────╯
+
+
+
+
+#####  Grep and count number of empty lines
+```bash
+grep -c "^$"
+```
+
+#####  Grep and return only integer
+```bash
+grep -o '[0-9]*'
+#or
+grep -oP '\d*'
+```
+#####  Grep integer with certain number of digits (e.g. 3)
+```bash
+grep '[0-9]\{3\}'
+# or
+grep -E '[0-9]{3}'
+# or
+grep -P '\d{3}'
+```
+
+#####  Grep only IP address
+```bash
+grep -Eo '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}'
+# or
+grep -Po '\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}'
+```
+
+#####  Grep whole word (e.g. 'target')
+```bash
+grep -w 'target'
+
+#or using RE
+grep '\btarget\b'
+```
+#####  Grep returning lines before and after match (e.g. 'bbo')
+```bash
+# return also 3 lines after match
+grep -A 3 'bbo'
+
+# return also 3 lines before match
+grep -B 3 'bbo'
+
+# return also 3 lines before and after match
+grep -C 3 'bbo'
+```
+
+#####  Grep string starting with (e.g. 'S')
+```bash
+grep -o 'S.*'
+```
+
+##### Extract text between words (e.g. w1,w2)
+```bash
+grep -o -P '(?<=w1).*(?=w2)'
+```
+
+##### Grep lines without word (e.g. 'bbo')
+```bash
+grep -v bbo filename
+```
+
+##### Grep lines not begin with string (e.g. #)
+```bash
+grep -v '^#' file.txt
+```
+
+##### Grep variables with space within it (e.g. myvar="some strings")
+```bash
+grep "$myvar" filename
+#remember to quote the variable!
+```
+
+##### Grep only one/first match (e.g. 'bbo')
+```bash
+grep -m 1 bbo filename
+```
+
+##### Grep and return number of matching line(e.g. 'bbo')
+```bash
+grep -c bbo filename
+```
+
+##### Count occurrence (e.g. three times a line count three times)
+```bash
+grep -o bbo filename |wc -l
+```
+
+##### Case insensitive grep (e.g. 'bbo'/'BBO'/'Bbo')
+```bash
+grep -i "bbo" filename
+```
+
+##### COLOR the match (e.g. 'bbo')!
+```bash
+grep --color bbo filename
+```
+
+##### Grep search all files in a directory(e.g. 'bbo')
+```bash
+grep -R bbo /path/to/directory
+# or
+grep -r bbo /path/to/directory
+```
+
+##### Search all files in directory, do not ouput the filenames (e.g. 'bbo')
+```bash
+grep -rh bbo /path/to/directory
+```
+
+##### Search all files in directory, output ONLY the filenames with matches(e.g. 'bbo')
+```bash
+grep -rl bbo /path/to/directory
+```
+
+##### Grep OR (e.g. A or B or C or D)
+```
+grep 'A\|B\|C\|D'
+```
+
+##### Grep AND (e.g. A and B)
+```bash
+grep 'A.*B'
+```
+
+##### Regex any single character (e.g. ACB or AEB)
+```bash
+grep 'A.B'
+```
+
+##### Regex with or without a certain character (e.g. color or colour)
+```bash
+grep 'colou\?r'
+```
+
+##### Grep all content of a fileA from fileB
+```bash
+grep -f fileA fileB
+```
+
+##### Grep a tab
+```bash
+grep $'\t'
+```
+
+##### Grep variable from variable
+```bash
+$echo "$long_str"|grep -q "$short_str"
+if [ $? -eq 0 ]; then echo 'found'; fi
+#grep -q will output 0 if match found
+#remember to add space between []!
+```
+
+##### Grep strings between a bracket()
+```bash
+grep -oP '\(\K[^\)]+'
+```
+
+##### Grep number of characters with known strings in between(e.g. AAEL000001-RA)
+```bash
+grep -o -w "\w\{10\}\-R\w\{1\}"
+# \w word character [0-9a-zA-Z_] \W not word character
+```
+
+##### Skip directory (e.g. 'bbo')
+```bash
+grep -d skip 'bbo' /path/to/files/*
+```

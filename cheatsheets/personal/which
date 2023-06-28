@@ -1,0 +1,2 @@
+# if application have alias use type insteat of which
+type -P mpv

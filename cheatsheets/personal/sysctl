@@ -1,0 +1,32 @@
+# List all kernel keys (parameters) and their values.
+sysctl [--all|-a]
+# As above, but show only specified keys and their values.
+sysctl [KEY_1 [KEY_2] ...]
+
+# As above, but instead output only the values.
+sysctl [--values|-n] [KEY_1 [KEY_2] ...]
+# Not nearly as useful, but alternatively, output only the key names.
+sysctl [--names|-N] [KEY_1 [KEY_2] ...]
+
+# Assign one or more kernel keys a new value; usually requires root access.
+sysctl [KEY_1=VALUE_1 [KEY_2=VALUE_2] ...]
+
+ tldr:sysctl
+# sysctl
+# List and change kernel runtime variables.
+# More information: <https://manned.org/sysctl.8>.
+
+# Show all available variables and their values:
+sysctl -a
+
+# Set a changeable kernel state variable:
+sysctl -w section.tunable=value
+
+# Get currently open file handlers:
+sysctl fs.file-nr
+
+# Get limit for simultaneous open files:
+sysctl fs.file-max
+
+# Apply changes from `/etc/sysctl.conf`:
+sysctl -p

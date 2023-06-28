@@ -1,0 +1,70 @@
+###### Basic #######
+
+# Holds a Random number
+$RADNOM
+
+# Outputs a Random number
+echo $Random
+
+# Outputs a Random number between 0-100 (RANDOM % 100 would never output 100 thats why +1)
+echo $((RANDOM % 100 +1))
+
+# Random number 0..199
+$(($RANDOM%200))  
+
+# Random number 1..99
+$((1 + RANDOM%99))
+
+# Special variables
+$?	# Exit status of last task
+$!	# PID of last background task
+$$	# PID of shell
+$0	# Filename of the shell script
+
+# show stat with seatching for bin in variable
+stat "$(which lvim)"
+
+# Get the length of variable
+var="some string"
+echo ${#var}
+# 11
+
+# Get the first character of the variable
+var=string
+echo "${var:0:1}"
+#s
+
+# or
+echo ${var%%"${var#?}"}
+
+# Remove the first or last string from variable
+var="some string"
+echo ${var:2}
+#me string
+
+# Replacement (e.g. remove the first leading 0 )
+var="0050"
+echo ${var[@]#0}
+#050
+
+# Replacement (e.g. replace 'a' with ',')
+{var/a/,}
+
+# Replace all (e.g. replace all 'a' with ',')
+{var//a/,}
+
+# Grep lines with strings from a file (e.g. lines with 'stringA or 'stringB' or 'stringC')
+#with grep
+test="stringA stringB stringC"
+grep ${test// /\\\|} file.txt
+# turning the space into 'or' (\|) in grep
+
+# To change the case of the string stored in the variable to lowercase (Parameter Expansion)
+var=HelloWorld
+echo ${var,,}
+helloworld
+
+# Expand and then execute variable/argument
+cmd="bar=foo"
+eval "$cmd"
+echo "$bar" # foo

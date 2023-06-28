@@ -1,0 +1,9 @@
+#  show from whrere the option is loaded
+ nvim -V1 --headless -c "verbose set splitbelow? | q"
+
+# sort specific line
+select lines Shift + v
+:'<,'>!sort
+
+# Format json file in n/vim
+:%!jq .

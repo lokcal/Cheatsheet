@@ -1,0 +1,11 @@
+# Split a file based on pattern
+csplit input.file '/PATTERN/'
+
+# Use prefix/suffix to improve resulting file names
+csplit -f 'prefix-' -b '%d.extension' input.file '/PATTERN/' '{*}'
+
+# split after 5 lines ((*) repeat every 5 line) ( only if it is divisible in 5 file)
+cplist test.sh 5 '{*}'
+
+# split eveyline where function got found
+csplit .test.sh '/funct ion/' '{*}'

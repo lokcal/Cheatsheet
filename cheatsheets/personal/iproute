@@ -1,0 +1,38 @@
+---
+syntax: bash
+tags: [ ip route, networking ]
+---
+# List available routes
+ip route list
+ip route
+
+# Display the route an address will take
+ip route get 192.168.168.10
+
+# Display all routes for IPv4
+ip -4 route
+
+# Display all routes for IPv6
+ip -6 route
+
+# Add default route to routing table
+ip route add default via 192.168.0.1 dev {interface}
+ip route add default via 192.168.0.0/24 dev {interface}
+
+# Delete default route from routing table
+ip route delete default dev {interface}
+ip route delete default via 10.0.2.2
+
+# Delete additional route from routing table
+ip route delete 192.168.168.0/24 via 192.168.0.1
+
+# Add additional route to the routing table
+ip route add 192.168.168.0/24 via 192.168.0.1 dev {interface}
+
+# Replace existing routes from routing table
+ip route replace 192.168.168.0/24 via 10.0.2.2 dev {interface}
+
+# If you need to add a static route client-side, add it to /etc/dhcpcd.exit-hook. 
+The example shows a new hook-script which adds a static route to a VPN subnet on 10.11.12.0/24 via a gateway machine at 192.168.192.5:
+/etc/dhcpcd.exit-hook
+ip route add 10.11.12.0/24 via 192.168.192.5

@@ -1,0 +1,113 @@
+# ufw
+# Uncomplicated Firewall.
+# Frontend for iptables aiming to make configuration of a firewall easier.
+
+# Enable ufw:
+ufw enable
+
+# Disable ufw:
+ufw disable
+
+# Reset ufw
+ufw reset
+
+# Show ufw rules, along with their numbers:
+ufw status numbered
+
+# Limit SSH Connections (
+ufw limit ssh
+
+# Limit SSH with comment
+ufw limit 22/tcp comment 'SSH port rate limit'
+
+######################################
+############## Block #################
+######################################
+
+# To allow all incoming SSH connections (application)
+sudo ufw allow ssh  alternativ: sudo ufw allow 22
+
+# Allow Incoming SSH from Specific IP Address or Subnet
+# To allow incoming SSH connections from a specific IP address or subnet, specify the source. 
+# For example, if you want to allow the entire 15.15.15.0/24 subnet, run this command:
+ufw allow from 15.15.15.0/24 to any port 22
+
+# Allow incoming SSH TCP from IP to IP port 22
+ufw allow proto tcp from 15.15.15.50 to 123.456.78.90 port 22 
+
+# Allow incoming traffic on port 5432 on this host with a comment identifying the service:
+ufw allow 5432 comment "Service"
+
+# Allow only TCP traffic from 192.168.0.4 to any address on this host, on port 22:
+ufw allow proto tcp from 192.168.0.4 to any port 22
+
+# Allow Incoming Rsync from Specific IP Address or Subnet
+ufw allow from 15.15.15.0/24 to any port 873
+
+# Allow All Incoming HTTP and HTTPS
+ufw allow proto tcp from any to any port 80,443
+
+# Allow MySQL to Specific Network Interface
+ufw allow in on eth1 to any port 3306
+
+# Allow Specific Port Ranges
+ufw allow 6000:6007/tcp
+ufw allow 6000:6007/udp
+
+######################################
+############## Block #################
+######################################
+
+# Deny traffic on port 80 on this host:
+ufw deny 80
+
+# Block an IP Address
+ufw deny from 15.15.15.51
+
+# Block Connections to a Network Interface
+# To block connections from a specific IP address, e.g. 15.15.15.51, to a specific network interface, 
+# e.g. eth0, use this command:
+ufw deny in on eth0 from 15.15.15.51
+
+# Deny all UDP traffic to port 22:
+ufw deny proto udp from any to any port 22
+
+# Reject SSH Connections on Port 22
+ufw reject 22
+
+
+######################################
+######## Applications-Filter #########
+######################################
+
+# Overview of the applicationslist
+ufw app list 
+
+# Details over the aplication
+# ufw app info <application>
+
+# Allow Transmission 
+ufw allow Transmission
+
+######################################
+############# Logging ################
+######################################
+
+# Activate logging
+ufw logging on 
+
+# Set logging level; medium,high,full
+ufw logging <Level>
+
+# Disable logging
+ufw logging off
+
+######################################
+############# Delete #################
+######################################
+
+# Delete a particular rule. The rule number can be retrieved from the `ufw status numbered` command:
+ufw delete rule_number
+
+# Remove allow http rule
+ufw delete allow http  alternativ: ufw delete allow 80

@@ -1,0 +1,14 @@
+# resize2fs
+ #ext2/ext3/ext4 file system resizer
+
+# resize filesystem up to the block device size
+# make e2fsck /dev/xvdb1 before
+# filesystem must be not mounted for ext2
+resize2fs /dev/xvdb1
+
+# Resize the filesystem to a size of 40G, displaying a progress bar:
+resize2fs -p /dev/sdXN 40G
+
+# shrink filesystem (20G is new size)
+resize2fs /dev/xvdb1 20G
+

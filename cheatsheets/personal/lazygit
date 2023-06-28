@@ -1,0 +1,216 @@
+Global Keybindings
+  pgup: scroll up main panel (fn+up)
+  pgdown: scroll down main panel (fn+down)
+  m: view merge/rebase options
+  ctrl+p: view custom patch options
+  P: push
+  p: pull
+  R: refresh
+  x: open menu
+  z: undo (via reflog) (experimental)
+  ctrl+z: redo (via reflog) (experimental)
+  +: next screen mode (normal/half/fullscreen)
+  _: prev screen mode
+  :: execute custom command
+  |: view filter-by-path options
+  W: open diff menu
+  ctrl+e: open diff menu
+
+List Panel Navigation
+  .: next page
+  ,: previous page
+  <: scroll to top
+  >: scroll to bottom
+  /: start search
+  ]: next tab
+  [: previous tab
+
+Branches Panel (Branches Tab)
+  space: checkout
+  o: create pull request
+  ctrl+y: copy pull request URL to clipboard
+  c: checkout by name
+  F: force checkout
+  n: new branch
+  d: delete branch
+  r: rebase checked-out branch onto this branch
+  M: merge into currently checked out branch
+  i: show git-flow options
+  f: fast-forward this branch from its upstream
+  g: view reset options
+  R: rename branch
+  ctrl+o: copy branch name to clipboard
+  enter: view commits
+
+Branches Panel (Remote Branches (in Remotes tab))
+  esc: Return to remotes list
+  g: view reset options
+  enter: view commits
+  space: checkout
+  n: new branch
+  M: merge into currently checked out branch
+  d: delete branch
+  r: rebase checked-out branch onto this branch
+  u: set as upstream of checked-out branch
+
+Branches Panel (Remotes Tab)
+  f: fetch remote
+  n: add new remote
+  d: remove remote
+  e: edit remote
+
+Branches Panel (Sub-commits)
+  enter: view commit's files
+  space: checkout commit
+  g: view reset options
+  n: new branch
+  c: copy commit (cherry-pick)
+  C: copy commit range (cherry-pick)
+  ctrl+r: reset cherry-picked (copied) commits selection
+  ctrl+o: copy commit SHA to clipboard
+
+Branches Panel (Tags Tab)
+  space: checkout
+  d: delete tag
+  P: push tag
+  n: create tag
+  g: view reset options
+  enter: view commits
+
+Commit Files Panel
+  ctrl+o: copy the committed file name to the clipboard
+  c: checkout file
+  d: discard this commit's changes to this file
+  o: open file
+  e: edit file
+  space: toggle file included in patch
+  enter: enter file to add selected lines to the patch (or toggle directory collapsed)
+  `: toggle file tree view
+
+Commits Panel (Commits)
+  s: squash down
+  r: reword commit
+  R: rename commit with editor
+  g: reset to this commit
+  f: fixup commit
+  F: create fixup commit for this commit
+  S: squash above commits
+  d: delete commit
+  ctrl+j: move commit down one
+  ctrl+k: move commit up one
+  e: edit commit
+  A: amend commit with staged changes
+  p: pick commit (when mid-rebase)
+  t: revert commit
+  c: copy commit (cherry-pick)
+  ctrl+o: copy commit SHA to clipboard
+  C: copy commit range (cherry-pick)
+  v: paste commits (cherry-pick)
+  enter: view commit's files
+  space: checkout commit
+  n: create new branch off of commit
+  T: tag commit
+  ctrl+r: reset cherry-picked (copied) commits selection
+  ctrl+y: copy commit message to clipboard
+
+Commits Panel (Reflog Tab)
+  enter: view commit's files
+  space: checkout commit
+  g: view reset options
+  c: copy commit (cherry-pick)
+  C: copy commit range (cherry-pick)
+  ctrl+r: reset cherry-picked (copied) commits selection
+  ctrl+o: copy commit SHA to clipboard
+
+Files Panel (Files)
+  c: commit changes
+  w: commit changes without pre-commit hook
+  A: amend last commit
+  C: commit changes using git editor
+  space: toggle staged
+  d: view 'discard changes' options
+  e: edit file
+  o: open file
+  i: add to .gitignore
+  r: refresh files
+  s: stash changes
+  S: view stash options
+  a: stage/unstage all
+  D: view reset options
+  enter: stage individual hunks/lines for file, or collapse/expand for directory
+  f: fetch
+  ctrl+o: copy the file name to the clipboard
+  g: view upstream reset options
+  `: toggle file tree view
+
+Files Panel (Submodules)
+  ctrl+o: copy submodule name to clipboard
+  enter: enter submodule
+  d: view reset and remove submodule options
+  u: update submodule
+  n: add new submodule
+  e: update submodule URL
+  i: initialize submodule
+  b: view bulk submodule options
+
+Main Panel (Merging)
+  esc: return to files panel
+  space: pick hunk
+  b: pick both hunks
+  ◄: select previous conflict
+  ►: select next conflict
+  ▲: select top hunk
+  ▼: select bottom hunk
+  z: undo
+
+Main Panel (Normal)
+  Ő: scroll down (fn+up)
+  ő: scroll up (fn+down)
+
+Main Panel (Patch Building)
+  esc: exit line-by-line mode
+  o: open file
+  ▲: select previous line
+  ▼: select next line
+  ◄: select previous hunk
+  ►: select next hunk
+  space: add/remove line(s) to patch
+  v: toggle drag select
+  V: toggle drag select
+  a: toggle select hunk
+
+Main Panel (Staging)
+  esc: return to files panel
+  space: toggle line staged / unstaged
+  d: delete change (git reset)
+  tab: switch to other panel
+  o: open file
+  ▲: select previous line
+  ▼: select next line
+  ◄: select previous hunk
+  ►: select next hunk
+  e: edit file
+  o: open file
+  v: toggle drag select
+  V: toggle drag select
+  a: toggle select hunk
+  c: commit changes
+  w: commit changes without pre-commit hook
+  C: commit changes using git editor
+
+Menu Panel
+  esc: close menu
+
+Stash Panel
+  enter: view stash entry's files
+  space: apply
+  g: pop
+  d: drop
+  n: new branch
+
+Status Panel
+  e: edit config file
+  o: open config file
+  u: check for update
+  enter: switch to a recent repo
+  a: show all branch logsM

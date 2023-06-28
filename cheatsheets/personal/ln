@@ -1,0 +1,11 @@
+# To create a symlink:
+ln -s <source-location> <symlink-location>
+
+# To symlink, while overwriting existing destination files
+ln -sf <source-location> <symlink-location>
+
+# Create a hard link to a file:
+ln /path/to/file path/to/hardlink
+
+# Remove symlink
+rm /file

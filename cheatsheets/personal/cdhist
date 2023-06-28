@@ -1,0 +1,16 @@
+---
+tags: [cd, cdhist]
+---
+
+List the current stack and its indices (without prompting):
+$ cd -l
+
+Change dir to stack index "n":
+$ cd -n
+
+Search back through stack for "string" and cd there:
+Note, you can also type /string (or just string) at the cd -- prompt to search.
+$ cd -/string
+
+Show this help:
+$ cd -h|?

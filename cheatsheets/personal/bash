@@ -1,0 +1,103 @@
+---
+syntax: bash
+tags: [ Bash ]
+---
+
+########### Generate numbers
+
+# Generate number 4-100 with seq
+seq 4 100
+
+## Bash For Loop 1 to 100 Numbers
+#!/bin/bash
+# Tested using bash version 4.1.5
+for ((i=1;i<=100;i++));
+do
+   # your-unix-command-here
+   echo $i
+done
+
+## zsh For Loop 1 to 100 Numbers
+#!/bin/ksh
+# Tested with zsh
+for i in {1..100}
+do
+ # your-unix-command-here
+ echo $i
+done
+# We can use while loop too:
+
+#!/bin/zsh
+i=1
+while [[ $i -lt 1000 ]] ; do
+   # your unix command here #
+   echo "$i"
+  (( i += 1 ))
+done
+#---------------------------------#
+
+# reanem file names (remove zeros from filename)
+for i in {1..9} ; do  mv "E0${i}.mp4" "E${i}.mp4"; done
+
+## Displaying Animations to Indicate Long-Running Tasks
+#!/bin/bash
+while true;
+do
+    # Frame #1
+    printf "\r< Loading..."
+    sleep 0.5
+    # Frame #2
+    printf "\r> Loading..."
+    sleep 0.5
+done
+
+# We can add more frames to the animation
+#!/bin/bash
+sleep 5 &
+pid=$!
+frames="/ | \\ -"
+while kill -0 $pid 2&>1 > /dev/null;
+do
+    for frame in $frames;
+    do
+        printf "\r$frame Loading..."
+        sleep 0.5
+    done
+done
+printf "\n"
+
+
+# Displaying Native GUI Notifications from Bash
+#!/bin/bash
+sleep 10
+notify-send "notify.sh" "Task #1 was completed successfully"
+
+
+# Modernizing the Terminal Output with Text Styles
+#!/bin/bash
+bold=$(tput bold)
+underline=$(tput smul)
+italic=$(tput sitm)
+info=$(tput setaf 2)
+error=$(tput setaf 160)
+warn=$(tput setaf 214)
+reset=$(tput sgr0)
+echo "${info}INFO${reset}: This is an ${bold}info${reset} message"
+echo "${error}ERROR${reset}: This is an ${underline}error${reset} message"
+echo "${warn}WARN${reset}: This is a ${italic}warning${reset} message"
+
+# for loop with sleep and tui loading
+for ((i = 0 ; i <= 100 ; i+=5)); do
+        sleep 0.1
+        echo $i
+    done | whiptail --gauge "Please wait while we are sleeping..." 6 50 0
+
+# Parameters
+$0   :name of shell or shell script.
+$1, $2, $3, ... :positional parameters.
+$#   :number of positional parameters.
+$?   :most recent foreground pipeline exit status.
+$-   :current options set for the shell.
+$$   :pid of the current shell (not subshell).
+$!   :is the PID of the most recent background command.
+$_   :last argument of the previously executed command, or the path of the bash script

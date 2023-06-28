@@ -1,0 +1,30 @@
+---
+syntax: bash
+tags: [ ssh, sshfs ]
+---
+#################################################
+| sshfs [user@]host:[dir] mountpoint [options]  |
+#################################################
+
+# Mount folder/filesystem through SSH
+# Install SSHFS from https://github.com/libfuse/sshfs
+# Will allow you to mount a folder securely over a network.
+sshfs name@server:/path/to/folder /path/to/mount/point
+
+# Create the mountpoint
+mkdir ~/folder
+
+# owning the folder
+sudo chown user:group /folder
+
+# Invoke SSHFS with your SSH credentials and the remote location to mount
+sshfs user@host:/home/user/Pictures ~/folder
+
+# mounting filesystem
+sshfs myuser@mycomputer:/remote/path /local/path -C -p 9876
+
+# Use "-o reconect" to allow the client to reconnect
+sshfs chris@zaphod:/home/chris/Pictures ~/mnt -o reconnect
+
+# unmounting sshfs filesystem
+fusermount3 -u mountpoint

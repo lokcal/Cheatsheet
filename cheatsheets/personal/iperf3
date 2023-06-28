@@ -1,0 +1,30 @@
+# iperf3
+# Traffic generator for testing network bandwidth.
+# More information: <https://iperf.fr>.
+
+# Run iperf3 as a server:
+iperf3 -s
+
+# Run an iperf3 server on a specific port:
+iperf3 -s -p port
+
+# Start bandwidth test:
+iperf3 -c server
+
+# specify the format with -f (k, m, g for Kbits, Mbits, Gbits or K, M, G for KBytes, Mbytes, Gbytes)
+iperf3 -s -f K
+
+# Run iperf3 in multiple parallel streams:
+iperf3 -c server -P streams
+
+# You can set the window size/socket buffer size using the -w flag as shown.
+iperf3 -c 192.168.10.1 -f K -w 500K
+
+# Reverse direction of the test. Server sends data to the client:
+iperf3 -c server -R
+
+# run iperf3 in client mode using -c flag and specify the host on which the server is running (either using its IP address or domain or hostname).
+iperf3 -c 192.168.10.1 -f K
+
+# you can run the server as a daemon, using the -D flag and write server messages to a log file, as follows.
+$ iperf3 -s -D > iperf3log

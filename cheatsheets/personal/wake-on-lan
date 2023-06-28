@@ -1,0 +1,26 @@
+---
+syntax: bash
+tags: [networking,wol, wake on lan] 
+---
+
+# Send wol package
+debian: wakeonlan <mac>
+redhat: wol <mac>
+centos: wol <mac>
+fedora: wol <mac>
+
+# check if Intraface has Wake-on-LAN on
+ethtool interface | grep Wake-on
+
+
+# Enable wol
+# The Wake-on values define what activity triggers wake up: d (disabled), p (PHY activity), u (unicast activity), m (multicast activity), b (broadcast activity), 
+# a (ARP activity), and g (magic packet activity). The value g is required for WoL to work, if not, the following command enables the WoL feature in the driver:
+ethtool -s interface wol g
+
+# Make wol persistance (https://wiki.archlinux.org/title/Wake-on-LAN)
+# If using netctl, one can make this setting persistent by adding the following the netctl profile:
+##/etc/netctl/profile
+ExecUpPost='/usr/bin/ethtool -s interface wol g'
+
+

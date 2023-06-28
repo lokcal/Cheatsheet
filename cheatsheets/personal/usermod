@@ -1,0 +1,32 @@
+########­##### Basic ##################
+
+# Change home dir of User
+usermod -d /my/new/home -m USERNAME
+
+# Change username of User
+usermod -l newname oldname
+
+# add user to other groups
+usermod -aG additional_groups USERNAME
+
+# To assign a new UID to user called foo - for gid see groupmod
+usermod -u <newid> foo
+
+# Lock Userpassword (lock account)
+usermod -L USERNAME
+
+# Lock Useraccount
+passwd -l USER
+
+# Unlock Userpassword (unlock account)
+usermod -U USERNAME
+
+# change Shell of user
+usermod -s /bin/bash <username>
+
+# Add new file to new Standard users in /etc/skel
+touch /etc/skel/"file"
+
+# Limit user in /etc/security/limits.conf
+edit /etc/securetty/limits.conf
+#######################################

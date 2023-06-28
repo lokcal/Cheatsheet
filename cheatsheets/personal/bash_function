@@ -1,0 +1,112 @@
+
+
+# function
+function_name () {
+  commands
+}
+
+# function Single line version:
+function_name () { commands; }
+
+# The second format starts with the reserved word function, followed by the function name.
+function function_name {
+  commands
+}
+
+# Single line version:
+function function_name { commands; }
+
+------------------------------
+# Hello world example
+#!/bin/bash
+
+hello_world () {
+   echo 'hello, world'
+}
+
+hello_world
+------------------------------
+# variables_scope.sh example
+#!/bin/bash
+
+var1='A'
+var2='B'
+
+my_function () {
+  local var1='C'
+  var2='D'
+  echo "Inside function: var1: $var1, var2: $var2"
+}
+
+echo "Before executing function: var1: $var1, var2: $var2"
+
+my_function
+
+echo "After executing function: var1: $var1, var2: $var2"
+
+
+# output
+
+Before executing function: var1: A, var2: B
+Inside function: var1: C, var2: D
+After executing function: var1: A, var2: D
+
+-------------------------------
+# Example Return values
+#!/bin/bash
+
+my_function () {
+  echo "some result"
+  return 55
+}
+
+my_function
+echo $?
+
+# output
+
+some result
+55
+--------------------------------
+# Example 2 Return values
+#!/bin/bash
+
+my_function () {
+  func_result="some result"
+}
+
+my_function
+echo $func_result
+
+# output
+
+some result
+-------------------------------
+# Example 3 Return values
+#!/bin/bash
+
+my_function () {
+  local func_result="some result"
+  echo "$func_result"
+}
+
+func_result="$(my_function)"
+echo $func_result
+
+# output
+
+some result
+-----------------------------
+# Example ~/passing_arguments.sh
+#!/bin/bash
+
+greeting () {
+  echo "Hello $1"
+}
+
+greeting "Joe"
+
+# output
+
+Hallo Joe
+----------------------------

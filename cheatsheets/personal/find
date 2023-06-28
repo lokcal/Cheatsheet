@@ -1,0 +1,182 @@
+---
+syntax: bash
+tags: [find,serch]
+---
+file types
+f: a regular file
+d: directory
+l: symbolic link
+c: character devices
+b: block devices
+p: named pipe (FIFO)
+s: socket
+exec: executes binary
+{}: subsitutes with filename
+
+### find . -exec grep chrome {} \; ####
+# find will execute grep and will substitute {} with the filename(s) found.
+# The difference between ; and + is that with ; a single grep command for each file is executed
+# whereas with + as many files as possible are given as parameters to grep at once.
+
+##################### Basic #################################################
+
+# Find all the files whose name is tecmint.txt in a current working directory.
+find . -name tecmint.txt
+
+find . | grep <pattern>
+
+# Find all the files under /home directory with name tecmint.txt.
+find /home -name tecmint.txt
+
+# Find all the files whose name is tecmint.txt and contains both capital and small letters in /home directory.
+find /home -iname tecmint.txt
+
+# To find files by case-insensitive extension (ex: .jpg, .JPG, .jpG):
+find . -iname "*.jpg"
+
+# To find directories
+find . -type d
+
+# Find all directories whose name is Tecmint in / directory
+find / -type d -name Tecmint
+
+# find file with fzf
+find * -type f | fzf > selected
+
+# To find files:
+find . -type f
+
+# Find all php files whose name is tecmint.php in a current working directory (Only Files not Directory)
+find . -type f -name tecmint.php
+
+# Find all files Directory with jpg endingjpg in /home (Files and Directory)
+find /home -name '*.jpg'
+
+# Find all files and Directory with jpg ending in /home and list all (Files and Directory)
+find /home -name '*.jpg' -ls
+
+# To search for directories named build at a max depth of 2 directories
+find . -maxdepth 2 -name build -type d
+
+# To find symlinks owned by a user and list file information
+find . -type l --user=username -ls
+
+# To filter for file (search for mama file without archiv name in it)
+find . ! -iname "*archive*" -iname "*mama*"
+
+####################### User & Groups #########################################
+
+# To find all files that belongs to user Tecmint under /home directory.
+find /home -user tecmint
+
+# To find all .txt files of user Tecmint under /home directory
+find /home -user tecmint -iname "*.txt"
+
+# To find all files that belongs to group Developer under /home directory.
+find /home -group developer
+
+
+ ####################### Premission #########################################
+
+# To find files by octal permission:
+find . -type f -perm 777
+
+# To find all files in the current directory and modify their permissions
+find . -type f -exec chmod 644 {} \;
+
+# Find all Read Only files (u=r(Read-Only, a=x(Executable), g=s(SGID), u=s(SUID))
+find / -perm /u=r
+
+# Find all 777 permission files and use chmod command to set permissions to 644.
+find / -type f -perm 0777 -print -exec chmod 644 {} \;
+
+# Find all 777 permission directories and use chmod command to set permissions to 755.
+find / -type d -perm 777 -print -exec chmod 755 {} \;
+
+######################### Rename ############################################
+# Find in current every folder that contains foo and change to bar
+find . -type d -exec rename 's/foo/bar/g' {} \;
+
+
+######################### Remove ############################################
+
+# To find a single file called tecmint.txt and remove it.
+find . -type f -name "tecmint.txt" -exec rm -f {} \;
+
+# To find and remove multiple files such as .mp3 or .txt, then use.
+find . -type f -name "*.txt" -exec rm -f {} \;
+
+# To find files with extension '.txt' and remove them:
+find ./path/ -name '*.txt' -exec rm '{}' \;
+
+######################### Hidden #############################################
+
+# To find all empty files under certain path
+find /tmp -type f -empty
+
+# To file all empty directories under certain path
+find /tmp -type d -empty
+
+# To find all hidden files, use below command
+find /tmp -type f -name ".*"
+
+###################### Modified & Accessed ##################################
+# To find all files modified on the 7th of June, 2007:
+find . -type f -newermt 2007-06-07 ! -newermt 2007-06-08
+
+# Tofind all the files which are modified 50 days back.
+find / -mtime 50
+
+# To find all the files which are accessed 50 days back
+find / -atime 50
+
+# To find all the files which are modified more than 50 days back and less than 100 days.
+find / -mtime +50 –mtime -100
+
+# To find all the files which are changed in last 1 hour
+find / -cmin -60
+
+# To find all the files which are modified in last 1 hour
+find / -mmin -60
+
+# To find all the files which are accessed in last 1 hour.
+find / -amin -60
+
+# To find files modified more than 7 days ago and list file information
+find . -type f -mtime +7d -ls
+
+# To find all files accessed on the 29th of september, 2008:
+find . -type f -newerat 2008-09-29 ! -newerat 2008-09-30
+
+# files which had their permission changed on the same day:
+find . -type f -newerct 2008-09-29 ! -newerct 2008-09-30
+###################### Size + delete ################################################
+
+# To find all 50MB files, use
+find / -size 50M
+
+# To find all the files which are greater than 50MB and less than 100MB.
+find / -size +50M -size -100M
+
+# To find files bigger than 2 Megabyte and list them:
+find . -type f -size +200000000c -exec ls -lh {} \; | awk '{ print $9 ": " $5 }'
+
+# To find all 100MB files and delete them using one single command.
+find / -size +100M -exec rm -rf {} \;
+
+# Find all .mp3 files with more than 10MB and delete them using one single command.
+find / -type f -name *.mp3 -size +10M -exec rm {} \;
+
+# To find files with size bigger than 5 Mebibyte and sort them by size:
+find . -size +5M -type f -print0 | xargs -0 ls -Ssh | sort -z
+
+########################## Special ####################################################
+
+# Backup file #1
+# This uses find's exec option like it looks like you tried to use. Then cp copies the file (specified with {}) and appends .bak to the copy and preserves what it can with the p option:
+find foldername -name filename.html -exec cp -vp {}{,.bak} \; -exec truncate -s 0 {} \;
+
+# Backup file #2
+find . -max-depth 1 -name 'gmail-meta3*' -exec cp "{}" "{}.bak" \;
+
+

@@ -1,0 +1,118 @@
+---
+syntax: bash
+tags: [ ip addr, ip bridge, networking ]
+---
+# ip address
+
+# List network interfaces and their associated IP addresses:
+ip address
+ip addr
+
+# To list interfaces with brief network layer info, use:
+ip -brief address
+
+# To list interfaces with brief link layer info, use:
+ip -brief link
+
+# Filter to show only active network interfaces:
+ip address show up
+
+# Display information about a specific network interface:
+ip address show dev eth0
+
+# Display information about a IPv4 specific network interface:
+ip -4 addr show dev eth0
+
+#Add an IP address to a network interface:
+ip address add ip_address dev eth0
+ip addr add 192.168.56.101/24 dev enp0s9
+
+# Remove an IP address from a network interface:
+ip address delete ip_address dev eth0
+ip add del 192.168.56.101/24 dev enp0s9
+
+# Delete all IP addresses in a given scope from a network interface:
+ip address flush dev eth0 scope global|host|link
+ip addr flush dev enp0s9
+
+# Display detailed statistics of interface
+ip -s link show dev nm-bridge1
+
+# Display detailed statistics of interface (-s -s) more information
+ip -s -s link show dev nm-bridge1
+
+# find the MTU of the {interface}
+ip -j -p link show {interface} | grep mtu
+
+# Change the MTU on interface
+sudo ip link set mtu 8000 dev {interface}
+
+# list the current MAC address of the {interface} network interface:
+ip -j -p link show {interface} | grep address
+
+# Change the MAC address of the network interface
+sudo ip link set dev {interface} address 02:42:ac:13:01:03
+
+# Monitor netlink messages
+ip monitor all
+
+# View neighbors (using ARP and NDP) 
+ip neighbor show
+############# Bridge ####################
+
+# Create a bridge interface
+ip link add name br0 type bridge
+
+# Set bridge link up
+ip link set dev br0 up
+
+# Set interface as master 
+ip link set dev eth0 master br0
+
+# Set second interface as master
+ip link set dev eth1 master br0
+
+# remove an interface from the bridge:
+ip link set dev eth0 nomaster
+
+# The interface will still be up, so you may also want to bring it down:
+ ip link set eth0 down
+
+# remove bridge interface
+ip link delete bridge_name type bridge
+ip link del br0
+
+# When the bridge is fully set up, it can be assigned an IP address
+ip addr add dev bridge_name 192.168.66.66/24
+
+############## Forwarding manipulation #####
+
+# Show forwarding database on br0
+bridge fdb show dev br0
+
+# Disable a port(eth0) from processing BPDUs. This will make the interface filter any incoming bpdu
+bridge link set dev eth0 guard on
+
+# Setting STP Cost to a port(eth1 for example):
+bridge link set dev eth1 cost 4
+
+# To set root guard on eth1:
+bridge link set dev eth1 root_block on
+
+########## VLAN rules ####################
+
+# To show if there is any vlan ingress/egress filters:
+bridge vlan show
+
+# To add rules to a given interface:
+bridge vlan add dev eth1 <vid, pvid, untagged, self, master>
+
+# To remove rules. Use the same parameters as vlan add at the end of the command to delete a specific rule.
+bridge vlan delete dev eth1
+
+
+
+
+
+
+

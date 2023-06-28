@@ -1,0 +1,27 @@
+---
+tags: [ mpv_keymap,mpvkeymap,mpv ]
+---
+
+Default
+
+#######################################################
+################ mpv-file-browser #####################	
+# https://github.com/CogentRedTester/mpv-file-browser #
+#######################################################
+# Menu Key
+# changed in lua file to "o"
+
+#######################################################
+############### Uosc minimal gui ######################
+######## # https://github.com/darsain/uosc ############
+#######################################################
+mbtn_mid  script-binding uosc/menu                 # right, left, mid
+alt+s       script-binding uosc/load-subtitles     #! Load subtitles
+s           script-binding uosc/subtitles          #! Select subtitles
+a           script-binding uosc/audio              #! Select audio
+P           script-binding uosc/playlist           #! Utils > Playlist
+C           script-binding uosc/chapters           #! Utils > Chapters
+#esc         quit #! Quit
+#q           quit #!
+
+

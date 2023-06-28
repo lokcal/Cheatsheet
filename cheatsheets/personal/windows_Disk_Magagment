@@ -1,0 +1,53 @@
+# Check and repair disk problems (local disks only)
+CHKDSK
+
+# Fix errors on A: drive
+CHKDSK /F A:
+
+# Recover data on A: drive
+CHKDSK /R A:
+
+# Dismount drive A:
+CHKDSK /X A:
+
+# Encrypt the folder classified
+CIPHER /E classified
+
+# Decrypt the file secret_recipe.txt
+CIPHER /D secret_recipe.txt
+
+# Display/modify disk-checking on startup
+CHKNTFS
+
+# Display/change the compression of files in NTFS partitions
+COMPACT
+
+# Convert FAT disk volume to NTFS
+CONVERT
+
+# Display and adjust disk partition properties
+DISKPART
+
+# Format the disk
+FORMAT
+
+# File system management
+FSUTIL
+
+# Assign drive P:\ to the local folder c:\taxes
+SUBST p: c:\taxes
+
+# Remove the path represented by P:\
+SUBST p: /D
+
+# Recover a file data.dat from a bad or defective disk D:\
+RECOVER d:\data.dat
+
+# Display current disk volume label and serial number
+VOL
+
+# Control power settings and configure Hibernate/Standby modes
+POWERCFG
+
+# Scan and update protected system files
+SFC /SCANNOW

@@ -1,0 +1,32 @@
+
+# Ldap connrtion String
+CN=Users,DC=corp,DC=domain,DC=com
+
+LDAP:	The provider (case sensitive) # Ldap CN, OU, DC,
+objUser, objComputer, objGroup, objOU	Variable referring to the object
+cn=Joe Smith,ou=East,dc=MyDomain,dc=net	Distinguished Name of user "Joe Smith"
+cn=Joe Smith	Relative Distinguished Name of user "Joe Smith"
+dc=MyDomain,dc=com	DNS domain name (MyDomain.com)
+cn=Users	Relative Distinguished Name of container "Users"
+ou=East	Organizational Unit where user "Joe Smith" resides
+cn	Common Name
+ou	Organizational Unit
+dc	Domain Component
+
+
+# Running ldapadd/ldapmodify with correct rootdn
+ldapmodify -x -v -D 'cn=root,dc=fulltilt,dc=com' -w 'foo$bar'
+ldapadd -x -v -D 'cn=root,dc=fulltilt,dc=com' -w 'foo$bar'
+
+#Assumes rootdn is defined something like this:
+#rootdn   "cn=root,dc=fulltilt,dc=com"
+#rootpw   {SSHA}u1zwxGiID0uDSA0p+jH+n7Ev5kHFMryq
+
+# Running ldapsearch using simple authentication
+ldapsearch -x -b 'dc=fulltilt,dc=com' 'userName=*'
+
+# Running ldapsearch using simple authentication and the rootdn. (Passwords won’t show up in the result unless bind is done this way.)
+# Prompt for password:
+ldapsearch -D cn=root,dc=fulltilt,dc=com -W -x -b 'dc=fulltilt,dc=com' 'userName=*'
+#Specifying password on command line:
+ldapsearch -D cn=root,dc=fulltilt,dc=com -w password -x -b 'dc=fulltilt,dc=com' 'userName=*'

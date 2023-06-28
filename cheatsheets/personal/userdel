@@ -1,0 +1,7 @@
+####### Basic ########
+
+# Delete User
+userdel USERNAME
+
+# Delete User with home folder (recusive)
+userdel -r USERNAME

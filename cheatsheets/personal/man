@@ -1,0 +1,14 @@
+# To convert a man page to pdf:
+man -t bash | ps2pdf - bash.pdf
+
+# To view the ascii chart:
+man 7 ascii
+
+# Show where (command listed)
+man -k mount
+
+# Alternativ to man
+info
+
+# show if -z etc
+man test

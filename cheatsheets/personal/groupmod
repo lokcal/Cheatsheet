@@ -1,0 +1,10 @@
+################## Basic ####################
+
+# rename of the group. (all files previously owned by old_group will be owned by new_gr­­oup)
+groupmod -n NEW_GROUP OLD_GROUP
+
+# To assign a new GID to group called foo
+groupmod -g <newid> foo
+
+#############################################
+#############################################

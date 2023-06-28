@@ -1,0 +1,119 @@
+## Some handy environment variables
+$0   :name of shell or shell script.
+$1, $2, $3, ... :positional parameters.
+$#   :number of positional parameters.
+$?   :most recent foreground pipeline exit status.
+$-   :current options set for the shell.
+$$   :pid of the current shell (not subshell).
+$!   :is the PID of the most recent background command.
+
+$DESKTOP_SESSION     current display manager
+$EDITOR   preferred text editor.
+$LANG   current language.
+$PATH   list of directories to search for executable files (i.e. ready-to-run programs)
+$PWD    current directory
+$SHELL  current shell
+$USER   current username
+$HOSTNAME   current hostname
+
+##  Chaining Operators 
+# Run commands in single go. semi-colon Operator (;)
+cmd1 ; cmd2
+
+# will run both at the same time.
+cmdA & cmdB 
+
+# Run cmd2 if cmd1 is successful
+cmd1 && cmd2
+
+# Run cmd2 if cmd1 is not successful
+cmd1 || cmd2
+
+# Run cmd in background
+cmd &
+
+# put command in backgroundg
+start command
+strg+z # putting in hold
+jobs # showing nr.
+bg %(nr)
+
+# put command in the backround with &
+command &
+
+# change 1 command of the last running command Example: systemctl stop mpd.service
+^stop^start
+
+# run the last specific command u run Example: connecting to last ssh-server 
+!<command>
+
+# Run last command
+!!
+
+# run the previous command using sudo
+sudo !!
+
+# insert the first element of the previous command
+!$ or !:0
+
+# insert all argument/option of the previous command
+!* or !:1
+
+# Run last command and change some parameter using caret substitution (e.g. last command: echo 'aaa' -> rerun as: echo 'bbb')
+#last command: echo 'aaa'
+^aaa^bbb
+
+#echo 'bbb'
+#bbb
+
+#Notice that only the first aaa will be replaced, if you want to replace all 'aaa', use ':&' to repeat it:
+^aaa^bbb^:&
+#or
+!!:gs/aaa/bbb/
+
+# Run past command that began with (e.g. cat filename)
+!cat
+# or
+!c
+# run cat filename again
+
+# Bash globbing
+# '*' serves as a "wild card" for filename expansion.
+/etc/pa*wd    #/etc/passwd
+
+# '?' serves as a single-character "wild card" for filename expansion.
+/b?n/?at      #/bin/cat
+
+# '[]' serves to match the character from a range.
+ls -l [a-z]*   #list all files with alphabet in its filename.
+
+# '{}' can be used to match filenames with more than one patterns
+ls *.{sh,py}   #list all .sh and .py files
+
+# Grep line where pattern matches and execute
+awk '/DGB/' mining.txt | bash
+
+# One Liner to Download the Latest Release from Github Repo
+- Use curl to get the JSON response for the latest release
+- Use grep to find the line containing file URL
+- Use cut and tr to extract the URL
+- Use wget to download it
+curl -s https://api.github.com/repos/jgm/pandoc/releases/latest \
+| grep "browser_download_url.*deb" \
+| cut -d : -f 2,3 \
+| tr -d \" \
+
+# nohup command, which also enables a process to continue running in the background when a user exits a shell.
+nohup tar -czf iso.tar.gz Templates/* &
+
+# run local script on remoteserver
+ssh host1 'bash -s' < /home/script.sh arg1
+
+# Turn on debugging:
+set -x
+
+# Turn off debugging:
+set +x
+
+# run local script on remoteserver
+ssh host1 'bash -s' < /home/script.sh arg1

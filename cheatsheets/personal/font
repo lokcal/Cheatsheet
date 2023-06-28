@@ -1,0 +1,17 @@
+# Manual installation
+The recommended way of adding fonts that are not in the repositories of your system is described in #Creating a package. This gives pacman the ability to remove or update them at a later time.
+
+Alternatively, fonts can be installed manually:
+
+- For a single user, install fonts to ~/.local/share/fonts/.
+    - In many cases this suffices, unless you run graphical applications as other users.
+    - In the past ~/.fonts/ was used, but is now deprecated.
+- For system-wide (all users) installation, place your fonts under /usr/local/share/fonts/.
+    - You may need to create the directory first; mkdir -p /usr/local/share/fonts.
+    - /usr/share/fonts/ is under the purview of the package manager, and should not be modified manually.
+The creation of a subdirectory structure is up to the user, and varies among Linux distributions.
+For clarity, it is good to keep each font in its own directory. Fontconfig will search its default paths recursively, ensuring nested files get picked up.
+
+# Updating Cache
+fc-cache
+

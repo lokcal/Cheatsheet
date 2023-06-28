@@ -1,0 +1,8 @@
+######### Networktools #####################################
+lsof                    = list open files (usable for network)
+protonvpn               = VPN commands for Protonvpn cli
+nmtui                   = Networkmanager TUI
+nmcli                   = Networmanger cli
+ipaddress               = cheatsheet for ip add,ip link, bridge, etc
+iproute                 = ip route
+brctl                   = bridge (legacy)

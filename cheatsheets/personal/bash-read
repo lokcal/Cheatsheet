@@ -1,0 +1,88 @@
+---
+syntax: bash
+tags: [ Bash, read ]
+---
+explantion: read — read from standard input into shell variables
+
+# Store value in variable1 and output with echo
+read variable1
+echo $variable1
+
+# Input date into first middle and last
+read first middle last
+echo "Hello $first $middle $last"
+
+# Provide the hint while entering the user inputs in the shell prompt
+read -p "Please Enter 3 words followed by ENTER: " first middle last
+echo "Hello $first $middle $last"
+
+# Set Character Limit
+read -n 3
+
+
+#############################################################
+|Different Ways to Read File in Bash Script Using While Loop|
+#############################################################
+
+while [ CONDITION ]
+do
+    code block
+done
+
+# Piping in Linux
+cat /etc/passwd | while read LREAD
+do
+    echo ${LREAD}
+done
+
+# Alternantive 
+head -n 5 /etc/passwd | while read LREAD
+do
+    echo ${LREAD}
+done
+
+# Alternantive
+FILENAME="/etc/passwd"
+
+while read LREAD
+do
+    echo ${LREAD}
+done < ${FILENAME}
+
+
+> cat /etc/passwd will read the contents of the file and pass it as input through the pipe.
+> read command reads each line passed as input from cat command and stores it in the LREAD variable.
+> read command will read file contents until EOL is interpreted.
+
+# Input Redirection in Linux
+while read LREAD
+do
+    echo ${LREAD}
+done < /etc/passwd | head -n 5
+
+# Internal Field Separator
+while IFS=":" read A B C D E F G
+do
+    echo ${A}
+    echo ${B}
+    echo ${C}
+    echo ${D}
+    echo ${E}
+    echo ${F}
+    echo ${G}
+done < /etc/passwd
+
+# Empty Lines in Linux
+while read LREAD
+do
+    echo ${LREAD}
+done < testfile
+
+# 
+while read LREAD
+do
+    if [[ ! -z $LREAD ]]
+    then
+        echo ${LREAD} 
+    fi
+done < testfile

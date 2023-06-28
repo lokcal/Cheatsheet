@@ -1,0 +1,10 @@
+############### Basic #######################
+
+# creating a group with Standard ID
+groupadd GROUP
+
+# creating a group with ID 142
+groupadd -g 142 anhalter
+
+#############################################
+#############################################

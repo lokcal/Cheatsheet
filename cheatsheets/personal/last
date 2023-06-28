@@ -1,0 +1,36 @@
+# Show who logged and out
+last
+
+# hide the host-name field
+last -R basil
+
+# Display the login and logout time including the dates.
+last -F
+
+# Display information like system down entries and run level changes.
+last -x
+
+# show reboots
+last -x reboot
+
+# show reboots last 2 entries
+last -x reboot -2 
+
+# show shutdowns
+last -x shutdown
+
+# Shows last logged User 
+last User
+
+# Display the host-name in the last column
+last -a
+
+# Translate the IP address back into its host-name
+last -d
+
+# Display within a specific time period.(-s) since and (-t) until
+last -s yesterday -t today
+
+# Display full user and domain names
+last -w basil
+______________________________________________________________________

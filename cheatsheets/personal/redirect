@@ -1,0 +1,65 @@
+############ Basic ####################
+
+0  - stdin
+1  - stdout
+2  - stderr
+>  - insert (Overwrite file)
+>> - Append
+
+# Input of cmd from file
+cmd < file
+
+# Output of cmd2 as file input to cmd1
+cmd1 < cmd2
+
+# Standard output (stdout) of cmd to file
+cmd > file.txt (or something else)
+
+# Discard stdout of cmd
+cmd > /dev/null
+cmd &> /dev/null (black hole)
+
+# Append stdout to file
+cmd >> file
+
+# Error output (stderr) of cmd to file
+cmd 2> file
+
+# Every output of cmd to file
+cmd &> file
+
+# Append Error output of cmd to file
+cmd 2>> file
+
+# stdout to same place as stderr
+cmd > file 1>&2
+
+# stderr to same place as stdout
+cmd > file 2>&1
+
+# wirte (STDOUT) & (STDERR) to text.txt
+command 2>&1 | cat > text.txt
+
+# redirect to device
+cat music.mp3 > /dev/audio
+
+# write in file and show on cmd
+command | tee text.txt
+
+# Merge two text dokument to one
+cat text1.txt text2.txt > text.txt
+
+# Pipe and get link
+dmesg|­nopaste
+
+
+# Some shells have shortcuts for common redirections;
+1> can be shortened to just >
+
+1>foo 2>&1 to >&foo or &>foo
+
+2>&1 | program to |& program
+
+#####################################################
+#####################################################
+fertig 

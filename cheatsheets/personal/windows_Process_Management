@@ -1,0 +1,41 @@
+# Create/edit a job on Task Scheduler. Use this to create scheduled tasks in Disk Management.
+SCHTASKS
+
+# List environment variables
+SET
+
+# Display/change the list of folders stored in the %PATH% environment variable
+PATH
+
+# Restart the computer
+SHUTDOWN /R
+
+# Shut down the computer 60 seconds from now
+SHUTDOWN /S /T 60
+
+# List running tasks
+TASKLIST
+
+# Show services related to each task
+TASKLIST /SVC
+
+# Display detailed task information
+TASKLIST /V
+
+# Get the name of the executable associated with the process ID (PID) of 1234
+TASKLIST | FIND "1234"
+
+# End one or more tasks
+TASKKILL
+
+# Terminate all Microsoft Edge instances:
+TASKKILL /IM "msedge.exe"
+
+# Terminate process with PID of 10736
+TASKKILL /PID 10736
+
+# Registry Editor
+REGREGEDIT
+
+# Execute a program program1 as another user user2
+RUNAS /USER:user2 program1

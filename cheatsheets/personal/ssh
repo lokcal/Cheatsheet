@@ -1,0 +1,173 @@
+---
+syntax: bash
+tags: [ ssh, networking ]
+---
+explanation: ssh — OpenSSH remote login client
+
+##### Change Key premission to 0600 ###
+
+# Connect to ssh server
+# ssh user@host
+
+# Connect as domain User
+ssh domainname\username@hostname
+
+# To connect on an non-standard port:
+ssh -p 2222 user@example.com
+
+# To connect on non-standard port with KEY
+ssh user@host -p 23 -i /path
+
+# To connect and forward the authentication agent
+ssh -A user@example.com
+
+# To execute a command on a remote server:
+ssh -t user@example.com 'the-remote-command'
+
+# An alternative method to compress SSH traffic to improve performance on slow connections
+# This is the same as inserting Compression yes into your SSH configuration files.
+ssh -o "Compression yes" -v hostname
+
+# Invoke the script script.sh in the current working directory spawning the SSH session to 192.168.3.3 as user user
+ssh user@192.168.3.3 bash < script.sh
+
+# Compress the ~/ffmpeg directory and download it from a server Best.local as user friend
+ssh friend@Best.local "tar cvzf - ~/ffmpeg" > output.tgz
+
+# Local Forwarding; forward connections from a local port to a different port on another computer on the network
+# example forward the nginx website from remote host to this Host
+ssh -L local_port:destination_server_ip:remote_port user@server
+ssh -L 6161:localhost:443 supervisor@123.456.789.10
+
+# Remote Forwarding; While local forwarding allows us to forward local connections to a remote port,
+# with remote port forwarding we can accept connections on a remote server, and forward those to a local port on our machine
+ssh -R remote_port:localhost:local_port user@server
+
+# dynamic forwarding (SOCKS),
+# Dynamic port forwarding”, which works similarly to a proxy or VPN.
+# The SSH client will create a SOCKS proxy you can configure applications to use.
+# All the traffic sent through the proxy would be sent through the SSH server.
+# This is similar to local forwarding—it takes local traffic sent to a specific port on your PC and sends it over the SSH connection to a remote location.
+# ssh -D opens a local port, but it doesn't have a specific endpoint like with -L. Instead,
+# it pretends to be a SOCKS proxy. If you open, e.g., ssh -D 7777, when you tell your browser to use localhost:7777 as your SOCKS proxy,
+# everything your browser requests goes through the ssh tunnel. To the public internet,
+# it's as if you were browsing from your ssh server instead of from your computer.
+ssh -D local_port username@server.com
+ssh -D 8888 bob@ssh.yourhome.com
+
+# To tunnel an x session over SSH:
+ssh -X <user>@<host>
+
+# To launch a specific x application over SSH:
+ssh -X -t <user>@<host> 'chromium-browser'
+
+# Redirect traffic with a tunnel between local host (port 8080) and a remote
+# host (remote.example.com:5000) through a proxy (personal.server.com):
+ssh -f -L 8080:remote.example.com:5000 user@personal.server.com -N
+
+# -f ## Requests ssh to go to background just before command execution
+# -N ## Do not execute a remote command. This is useful for just forwarding ports. which tell SSH to not start a shell (or execute a given command) and only forward ports
+
+# To launch a specific x application over SSH remote maschine sees as untrusted client:
+less vulnerable but with security rules, if restrictions use -Y
+ssh -X user@example.com
+ssh -X -t user@example.com 'chromium-browser'
+
+# # To launch a specific x application over SSH trusted client:
+ssh -Y
+
+# To create a SOCKS proxy on localhost and port 9999
+ssh -qND 9999 user@example.com
+
+# To tunnel an ssh session over the SOCKS proxy on localhost and port 9999
+ssh -o "ProxyCommand nc -x 127.0.0.1:9999 -X 4 %h %p" username@example2.com
+
+# -X use an xsession, -C compress data, "-c blowfish" use the encryption blowfish
+ssh user@example.com -C -c blowfish -X
+
+# For more information, see:
+# http://unix.stackexchange.com/q/12755/44856
+
+# Copy files and folders through ssh from remote host to pwd with tar.gz compression
+# when there is no rsync command available
+ssh user@example.com "cd /var/www/Shared/; tar zcf - asset1 asset2" | tar zxf -
+
+
+  - SSH Tunneln: Leite einen spezifischen Ports (localhost:9999 zu example.org:80) weiter zusammen mit deaktivierter pseudy-tty Provisionierung für die Ausführung eines Befehls:
+    ssh -L 9999:example.org:80 -N -T benutzer@externer_server
+
+  - SSH Springen: Verbinde über einen Spring-Server zu einem externen Server (Es können auch mehrere Spring-Server über eine Komma-separierte Liste angegeben werden):
+    ssh -J benutzer@sring_server benutzer@externer_server
+
+  - Agenten Weiterleitung: Leite ie eigenen Authentifizierungs-Information an den externen Server weiter (siehe `man ssh_config` für mehr Optionen):
+    ssh -A benutzer@externer_server
+
+
+# run local script on remoteserver
+ssh host1 'bash -s' < /home/script.sh arg1
+_________________________________________________________
+### SSH Jumphost
+ssh -J <jump-host> <remote-host>
+ssh -J user@<jump:port> <user@remote:port>
+
+for ssh_config Example
+Host jumphost
+	HostName vps1.example.org
+	IdentityFile ~/.ssh/vps1.pem
+	User ec2-user
+
+Host RemoteHost
+	HostName contabo.example.org
+	IdentityFile ~/.ssh/contabovps
+	Port 22
+	User admin
+	Proxy Command ssh -q -W %h:%p vps1
+-------------------------------------
+for ssh_config Example2
+### The Jumphost
+Host bastion-host-nickname
+  HostName bastion-hostname
+
+### The Remote Host
+Host remote-host-nickname
+  HostName remote-hostname
+  ProxyJump bastion-host-nickname
+-------------------------------------
+
+## normal SSH_config
+# Host dev-meta*
+#     User ec2-user
+#     IdentityFile ~/.ssh/johnsnow.pem
+
+# Host dev-meta-facebook
+#     Hostname 192.168.178.1
+
+# Host dev-meta-whatsapp
+#     Hostname 192.168.178.2
+
+# Host api.google.com
+#     User googleUser
+#     IdentityFile ~/.ssh/targaryen.key
+#
+
+
+## Multiple GitHub Keypairs
+# Host github-work.com
+#     Hostname github.com
+#     IdentityFile ~/.ssh/id_work
+
+# Host github-personal.com
+#     User git
+#     Hostname github.com
+#     IdentityFile ~/.ssh/id_personal
+
+# Host github.com
+#    Hostname github.com
+#	    PreferredAuthentications publickey
+#      IdentityFile ~/Dokumente/Key/git_auth
+#     User git
+#	    IdentitiesOnly yes
+
+
+# How to Restrict SSH User Access to Certain Directory Using Chrooted Jail
+https://www.tecmint.com/restrict-ssh-user-to-directory-using-chrooted-jail/

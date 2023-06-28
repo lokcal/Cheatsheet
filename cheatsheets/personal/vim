@@ -1,0 +1,653 @@
+---
+tags: [vim,nvim,text,editor]
+---
+https://vim.fandom.com/wiki/Vim_Tips_Wiki
+
+TODO: ADD vim-surround key in cheat sheat
+
+NEOVIM QUICK KEYMAP Ref: https://neovim.io/doc/user/quickref.html
+------------------------------------------------------------
+##################### Tab Switching ############################
+:tabs           list all tabs including their displayed windows
+gt              go to next tab
+gT     	        go to previous tab
+
+{i}gt           go to tab in position i
+ctrl+PgUp       go to next tab
+ctrl+PgDown     go to previous tab
+:tabnew         open a file in a new tab
+:tabnew file    open a file in a new tab
+Ctrl + wT       move the current split window into its own tab
+:tabn – move to the next tab
+gT or :tabprev or :tabp – move to the previous tab
+:tabmove # – move current tab to the #th position (indexed from 0)
+:tabclose or :tabc – close the current tab and all its windows
+:tabonly or :tabo – close all tabs except for the current one
+:tabdo command – run the command on all tabs (e.g. :tabdo q – closes all opened tabs)
+
+##################### Spliting Winow ####################
+:sp             split window horizontal (:sp followed by the filename}
+:vs             split window vertical
+ctrl+w+k        Go to window above
+ctrl+w+j        Go to window below
+ctrl+w+h        Go to window left
+ctrl+w+l        Go to window right
+ctrl+w+w        Change beetween windows
+resize + 20     Resize 20  (horizontal)  ctrl+up    (=3)
+resize - 20     Shrink 20  (horizontal)  ctrl+down  (=3)
+vert res +20    Resize 20  (vertical)    ctrl+right (=3)
+vert res -20    Shrink 20  (vertical)    ctrl+left  (=3)
+ctrl+w+_        Maximize window size
+ctrl+w+Shift+=  Make all windows equal size
+ctrl+w+|        Maximize current window horizontally
+
+#################### Recording / macro #######################
+qa              record keystrokes to register a,b,c or 3 (then make changes)
+q               quit recording
+@a              execute commands again
+32@a            execute command 32 times
+@@              repeat
+
+#################### Printing #################################
+hardcopy > test.pdf      create a pdf file
+hardcopy > ~/folder/.pdf creating to specific path
+
+
+------------------------------------------------------------
+#################### File management ####################
+leaderkey "space"
+
+:Ex             (netwr) File explorer note capital Ex
+:lex            (netwr) File explorer vertical
+:sex            (netwr) File explorer horizontal
+:e              Reload file
+:e {path/file} 	Open file
+:e.             Open integrated file explorer
+gf              Open file name under cursor
+:q              Quit
+:q!             Quit without saving changes
+:sav            save the file under a new name and continue editing the new copy
+:w              Write file
+:w {file}       Write new file
+:w !sudo tee %  Save a file as root/sudo
+:wa             write to all buffer
+:w >> filename  append to an existing file
+:x              Write file and exit
+:S              Open File Explorer
+vim -R file     vim in readonly mode
+:sp /file       Open File in Horizontal Split
+:vs /file       Open File in Vertical Split
+:ls             List of buffers(eg following)
+:bn             next buffer
+:bp             previous buffer
+:b2             Change to buffer 2
+:bd             Close/delete buffer
+:2bd            Close/delete buffer 2
+:1,3bd          Close buffer 1-3
+:2bw            Remove buffer 2, options and marks etc will be lost
+50%             move to 50% of the file
+
+Ctrl+m+d        Open MarkdownPreview
+Ctrl+n          Open Nerdtree
+Leader+u        Open UndoTree
+------------------------------------------------------------
+##################### Movement ########################
+
+    k
+  h   l         basic motion
+    j
+
+gg              Go to first line in file
+G               Go to last line in file
+)               Jump forward one sentence.
+(               Jump backward one sentence.
+}               Jump forward one paragraph.
+{               Jump backward one paragraph.
+gk              Move down one displayed line
+gj              Move up one displayed line
+5w              Move right 5 words (counts ",;: as word)
+5W              Move right 5 words (complete words)
+0               Move to Start of line
+^               Move to the first non-blank character of the line.
+$               Move to End of line
+33gg            Move to line 33
+22k             Move 22 lines up
+11+             Move 11 lines up
+:11             Move to line 11
+22j             Go 22 lines down
+11-             Go 11 lines down
+42|             Jump to the 42nd column of the current line.
+fb              Jump to b in cursor line (jump to next one with ;)
+Fb              Jump to b in cursor line to the left
+tb              Jump before b in cursor line (jump to next one with ;)
+;               Repeat latest f, t, F or T [count] times
+,               Repeat latest f, t, F or T in opposite direction
+H               Move to top of screen
+M               Move to middle of screen
+L               Move to bottom of screen
+w               Move to beginning of next word
+3w              Move forward three words
+W               Move forward a WORD (any non-whitespace characters).
+e               Move to end of word
+E               Move to end of WORD before a whitespace
+b               Move to previous beginning of word
+B               previous start of whitespace-delimited WORD
+gh              select from normal mode to visual
+gH              select-Line from normal mode to visual
+ge              Move backwords end of word (same as b)
+gE              Move backwords end of whitespace-delimited word (same as B)
+Ctrl-d          Move half-page down
+Ctrl-u          Move half-page up
+Ctrl-b          Page up
+Ctrl-f          Page down
+Ctrl-o          Jump to last (older) cursor position
+Ctrl-i          Jump to next cursor position (after Ctrl-O)
+Ctrl-y          Move view pane up
+Ctrl-e          Move view pane down
+CTRL-v          Visual Block-Mode
+zt              move screen top
+zz              move screen middle
+zb              move screen bottom
+ze              move screen keft
+zs              move screen right
+%               move the next paragraph "{" show matching )]{
+alt             press ALT before typing a key in insert mode. it will be exectuted like if youu wer in normale mode
++               move to first character of next line
+-               move to first character of previous line
+(               move to next sentence
+)               move to previous sentence
+]]              move to next section
+]]              move to previous sentence
+{               move to next paragraph
+}               move to next paragraph
+
+A word consists of a sequence of letters, digits and underscores, or a sequence of other non-blank characters, separated with white space (spaces, tabs, ). This can be changed with the 'iskeyword' option.
+A WORD consists of a sequence of non-blank characters, separated with white space. An empty line is also considered to be a word and a WORD.
+
+#################### Join / move / indent ################################
+J               join the line below to the current one with one space in between
+gJ              join the line below to the current one without space in between
+:m <2>          move to line 2
+:m -2           move to -2 line (2 lines back/up)
+:m +3           move to +2 line (2 lines back/up)
+:21,23 4        move line 21 til 23 after line 4
+:.,.+4m 21	move 5 lines starting at current line to after line 21
+:,+4m14	same 	(. for current line is assumed (move)
+:/patter/m-2    move line -2 line (2 lines back/up)
+:/pattern/m$    move the searchpattern to the end of the text
+:/pattern/+1m-2 move the next line where the seach pattern is and move it 2 lines up
+:1,$join        join every line into first line ( or ggVGJ)
+
+>>              indent line to right
+>>ip            indent paragraph
+ctrl+t          indent line to right (insert mode)
+<<              indent line to left
+ctrl+d          indent line to left (insert mode)
+=12gg           indent from currentline to 12 line
+=G              indent every line from top (gg) to bottom
+==              indent line automaticly
+
+Ctrl + h        move text up (insertmode)
+Ctrl + j        move text down (insertmode)
+:10,43>         indent the lines from 10 to 43
+
+------------------------------------------------------------
+##################### Command ####################
+nvim --clean             start nvim without plugins
+:! command               run command in vim
+:r!unix_command          Put output of a command in your document
+:w !sudo tee %           save a file as root/sudo
+:set syntax=perl         Force syntax highlighting
+.                        repeat last command (normal mode)
+q:                       search for commands in history
+<C-f>                    search for commands in history
+<C-c>                    edit commands in history
+:setfiletype             set Filetype (example sh)
+:set encoding            set Encoding (example utf-8)
+echo "test "| nvim -     pipe from terminal into nvim
+nvim $(fzf)              use fzf with nvim
+
+####### Sorting
+:%sort          Sort
+:%sort!         Sort in reverse
+:sort n         Numeric sort
+:%sort u        Sort, removing duplicate lines
+:%!sort -M      Sort using the external Unix sort utility, respecting month-name order
+:296,349sort    sort lines 296 to 349, inclusive
+:10,20!shuf     Shuffle random (works only if line range marked)
+
+------------------------------------------------------------
+##################### Insertion ####################
+#   To exit from insert mode use Esc or Ctrl-C
+#   Enter insertion mode and:
+
+a               append after the cursor
+A               append at the end of the line
+i               insert before the cursor
+I               insert at the beginning of the line
+ea              insert (append) text at the end of the word
+3o <ESC>        insert 3 empty line
+o               create a new line under the cursor
+O               create a new line above the cursor
+R               enter insert mode but replace instead of inserting chars
+:abs (fsf)      enter aberation (fsf) (expand abbreviations) "Free Software Foundation"
+ctrl+v          dont actiavate aberation after typing the abberation then space
+CTRL-a	    	  insert previously inserted text
+CTRL-V {char}..	  insert character literally, or enter decimal byte value
+NL> or <CR> or CTRL-M or CTRL-J begin new line
+CTRL-E		  insert the character from below the cursor
+CTRL-Y		  insert the character from above the cursor
+CTRL-A		  insert previously inserted text
+CTRL-@		  insert previously inserted text and stop Insert mode
+CTRL-R {register} insert the contents of a register
+CTRL-N		  insert next match of identifier before the cursor
+CTRL-P		  insert previous match of identifier before the cursor
+CTRL-X ...	  complete the word before the cursor in various ways
+CTRL-H	  delete the character before the cursor
+<Del>		  delete the character under the cursor
+CTRL-W		  delete word before the cursor
+CTRL-U		  delete all entered characters in the current line
+CTRL-T		  insert one shiftwidth of indent in front of the current line
+CTRL-D		  delete one shiftwidth of indent in front of the current line
+CTRL-D	  delete all indent in the current line
+CTRL-D	  delete all indent in the current line, restore indent in next line
+CRTL-R    (costum Key) insert register registers._bind_global_key("insert", "<C-R>", "i")
+
+############# Ctrl + V (Visual Blockmode)
+############# Insert text in visual block mode
+
+:norm I"        add " at the beginning of the lines
+:norm A"        add " at the end of the lines
+
+#################### commenting/uncommenting ########################
+1.
+Ctrl+v actived visual Block-Mode and then select the lines. Press Shift+i to insert mode, press #
+and escape insert mode.
+
+Ctrl+v visual Block-Mode select line then press x to remove/uncommenting
+
+alternativ to commenting
+select line enter command mode :s/^/# / and enter.
+
+################ Autocomplete #########################
+
+ctrl+f          Complete Path standard ctrl+x ctrl+f remapped
+Ctrl+n Ctrl+p   (To be used in insert mode)	Complete word
+Ctrl+x Ctrl+l	Complete line
+Ctrl+x Ctrl+k	Complete with dictionnary
+:set dictionary=dict	Define dict as a dictionnary
+
+------------------------------------------------------------
+#################### Editing ###############################
+############################################################
+u               undo
+ctrl-r          Redo an undo
+g;              Jump to the place of last edit. Can be quite helpful while debugging or editing files.
+
+:1,10 w outfile	Saves lines 1 to 10 in outfile
+:1,10 w >> outfile	Appends lines 1 to 10 to outfile
+:r infile	Insert the content of infile
+:r {file}       insert from file
+:23r infile	Insert the content of infile under line 23
+ddp             swap the currentline with the next line (delete and copy)
+
+########################################################################################
+Text objects let you operate (with an operator) in or around text blocks (objects).
+
+v                i                      p
+Operator	[i]nside or [a]round	Text object
+
+Text objects
+p	          Paragraph
+w	          Word
+s	          Sentence
+[ ( { <	    A [], (), or {} block
+' " `	      A quoted string
+b	          A block [(
+B	          A block in [{
+t	          A XML tag block
+
+################ Visual Mode ########################
+Ctrl+a           increment selection
+Ctrl+x           Decrement number under cursor
+v                select text using character mode
+V                select lines using line mode
+Ctrl+v           select text using block mode
+alt+k            move line -1 down (Costum +Lunarvim)
+alt+j            move line +1 up (Costum +Lunarvim)
+select S+k       move selected block down
+select S+j       move selected block up
+o                move from one end of the selected text to the other
+vip              Select paragraph
+vipipipip	 Select more
+vaw              select a word to end of a word
+vab    ()        select a block with ()
+vaB    {}        select a block with {}
+vat    <>        select a block with <>
+viw              select a word from begin
+vib or ()        select inner block with ()
+viB or {}        select inner block with {}
+vit or <>        select inner block with <>
+
+------------------------------------------------------------
+###################### Delete/Remove (Cutting) ####################
+<Del> or x      delete a character
+10              delete 10 character
+dw              delete word
+dW              delete Word (with ,=!'*+ without spaces)
+5dw             delete next five words
+dd              delete a line / cut line
+5dd             delete next five lines
+5d-             delete 5 linse before
+d0              delete to the beginning
+d$              delete to end of line
+shift+d         delete from position to end of the line
+d^              delete text infront of the cursor
+d{motion}       delete text that {motion} moves over
+di'             delete text between ''
+da[             delete around bracket
+dip             delete inner paragraph
+dfa             delete until first a
+d3fa            delete until 3rd a
+:.,44d          delete from current line to line 44
+:1,.d           delete from first line to current position
+:3,5d           delete lines starting from 3 to 5
+:.,$d           delete everything from the current line to the end of the file
+:g/^\s*$/d      deleting (remove) all lines that are empty or that contain only whitespace.
+:g/^\s*#/d      deleting  all lines that are commented.
+:g!/foo/d       delete all lines not containing the string “foo”
+:/pattern/;+1d  delete the line matching pat1 as well as the line after
+
+#################### Copy ################
+yy              Yank the current line, including the newline character.
+3yy             Yank three lines, starting from the line where the cursor is positioned.
+y$              Yank everything from the cursor to the end of the line.
+shift+y         Yank from position to end of the line
+y^              Yank everything from the cursor to the start of the line.
+yw              Yank to the start of the next word.
+y3w             Yank the 3 next word where the cursers is positioned.
+yiw             Yank the current word.
+yaw             Yank the current word (including leading or trailing whitespace)
+yip             Yank inner paragraph
+yap             Yank inner paragraph (including newline)
+ytx             yank from the current cursor position up to and before the character (til x)
+yfx             the current cursor position up to and including the character (find x)
+y%              Yank to the matching character. By default supported pairs are (), {}, and [].
+                Useful to copy text between matching brackets
+:-4,-2co.       Copy line -4 till -2 and paste to cursor line (co. is = copy.) (.=here)
+"*y             Yank (copy) to system clipboard any (*,A,B)
+"dyy            Yank current line into register d.
+"wy             Yank (copy) word to systemclipboard
+y{motion}       Yank text that {motion} moves over
+:reg            Display contents of all registers
+"1p             Paste from register 1
+xp              transpose two letters (delete and paste)
+
+################### Paste #####################################
+p               paste after cursor
+P               paste before cursor
+s-p (P)         paste same yanked text in visual mode without overwriting register
+"ap             paste from register" any (register *,a,A,B,C)
+3p              paste at 3 lines
+"/p             paste the last search
+":p             paste the last command
+
+#################### Replace/Substitute ####################
+r               replacing character
+R               replace character and stay in Replace mode
+s               substitute one character
+S               delete line and substitute text (same as cc)
+ciw             change (replace) entire word
+cip             change inner paragraph
+cw or ce        change (replace) to the end of the word
+c$              change (replace) to the end of the line
+shift+c         change from position to end of the line
+
+
+#################### Toggle case of the character ##############
+
+~               Toggle case of the character under the cursor, or all visually-selected characters.
+3~              Toggle case of the next three characters.
+g~3w            Toggle case of the next three words.
+g~iw            Toggle case of the current word (inner word – cursor anywhere in word).
+g~~, g~$        Toggle case of the current line (same as V~).
+ve~             Change the current Word to lowercase/uppercase (visual)
+vb~             Change the Word vefore to lowercase/uppercase (visual)
+V4e~            Change the next 4 Words to lowercase/uppercase (visual)
+g~G             Toggle case until EOF
+
+#################### uppercase ###################
+
+U                 Uppercase the visually-selected text. (visual)
+gUU               Change the current line to uppercase (same as VU).
+gUw,gUiw,gUaw     Change current WORD from lower to uppercase.
+gU3w              Change next 3 words to uppercase
+veU               Change the current Word to uppercase (visual)
+vbU               Change the Word vefore to uppercase (visual)
+V4eU              Change the next 4 Words to uppercase (visual)
+gUG               Change to uppercase until EOF.
+
+#################### lowercase ###################
+
+u                 Lowercase the visually-selected text
+guu               Change the current line to lowercase (same as Vu).
+guw,guiw,guaw     Change current word to lowercase
+gu3w              Change next 3 words to lowercase
+veu               Change the current Word to lowercase (visual)
+vbu               Change the Word vefore to uppercase (visual)
+V4eu              Change the next 4 Words to lowercase (visual)
+guG               Change to lowercase until EOF.
+
+###################### Search & Replace ####################
+
+/word             Find word (forward) in the file
+?word             Find word (backwards) in the file
+n                 Find next
+N                 Find previous
+/\cword           Find word (forward) case insensetive /word\c /word}
+/\Cword           Find word (forward) case sensetiv
+?\cword           Find word (backwards) case insensetive "       "
+?\Cword           Find word (backwards) case sensetive
+:noh              Turn off highlighting
+*                 Find next instance of a word that your cursor is over
+#                 Find previous instance of a word that your cursor is over
+cgn               Find word and replace it then do cgn to change the next one (use escape then cgn after search find)
+gd                will take you to the local declaration.
+gD                will take you to the global declaration.
+g*                search for the word under the cursor (like *, but g* on 'rain' will find words like 'rainbow').
+g#                same as g* but in backward direction.
+g&                repate the last substitute command
+
+/\cstring or /string\c               Search STRING or string, case insensitive
+/jo[ha]n                             Search john or joan
+/\< the	                             Search the, theatre or then
+/\<pro\>                             Search only for the
+/the\>                               Search the or breathe
+/fred\|joe                           Search fred or joe
+/\<\d\d\d\d\>                        Search exactly 4 digits
+:bufdo /searchstr/                   Search in all open files
+/^\n\{3}                             Find 3 empty lines
+bufdo %s/something/somethingelse/g	 Search something in all the open buffers and replace it with somethingelse
+
+
+:%s/old/new/g                 Replace all occurences of old by new in file
+:%s/onward/forward/gi         Replace onward by forward, case unsensitive
+:%s/old/new/gc                Replace all occurences with confirmation
+:%s/^/hello/g                 Replace the begining of each line by hello
+:%s/$/Harry/g                 Replace the end of each line by Harry
+:%s/onward/forward/gi         Replace onward by forward, case unsensitive
+:%s/\./_/g 		                Replace all dots with underscore
+:%s/ *$//g                    Delete all white spaces
+:%s/\s\+$//                   delete (remove) trailing whitespaces
+:g/^\s*$/d                    Delete all empty lines
+:g/string/d	                  Delete all lines containing string
+:v/string/d	                  Delete all lines containing which didn’t contain string
+:s/Bill/Steve/                Replace the first occurence of Bill by Steve in current line
+:s/Bill/Steve/g               Replace the all occurence of Bill by Steve in current line
+:s/Bill/Steve/g3              Replace the all occurence of Bill by Steve in next 3 current line
+:5,12s/foo/bar/g              Replace foo to bar for all lines from line 5 to line 12 (inclusive)
+:'a,'bs/foo/bar/g             Replace each foo to bar for all lines from mark a to mark b inclusive
+:.,+2s/foo/bar/g              Replace each foo to bar for the current line (.) and the 2 next lines
+:.,$s/foo/bar/g              Replace each foo to bar for the current line (.) to the end of file
+:s/Bill/Steve/g	              Replace Bill by Steve in current line
+:%s/Bill/Steve/g              Replace Bill by Steve in all the file
+:%s/foo/bar/gci               Replalce foo (case insensitive i flag) to 'bar'ask for confirmation
+:%s/^M//g                     Delete DOS carriage returns (^M)
+:%s/\r/\r/g	              Transform DOS carriage returns in returns
+:%s#<[^>]\+>##g	              Delete HTML tags but keeps text
+:%s/^\(.*\)\n\1$/\1/          Delete lines which appears twice
+Ctrl+x                        Decrement number under cursor
+ggVGg?                        Change text to Rot13
+:%s/.*\zsfoo/bar/             On each line, replace the last occurrence of "foo" with "bar".
+:%s/\<foo\>//g                On each line, delete all occurrences of the whole word "foo".
+:%s/\<foo\>.*//               On each line, delete the whole word "foo" and all following text (to end of line).
+:%s/\<foo\>.\{5}//            On each line, delete the first occurrence of the whole word "foo" and the following five characters.
+:%s/\<foo\>\zs.*//            On each line, delete all text following the whole word "foo" (to end of line).
+:%s/.*\<foo\>//               On each line, delete the whole word "foo" and all preceding text (from beginning of line).
+:%s/.*\ze\<foo\>//            On each line, delete all the text preceding the whole word "foo" (from beginning of line).
+:%s/.*\(\<foo\>\).*/\1/       On each line, delete all the text preceding and following the whole word "foo".
+:%s/\<foo\(bar\)\@!/toto/g   On each line, replace each occurrence of "foo" (which starts a word and is not followed by "bar") by "toto".
+
+
+
+###################### mark ####################
+m                 set mark
+ma                set mark with a
+'                 jumps to line
+`                 jumps to mark at line
+`a                jump to mark a
+'a                jump to line with mark a
+`A                (uppercase) jump to the file and the position holding the mark
+                  (you do not need to open the file prior to jumping to the mark).
+:marks            list all the current marks
+:marks aB         list marks a, B
+d'a               delete from current line to line of mark a
+d`a               delete from current cursor position to position of mark a
+c'a               change text from current line to line of mark a
+y`a               yank text to unnamed buffer from cursor to position of mark a
+]'                jump to next line with a lowercase mark
+['                jump to previous line with a lowercase mark
+]`                jump to next lowercase mark
+[`                jump to previous lowercase mark
+5]`               jumps to the fifth mark after the cursor.
+`.                jump to position where last change occurred in current buffer
+`"                jump to position where last exited current buffer
+`0                jump to position in last file edited (when exited Vim)
+`1                like `0 but the previous file (also `2 etc)
+''                jump back (to line in current buffer where jumped from)
+``                jump back (to position in current buffer where jumped from)
+`[ or `]          jump to beginning/end of previously changed or yanked text
+`< or `>          jump to beginning/end of last visual selection
+:delmarks a       delete mark a
+:delmarks a-x     delete marks a till x
+:delmarks abxy    delete marks a, b, x, y
+:delmarks aA      delete marks a, A
+:delmarks!        delete all lowercase marks for the current buffer (a-z)
+
+################### Folds ###############################
+zf                create fold
+zd                remove folds after za (folded)
+zo / zO           Open folds
+zc / zC	          Close folds
+za / zA	          Toggle folds
+zv                Open folds for this line
+zfap              marks the entire paragraph
+V select then zf  Fold in Visual mode
+zM	              Close all
+zR	              Open all
+zf3j              Fold the next 3 lines = 4 lines
+zm	              Fold more (foldlevel += 1)
+zr	              Fold less (foldlevel -= 1)
+zx	              Update folds
+
+##################### Costum Keymap ############################
+ctrl+n           open Nerdtree
+leader+b         open bufferlist
+Shift+k          open Hover on functions (LSPcongig)
+
+
+Commands                        Mode
+--------                        ----
+nmap, nnoremap, nunmap          Normal mode
+imap, inoremap, iunmap          Insert and Replace mode
+vmap, vnoremap, vunmap          Visual and Select mode
+xmap, xnoremap, xunmap          Visual mode
+smap, snoremap, sunmap          Select mode
+cmap, cnoremap, cunmap          Command-line mode
+omap, onoremap, ounmap          Operator pending mode
+
+For example, the following command maps the <F5> key to search for the keyword under the cursor in the current directory using the 'grep' command:
+
+:nnoremap <F5> :grep <C-R><C-W> *<CR>
+Examples:
+
+The following commands map the 'j' key to execute 'gj' and the 'k' key to execute 'gk'. These are useful for moving between long wrapped lines.
+
+:nnoremap k gk
+:nnoremap j gj
+The following command maps ',b' to display the buffer list and invoke the ':buffer' command. You can enter the desired buffer number and hit <Enter> to edit the buffer.
+
+:nnoremap ,b :ls<CR>:buffer<Space>
+In the above command, you can enter <Space> at the end of the map command either literally or by pressing the space bar.
+
+
+########################## install python for nvim ################
+python3 -m pip install --user --upgrade pynvim
+
+########################## vim-visual-multi #######################
+Basic usage:
+
+select words with Ctrl-N (like Ctrl-d in Sublime Text/VS Code)
+create cursors vertically with Ctrl-Down/Ctrl-Up
+select one character at a time with Shift-Arrows
+press n/N to get next/previous occurrence
+press [/] to select next/previous cursor
+press q to skip current and get next occurrence
+press Q to remove current cursor/selection
+start insert mode with i,a,I,A
+
+Two main modes:
+
+in cursor mode commands work as they would in normal mode
+in extend mode commands work as they would in visual mode
+press Tab to switch between «cursor» and «extend» mode
+
+
+# insert current date or time
+:pu=strftime('%c')
+Format String	      Example output
+%c	              Thu 27 Sep 2007 07:37:42 AM EDT
+%a %d %b %Y	      Thu 27 Sep 2007
+%b %d, %Y	        Sep 27, 2007
+%H:%M:%S	        07:36:44
+%T	              07:38:09
+%m/%d/%y	        09/27/07
+%y%m%d	          070927
+%x %X (%Z)	      09/27/2007 08:00:59 AM (EDT)
+%Y-%m-%d	        2016-11-23
+%F	              2016-11-23 (works on some systems)
+%d/%m/%y %H:%M:%S	27/09/07 07:36:32
+
+
+# Special command also in cheat vimtips
+# Format json file in n/vim
+:%!jq .
+
+
+# Netman
+:edit sftp://myhost/myfile.txt
+## dirctly from cli
+nvim sftp://myhost/myfile.txt
+# delete
+:Nmdelete sftp://myhost/mydir/myfile.txt
+# docker
+:edit docker://mycontainer/my/dir/to/file.txt
+:Nmread docker://mycontainer/my/dir/to/file.txt
+
+
+#########################################################################
+sources:
+https://www.computerhope.com/unix/vim.htm
+https://vim.rtorr.com/
+https://devhints.io/vim
+https://devhints.io/vim

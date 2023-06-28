@@ -1,0 +1,33 @@
+# dmesg
+# Print or control the kernel ring buffer
+
+# Show kernel messages:
+dmesg
+
+# Show kernel error messages:
+dmesg --level err
+
+# Show kernel messages and keep reading new ones, similar to `tail -f` (available in kernels 3.5.0 and newer):
+dmesg -w
+
+# Show how much physical memory is available on this system:
+dmesg | grep -i memory
+
+# Show kernel messages 1 page at a time:
+dmesg | less
+
+# Print the ring buffer contents, then clear it.
+dmesg -c
+
+# Display the local time and the delta in human-readable format. Conversion to
+# the local time could be inaccurate.
+dmesg -e
+
+# Print human-readable timestamps.
+dmesg -T
+
+# Human-readable output (color + reltime).
+dmesg -H
+
+# Colorize output (available in kernels 3.5.0 and newer):
+dmesg -L

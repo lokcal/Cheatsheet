@@ -1,0 +1,59 @@
+############## Basic ##################
+
+# creates user without home folder
+useradd USERNAME
+
+# create user with home
+useradd -m USERNAME
+
+# Create a User with Different Home Directory
+useradd -d /data/projects anusha
+
+# Create a User with a Specific User ID
+useradd -u 1002 navin
+
+# Create a User with a Specific Group ID
+useradd -u 1005 -g tecmint tarunika
+
+# Add a User to Multiple Groups
+useradd -G admins,webadmin,developers paddy
+
+# Add a User without Home Directory
+useradd -M shilpi
+
+# Creates user with group and shell
+useradd -g initial_group -G additional_groups -s /bin/bash (Login shell) USERNAME
+useradd -g users -G wheel, -s /bin/zsh USERNAME
+
+# Create user with group,shell and home
+useradd -m -g initial_group -G additional_groups -s /bin/bash (Login shell) USERNAME
+
+# create a Systemuser (used to run processes/daemons under a diffrent user) -r for Systemuser 
+useradd -r -s /usr/bin/nologin USERNAME
+
+# Create a User with Account Expiry Date
+useradd -e 2021-08-27 aparna
+
+# Create a User with Password Expiry Date
+useradd -e 2014-04-27 -f 45 mansi
+
+# Create User Login Shell in Linux
+useradd -s /sbin/nologin tecmint
+
+# Add a User with Custom Comments (full name, phone number)
+useradd -c "Manis Khurana" mansi
+
+# Add a User with Specific Home Directory, Default Shell, and Custom Comment
+useradd -m -d /var/www/ravi -s /bin/bash -c "TecMint Owner" -U ravi
+
+# Add a User with Home Directory, Custom Shell, Custom Comment, and UID/GID
+useradd -m -d /var/www/tarunika -s /bin/zsh -c "TecMint Technical Writer" -u 1000 -g 100 tarunika
+
+# Add a User with Home Directory, No Shell, Custom Comment, and User ID
+useradd -m -d /var/www/avishek -s /usr/sbin/nologin -c "TecMint Sr. Technical Writer" -u 1019 avishek
+
+# Add a User with Home Directory, Shell, Custom Skell/Comment, and User ID
+useradd -m -d /var/www/navin -k /etc/custom.skell -s /bin/tcsh -c "No Active Member of TecMint" -u 1027 navin
+
+# Add a User without Home Directory, No Shell, No Group, and Custom Comment
+useradd -M -N -r -s /bin/false -c "Disabled TecMint Member" clayton

@@ -1,0 +1,19 @@
+Determine a file's MIME type:
+$ xdg-mime query filetype photo.jpeg
+image/jpeg
+
+Determine the default application for a MIME type:
+$ xdg-mime query default image/jpeg
+gimp.desktop
+
+Change the default application for a MIME type:
+$ xdg-mime default feh.desktop image/jpeg
+
+Shortcut to open all web MIME types with a single application:
+$ xdg-settings set default-web-browser firefox.desktop
+
+Shortcut for setting the default application for a URL scheme:
+$ xdg-settings set default-url-scheme-handler irc xchat.desktop
+
+# test opening file
+xdg-open file

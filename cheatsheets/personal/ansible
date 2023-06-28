@@ -1,0 +1,582 @@
+---
+tags: [ansible]
+---
+
+# loop and with_items
+https://docs.ansible.com/ansible/latest/user_guide/playbooks_loops.html#
+
+# Yaml Syntax
+https://docs.ansible.com/ansible/latest/reference_appendices/YAMLSyntax.html
+https://cheat.readthedocs.io/en/latest/ansible/#
+
+# Generate Ansible Roles template
+ansible-galaxy init (name)
+
+# Host Variables
+ansible_host							The name or the ip of the host to connect to. If none, the alias will be used.
+ansible_port							The port to connect, if not defined, port 12 will used.
+ansible_user							The user to use when connecting to the host
+ansible_password						The password to use to authenticate to the host
+ansible_ssh_private_key_file			Private key file used by ssh.
+ansible_ssh_common_args					This setting is always appended to the default command line for sftp, scp, and ssh.
+ansible_sftp_extra_args					This setting is always appended to the default sftp command line.
+ansible_scp_extra_args					This setting is always appended to the default scp command line.
+ansible_ssh_extra_args					This setting is always appended to the default ssh command line.
+ansible_ssh_pipelining					Determines whether or not to use SSH pipelining. This can override the pipelining setting in ansible.cfg.
+ansible_ssh_executable					This setting overrides the default behavior to use the system ssh. This can override the ssh_executable setting in ansible.cfg.
+ansible_become							Equivalent to ansible_sudo or ansible_su, allows to force privilege escalation
+ansible_become_method					Allows to set privilege escalation method
+ansible_become_user						Equivalent to ansible_sudo_user or ansible_su_user, allows to set the user you become through privilege escalation
+ansible_become_password					Equivalent to ansible_sudo_password or ansible_su_password, allows you to set the privilege escalation password
+ansible_become_exe						Equivalent to ansible_sudo_exe or ansible_su_exe, allows you to set the executable for the escalation method selected
+ansible_become_flags					Equivalent to ansible_sudo_flags or ansible_su_flags, allows you to set the flags passed to the selected escalation method.
+ansible_shell_type						The shell type of the target system.
+ansible_python_interpreter				The target host python path.
+ansible_*_interpreter					Works for anything such as ruby or perl and works just like ansible_python_interpreter. This replaces shebang of modules which will run on that host.
+
+########################### 
+#         Variable        #
+###########################
+
+On controller machine :Access existing variables from controller use the env lookup plugin. 
+For example, to access the value of the HOME environment variable on the management machine:
+
+---
+# ...
+  vars:
+     local_home: "{{ lookup('env','HOME') }}"
+
+On target machines : Environment variables are available via facts in the ansible_env variable:
+
+{{ ansible_env.HOME }}
+
+You can set environment variable on Remote maschine with lineinfile module
+----------------------------------------
+
+## on Ad-hoc mode variable (-e)
+ansible_ssh_user=
+ansible_ssh_pass=
+
+# Overwrites ssh-key 
+ansible_ask_pass=
+----------------------------------------
+# When to quote variables
+- hosts: app_servers
+  vars:
+       app_path: "{{ base_path }}/22"
+
+# Defining variables as lists
+region:
+  - northeast
+  - southeast
+  - midwest
+
+# Referencing list variables
+# When you use variables defined as a list (also called an array), you can use individual, 
+# specific fields from that list. The first item in a list is item 0, the second item is item 1. For example:
+region: "{{ region[0] }}"
+
+# Defining variables as key:value dictionaries
+foo:
+  field1: one
+  field2: two
+
+# Referencing key:value dictionary variables
+foo['field1']
+	or 
+foo.field1
+
+########################################## 
+#         Running ad-hoc Commands        #
+##########################################
+https://docs.ansible.com/ansible/latest/user_guide/intro_adhoc.html
+
+# Using a Custom SSH Key
+ansible all -m ping --private-key=~/.ssh/custom_id
+ansible-playbook myplaybook.yml --private-key=~/.ssh/custom_id
+
+# Using Password-Based Authentication
+ansible all -m ping --ask-pass
+ansible-playbook myplaybook.yml --ask-pass
+
+# Providing the sudo Password
+ansible all -m ping --ask-become-pass
+ansible-playbook myplaybook.yml --ask-become-pass
+
+# Using a Custom Inventory File
+ansible all -m ping -i my_custom_inventory
+ansible-playbook myplaybook.yml -i my_custom_inventory
+
+# Testing Connectivity to Nodes
+ansible all -m ping
+
+# Save setup output on localmachine (only CLI)
+ansible all -m setup --tree /path
+
+###### Gather Facts ####
+https://docs.ansible.com/ansible/latest/user_guide/playbooks_vars_facts.html
+
+You can use ansible.builtin.setup or setup in ad-hoc mode
+
+# Save setup output on localmachine (only CLI)
+ansible all -m setup --tree /path
+
+# Gather Facts
+ansible all -m ansible.builtin.setup or gather_facts
+
+# Gather Facts Filter only (ansible_vethc40939b)
+ansible all -m ansible.builtin.setup -a "filter=ansible_vethc40939b"
+
+# Gather Facts Filter every (ipv4) facts
+ansible all -m ansible.builtin.setup -a "filter=*ipv4"
+
+# Gather Facts Filter only (ansible_distribution)
+ansible all -m setup -a "filter=ansible_distribution"
+
+# Install APT packages
+ansible all -m apt -a "name=apache2 state=present"
+
+# Gather Facts  gather_subset, to get only facts related to a subject
+ansible host -m ansible.builtin.setup -a 'gather_subset=virtual,!all,!min'
+
+
+# Gather Service facts
+https://docs.ansible.com/ansible/latest/collections/ansible/builtin/service_facts_module.html
+ - name: Populate service facts
+    ansible.builtin.service_facts:
+
+  - name: Print service facts
+    ansible.builtin.debug:
+      var: ansible_facts.services['sshd.service']
+
+
+############################################################################
+
+# execute uname -a 
+ansible all -a "uname -a"
+
+# install the package vim on server1
+ansible server1 -m apt -a "name=vim"
+
+# dry run to predict how the servers would be affected by your command
+ansible server1 -m apt -a "name=vim" --check
+
+# Update host with command (become user -b, ask for become_pass -K)
+ansbile host -a "pacman -Syu --noconfirm" -b -K
+
+# Transfer file from Ansible Engine to Managed Nodes
+ansible [-i INVENTORY] [server] -m copy -a "src=/source/file/path dest=/dest/path"
+
+# Create or Remove file and directory
+ansible [-i INVENTORY] [server] -m file -a "path=</path/to/file.txt state=touch>"
+
+# Create a directory on managed nodes
+ansible [-i INVENTORY] [server] -m file -a "path=</path/to/dir state=directory>"
+
+# Remove a directory
+ansible [-i INVENTORY] [server] -m file -a "path=</path/to/dir state=absent>"
+
+# Copy files locally on the remote server (managed node)
+ansible server1 -m copy -a "src=~/demo.txt dest=/tmp/demo-2.txt remote_src=yes"
+
+# Download file from managed nodes to controller node
+ansible [-i INVENTORY] [server] -m fetch -a "src=/source/file/path dest=/dest/path"
+
+# Create a file with custom arguments
+ansible server2 -m file -a "path=/tmp/demo_2.txt state=touch mode=755"
+
+# Remove a file from the managed nodes
+ansible [-i INVENTORY] [server] -m file -a "path=</path/to/file.txt state=absent>"
+
+# Execute commands with root privileges
+ansible server2 -m command -a "fdisk -l" --become
+
+# Working with packages using yum module
+ansible [-i INVENTORY] [server] -m yum -a "name=<pkg> state=<present/latest/absent>"
+
+# Execute ad-hoc commands as different user
+ansible server3 -m command -a "whoami" --user deepak --ask-pass
+
+############################## 
+#      Running Playbooks     #
+##############################
+https://docs.ansible.com/ansible/latest/reference_appendices/playbooks_keywords.html
+
+# Running Playbooks
+ansible-playbook myplaybook.yml
+ansible-playbook -l server1 myplaybook.yml
+
+# prompt for for continue task yes or no
+ansible-playbook --step
+
+# Overwrite remote_user (ansible_ssh_user) from vars
+ansible-playbook .ansible/first-deloyment.yml --extra-vars=ansible_ssh_user=dockeruser
+
+### Getting Information about a Play
+
+# list-tasks is used to list all tasks that would be executed by a play without making any changes to the remote servers
+ansible-playbook myplaybook.yml --list-tasks
+
+# list all hosts that would be affected by a play
+ansible-playbook myplaybook.yml --list-hosts
+
+# To list all tags available in a play
+ansible-playbook myplaybook.yml --list-tags
+
+### Running a Playbook with Data Encrypted via Ansible Vault
+ansible-playbook myplaybook.yml --ask-vault-pass
+
+# Using --vault-id without a vault ID, to use a password file dev-password:
+ansible-playbook --vault-id dev-password site.yml
+
+# Using --vault-id without a vault ID, To prompt for the password:
+ansible-playbook --vault-id @prompt site.yml
+
+# To get the password from an executable script my-vault-password-client.py:
+ansible-playbook --vault-id my-vault-password-client.py
+
+# If you used a password file instead of prompting for the password, you should use the option --vault-password-file instead:
+ansible-playbook myplaybook.yml --vault-password-file my_vault_password.py
+
+# If you’re using data encrypted under a vault ID, you’ll need to provide the same vault ID and password source you used when first encrypting the data:
+ansible-playbook myplaybook.yml --vault-id dev@prompt
+
+# If using a password file with your vault ID, you should provide the label followed by the full path to the password file as password source: 
+ansible-playbook myplaybook.yml --vault-id dev@vault_password.py
+
+# If your play uses multiple vaults, you should provide a --vault-id parameter for each of them, in no particular order:
+ansible-playbook myplaybook.yml --vault-id dev@vault_password.py --vault-id test@prompt --vault-id ci@prompt
+
+########################### 
+|      Ansible vault      |
+###########################
+
+# Creating a New Encrypted File
+ansible-vault create credentials.yml
+
+# Creating a New Encrypted File with Vault-id (MyId)
+ansible-vault create --vault-id MyId@prompt vault.yml
+
+# Encrypt an existing Ansible file
+ansible-vault encrypt credentials.yml
+
+# view the contents of a file that was previously encrypted with ansible-vault
+ansible-vault view credentials.yml
+
+# edit the contents of a file that was previously encrypted with Ansible Vault
+ansible-vault edit credentials.yml
+
+# If you wish to permanently revert a file that was previously encrypted with ansible-vault to its unencrypted version
+ansible-vault decrypt credentials.yml
+
+# encrpyted vars_file example and password in create user modul:
+vars_files:
+    - my_vault.yml
+ password: "{{ my_password | password_hash('sha512') }}"
+
+# create encrypted_string (secure_password = encrypted string) --name (variable)
+ansible-vault encrypt_string --vault-id nameid@prompt secure_password --name "variable_name"
+
+# create encrypted_string (secure_password = encrypted string) without variable
+ansible-vault encrypt_string --vault-id nameid@prompt secure_password
+
+ansible-vault encrypt_string 'P@ssword123' --name 'my_secret'
+# In playbook
+vars:
+    my_secret: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          32373330386330643061613237393466393363333031303965383063316338393261616134353233
+          6364623038303966323834396636646463613837373461380a303662373161393466326139383565
+          64396538393562343464666337633337353130306365666637373266393965633766366436623836
+          3430396234626533340a613637393563333131626665626535393462653139346563383062343535
+          6335
+
+#### Using Multiple Vault Passwords
+
+# This will create a new vault ID named dev that uses prompt as password source
+ansible-vault create --vault-id dev@prompt credentials_dev.yml
+
+# This will create a new vault ID named prod that uses prompt as password source
+ansible-vault create --vault-id prod@prompt credentials_prod.yml
+
+# Using a Password File
+ansible-vault create --vault-id dev@path/to/passfile credentials_dev.yml
+
+# Unprompted Decryption save promt secret somewhere save
+ansible-playbook --vault-password-file /path/vault-password-file secrets.yml
+
+# Run playbook with with vaulted-password-file to decrypt, encrpyted file/string
+# key password-file in secure place
+ansible-playbook --vault-password-file=secret.yml plays/add_ansible_user.yml
+
+# To use a ‘dev’ password read from a file and to be prompted for the ‘prod’ password:
+ansible-playbook --vault-id dev@dev-password --vault-id prod@prompt site.yml
+- dev -> Is the vault ID
+- dev-password -> Points to the password to be used
+- prod -> Another vault ID
+- prompt -> Prompts for the password
+
+#########################################################
+|               Filters-to-Manipulate-Data              |
+#########################################################
+https://docs.ansible.com/ansible/latest/user_guide/playbooks_filters.html#using-filters-to-manipulate-data
+
+# split string example.com
+{{  ansible_nodename.split(".")[0] }}
+Output: example
+
+{{  ansible_nodename.split(".")[1] }}
+Output: com
+
+
+####  Encrypting and checksumming strings and passwords
+
+# To get the sha1 hash of a string:
+{{ 'test1' | hash('sha1') }}
+
+# To get the md5 hash of a string:
+{{ 'test1' | hash('md5') }}
+
+# Get a string checksum:
+{{ 'test2' | checksum }}
+
+# Other hashes (platform dependent):
+{{ 'test2' | hash('blowfish') }}
+
+# To get a sha512 password hash (random salt):
+{{ 'passwordsaresecret' | password_hash('sha512') }}
+
+# To get a sha256 password hash with a specific salt:
+{{ 'secretpassword' | password_hash('sha256', 'mysecretsalt') }}
+
+# An idempotent method to generate unique hashes per system is to use a salt that is consistent between runs:
+{{ 'secretpassword' | password_hash('sha512', 65534 | random(seed=inventory_hostname) | string) }}
+
+#####################################
+############# Debugging #############
+#####################################
+# Increase verbosity in order to get more information about the problem.
+ansible-playbook myplaybook.yml -v
+
+# more verbosity
+ansible-playbook myplaybook.yml -vvvv
+
+#########################################
+############# File Transfer #############
+#########################################
+https://docs.ansible.com/ansible/2.8/user_guide/intro_adhoc.html#file-transfer
+
+# To transfer a file directly to many servers:
+ansible atlanta -m copy -a "src=/etc/hosts dest=/tmp/hosts"
+
+# The file module allows changing ownership and permissions on files
+ansible webservers -m file -a "dest=/srv/foo/b.txt mode=600 owner=mdehaan group=mdehaan"
+
+# The file module can also create directories, similar to mkdir -p:
+ansible webservers -m file -a "dest=/path/to/c mode=755 owner=mdehaan group=mdehaan state=directory"
+
+#############################
+######## conditional ########
+#############################
+# information on ansible.builtin.stat about stat.exist (Condition)
+
+## Exit codes
+*0* -- OK or no hosts matched
+
+*1* -- Error
+
+*2* -- One or more hosts failed
+
+*3* -- One or more hosts were unreachable
+
+*4* -- Parser error
+
+*5* -- Bad or incomplete options
+
+*99* -- User interrupted execution
+
+*250* -- Unexpected error
+
+# 3 different kinds of conditional
+when
+failed_when
+changed_when
+
+# When file exists
+when: result.stat.exists
+
+# Ansible When file does not exis
+when: result.stat.exists == false
+
+# Ansible when directory exists example"
+when: result.stat.exists == true and result.stat.isdir == true
+
+##
+- name: check file
+	ansible_builtin_stat:
+		< file/path/command>
+	register: result
+
+-name: exmaple task
+	ansible_builtin_example:
+		<example_module_taks>
+	when:result......
+
+#########################################
+########### Error Handling  #############
+#########################################
+
+# Ignoring failed commands
+- name: Do not count this as a failure
+  ansible.builtin.command: /bin/false
+  ignore_errors: yes
+
+# Ignoring unreachable host errors Task Level
+- name: This executes, fails, and the failure is ignored
+  ansible.builtin.command: /bin/true
+  ignore_unreachable: yes
+
+# Ignoring unreachable host errors Playbook Level
+- hosts: all
+  ignore_unreachable: yes
+  tasks:
+  - name: This executes, fails, and the failure is ignored
+    ansible.builtin.command: /bin/true
+
+  - name: This executes, fails, and ends the play for this host
+    ansible.builtin.command: /bin/true
+    ignore_unreachable: no
+
+# You can use meta: clear_host_errors to reactivate all hosts, so subsequent tasks can try to reach them again
+clear_host_errors
+
+# If a task notifies a handler but another task fails later in the play, by default the handler does not run on that host,
+# which may leave the host in an unexpected state. 
+# When handlers are forced, Ansible will run all notified handlers on all hosts, even hosts with failed tasks.
+# On Playbook Level
+force_handlers: True   
+##### Ignoring failed commands
+
+# By default Ansible stops executing tasks on a host when a task fails on that host. 
+# You can use ignore_errors to continue on in spite of the failure:
+
+- name: Do not count this as a failure
+  ansible.builtin.command: /bin/false
+  ignore_errors: yes
+
+###### Defining failure
+
+# failed_when example
+register: result
+failed_when: "'not installed' not in result.stdout"
+
+# You may check for failure by searching for a word or phrase in the output of a command:
+
+- name: Fail task when the command error output prints FAILED
+  ansible.builtin.command: /usr/bin/example-command -x -y -z
+  register: command_result
+  failed_when: "'FAILED' in command_result.stderr"
+
+or based on the return code:
+
+- name: Fail task when both files are identical
+  ansible.builtin.raw: diff foo/file1 bar/file2
+  register: diff_cmd
+  failed_when: diff_cmd.rc == 0 or diff_cmd.rc >= 2
+
+# You can also combine multiple conditions for failure. This task will fail if both conditions are true:
+
+- name: Check if a file exists in temp and fail task if it does
+  ansible.builtin.command: ls /tmp/this_should_not_be_here
+  register: result
+  failed_when:
+    - result.rc == 0
+    - '"No such" not in result.stdout'
+
+# If you want the task to fail when only one condition is satisfied, change the failed_when definition to:
+
+failed_when: result.rc == 0 or "No such" not in result.stdout
+
+# If you have too many conditions to fit neatly into one line, you can split it into a multi-line yaml value with >:
+
+- name: example of many failed_when conditions with OR
+  ansible.builtin.shell: "./myBinary"
+  register: ret
+  failed_when: >
+    ("No such file or directory" in ret.stdout) or
+    (ret.stderr != '') or
+    (ret.rc == 10)
+
+###### Defining "changed"
+
+# changed_when
+If task is changed
+
+# Ansible lets you define when a particular task has “changed” a remote node using the changed_when conditional. 
+# This lets you determine, based on return codes or output, whether a change should be reported in Ansible statistics 
+# and whether a handler should be triggered or not
+
+tasks:
+
+  - name: Report 'changed' when the return code is not equal to 2
+    ansible.builtin.shell: /usr/bin/billybass --mode="take me to the river"
+    register: bass_result
+    changed_when: "bass_result.rc != 2"
+
+  - name: This will never report 'changed' status
+    ansible.builtin.shell: wall 'beep'
+    changed_when: False
+
+# You can also combine multiple conditions to override “changed” result:
+
+- name: Combine multiple conditions to override 'changed' result
+  ansible.builtin.command: /bin/fake_command
+  register: result
+  ignore_errors: True
+  changed_when:
+    - '"ERROR" in result.stderr'
+    - result.rc == 2
+
+##### Ensuring success for command and shell
+ # The command and shell modules care about return codes, 
+# so if you have a command whose successful exit code is not zero, you can do this:
+
+tasks:
+  - name: Run this command and ignore the result
+    ansible.builtin.shell: /usr/bin/somecommand || /bin/true
+
+##### Aborting on the first error: any_errors_fatal
+# If you set any_errors_fatal and a task returns an error, 
+# Ansible finishes the fatal task on all hosts in the current batch, 
+# then stops executing the play on all hosts. Subsequent tasks and plays are not executed. 
+# You can recover from fatal errors by adding a rescue section to the block. 
+# You can set any_errors_fatal at the play or block level:
+
+- hosts: somehosts
+  any_errors_fatal: true
+  roles:
+    - myrole
+
+- hosts: somehosts
+  tasks:
+    - block:
+        - include_tasks: mytasks.yml
+      any_errors_fatal: true
+
+
+#########################################
+######### important commands ############
+#########################################
+
+# First deployment on remote Host
+
+# Run for creating ansible user without key
+ansible-playbook playbooks/add_ansible_user.yml --limit=raspi --ask-pass --user=alarm -b -K --become-method=su --become-user=root -vvv
+
+# Create ansible user with ssh-key on remote host (playbook) with created vault secret (vaultsecret = secret to dencrypt the vault secret in task)
+ansible-playbook --vault-password-file=secret.yml  add_ansible_user.yml -vv
+
+# Run first deployment for user creation  (-b  -- escalate privileges on remote system, -K  -- ask for privilege escalation password)
+ansible-playbook --vault-password-file=secret.yml  add_ansible_user.yml -vv -b -K
+
+

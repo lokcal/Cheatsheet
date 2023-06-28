@@ -1,0 +1,89 @@
+############# Bearbeiten ##################
+
+# Read from {/dev/urandom} 2*512 Bytes and put it into {/tmp/test.txt}
+# Note: At the first iteration, we read 512 Bytes. bs=512 standard
+# Note: At the second iteration, we read 512 Bytes.
+dd if=/dev/urandom of=/tmp/test.txt count=2 bs=512
+
+# Watch the progress of 'dd'
+dd if=/dev/zero of=/dev/null bs=4KB &; export dd_pid=`pgrep '^dd'`; while [[ -d /proc/$dd_pid ]]; do kill -USR1 $dd_pid && sleep 1 && clear; done
+
+# Watch the progress of 'dd' with `pv` and `dialog` (apt-get install pv dialog)
+(pv -n /dev/zero | dd of=/dev/null bs=128M conv=notrunc,noerror) 2>&1 | dialog --gauge "Running dd command (cloning), please wait..." 10 70 0
+
+# Watch the progress of 'dd' with `pv` and `zenity` (apt-get install pv zenity)
+(pv -n /dev/zero | dd of=/dev/null bs=128M conv=notrunc,noerror) 2>&1 | zenity --title 'Running dd command (cloning), please wait...' --progress
+
+# Watch the progress of 'dd' with the built-in `progress` functionality (introduced in coreutils v8.24)
+dd if=/dev/zero of=/dev/null bs=128M status=progress
+
+# DD with "graphical" return
+dcfldd if=/dev/zero of=/dev/null bs=500K
+
+# This will output the sound from your microphone port to the ssh target computer's speaker port. The sound quality is very bad, so you will hear a lot of hissing.
+dd if=/dev/dsp | ssh -c arcfour -C username@host dd of=/dev/dsp
+
+# Cloning HDD
+dd if=/dev/sda of=/dev/sdb bs=64K conv=noerror,sync status=progress
+
+# Cloning Partion 1 to to other HDD partition 1
+dd if=/dev/sda1 of=/dev/sdb1 bs=64K conv=noerror,sync status=progress 
+
+# Es werden die ersten zehn 1024 Byte großen Blöcke von der ersten Partition von /dev/sdb auf die zweite Partition von /dev/sdc kopiert:
+dd if=/dev/sdb1 of=/dev/sdc2 bs=1K count=10 sync status=progress 
+
+### Creating image of a partition
+# 1. Create an image 
+dd if=/dev/sda1 of=~/image_sda1.img
+
+# 2. Create a gzip image
+dd if=/dev/sda1 | gzip > ~/image-compress_sda1.img.gz
+#########################################################
+
+# Create a USB-Stick
+sudo dd if=ISO_IMAGE.iso of=/dev/sdX bs=1M && sync status=progress
+
+# Restore  the zipped image
+gzip -cd ~/image-compress_sda1.img.gz | sudo dd of=/dev/sda1 
+
+##################################
+# 	 Restore system 	 #
+##################################
+#To restore your system:
+gunzip -c /path/to/backup.img.gz | dd of=/dev/sda
+
+# When the image has been split, use the following instead:
+cat /path/to/backup.img.gz* | gunzip -c | dd of=/dev/sda
+##########################################################
+
+## Delete HDD Safe  (erase)
+# Der folgende Befehl löscht die komplette Festplatte /dev/sdX durch Überschreiben mit Nullen:
+dd bs=1M status=progress if=/dev/zero of=/dev/sdX 
+
+# Der folgende Befehl löscht die komplette Festplatte /dev/sdX durch Überschreiben mit Zufallsdaten:
+dd bs=1M status=progress if=/dev/urandom of=/dev/sdX 
+
+# Delete HDD Safe (Erase) with shred
+shred --verbose --random-source=/dev/urandom -n1 /dev/sdX
+
+# Dariks Boot and nuke
+Download iso
+
+# With secure Erase (hdpram)
+look wiki
+
+########################################################
+
+##########################################
+# Creating an image file with dd command #
+##########################################
+
+# To create 1MB file (1024kb)
+dd if=/dev/zero of=test.img bs=1024 count=0 seek=1024
+
+# To create 10MB
+dd if=/dev/zero of=test.img bs=1024 count=0 seek=$[1024*10]
+
+# To create 1GB
+dd if=/dev/zero of=1g.img bs=1 count=0 seek=1G
+#########################################

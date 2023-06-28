@@ -1,0 +1,2 @@
+# reset root pw via grub
+at boot press e. Navigate to linux /vmlinuz ..... and add rw init=/bin/bash and start

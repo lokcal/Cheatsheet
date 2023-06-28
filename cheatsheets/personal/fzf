@@ -1,0 +1,90 @@
+# Using the finder
+CTRL-J / CTRL-K (or CTRL-N / CTRL-P) to move cursor up and down
+Enter key to select the item, CTRL-C / CTRL-G / ESC to exit
+On multi-select mode (-m), TAB and Shift-TAB to mark multiple items
+Emacs style key bindings
+Mouse: scroll, click, double-click; shift-click and shift-scroll on multi-select mode
+
+Ctrl + T          # Paste the selected files and directories onto the command-line
+Ctrl + R          # Paste the selected command from history onto the command-line
+alt + c           # move to dir
+fzf -m            # Open fzf in multi-select mode
+TAB               # Select files in multi-select mode
+vim **<TAB>       # Open files under parent directory in vim
+vim ../fzf**<TAB> # Open files under parent directory that match `fzf` in vim
+
+
+# fzf will launch interactive finder, read the list from STDIN, and write the selected item to STDOUT.
+find * -type f | fzf > selected
+
+# fzf will launch interactive finder from current folder
+find . * -type f | fzf > selected
+
+# fzf by default starts in fullscreen mode, but you can make it start below the cursor with --height option.
+vim $(fzf --height 40%)
+
+# fzf with preview
+fzf --preview 'cat {}'
+
+# fzf preview with wraped to 70% right
+fzf --preview="cat {}" --preview-window=right:70%:wrap
+
+# list cheat list with preview
+cheat -l | fzf --preview="cheat {1}"
+
+# fzf preview git
+git log --graph --color=always --abbrev-commit --pretty=format:'%C(auto)%h%d %s %C(dim white)- %an, %ar%Creset' | fzf --ansi --preview='git show {2}'
+
+# Search words in the directory
+grep . <word> | fzf
+
+## Search syntax
+# Unless otherwise specified, fzf starts in "extended-search mode" where you can type in multiple search terms delimited by spaces. e.g. ^music .mp3$ sbtrkt !fire
+
+Token	Match type			Description
+sbtrkt	fuzzy-match			Items that match sbtrkt
+'wild	exact-match (quoted)		Items that include wild
+^music	prefix-exact-match		Items that start with music
+.mp3$	suffix-exact-match		Items that end with .mp3
+!fire	inverse-exact-match		Items that do not include fire
+!^music	inverse-prefix-exact-match	Items that do not start with music
+!.mp3$	inverse-suffix-exact-match	Items that do not end with .mp3
+
+# Files under current directory
+# - You can select multiple items with TAB key
+vim **<TAB>
+
+# run edidot with fzf
+nvim $(fzf)
+
+# open video files (ex. mp4)
+mpv $(fzf --query ".mp4")
+
+# Files under parent directory
+vim ../**<TAB>
+
+# Files under parent directory that match `fzf`
+vim ../fzf**<TAB>
+
+# Files under your home directory
+vim ~/**<TAB>
+
+
+# Directories under current directory (single-selection)
+cd **<TAB>
+
+# Directories under ~/github that match `fzf`
+cd ~/github/fzf**<TAB>
+
+# Can select multiple processes with <TAB> or <Shift-TAB> keys
+kill -9 <TAB>
+
+## Host names
+# The names are extracted from /etc/hosts and ~/.ssh/config.
+ssh **<TAB>
+telnet **<TAB>
+
+# Environment variables / Aliases
+unset **<TAB>
+export **<TAB>
+unalias **<TAB>

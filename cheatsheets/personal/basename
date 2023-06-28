@@ -1,0 +1,6 @@
+
+# show only file name
+base /etc/mdadm.conf
+
+# show file name without extension
+base /etc/mdadm.conf .conf

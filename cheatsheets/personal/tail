@@ -1,0 +1,28 @@
+##### bearbeiten #####
+
+# To show the last 10 lines of file and to wait for file to grow
+tail -f file
+
+# To show the last 10 lines of file
+tail file
+
+# To show the last N lines of file
+tail -n N file
+
+# Ignore First N Lines of a File in Linux
+tail -n +N file
+
+# To show the last N bytes/Characters of file
+tail -c N file
+
+# Remove First N Characters of File
+tail -c +5 /var/log/secure
+
+# Show File Name in Header
+tail -n 3 -v /var/log/secure
+
+# Show File Name as Header in Multiple Files
+tail -n 3 -v /var/log/secure /var/log/secure-20230402
+
+# Disable Display Header in File
+tail -q -n 3 /var/log/secure /var/log/secure-20230402

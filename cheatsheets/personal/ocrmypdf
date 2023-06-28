@@ -1,0 +1,41 @@
+####### Basic ###########################
+
+# Add an OCR layer and convert to PDF/A
+ocrmypdf input.pdf output.pdf
+
+# Add an OCR layer and convert to PDF/A with Title, Author and German OCR
+ocrmypdf -l deu --title "test" --author "Name" input.pdf output.pdf
+
+# Add an OCR layer and output a standard PDF
+ocrmypdf --output-type pdf input.pdf output.pdf
+
+# Create a PDF/A with all color and grayscale images converted to JPEG
+ocrmypdf --output-type pdfa --pdfa-image-compression jpeg input.pdf output.pdf
+
+# OCR and correct document skew (crooked scan)
+ocrmypdf --deskew input.pdf output.pdf
+
+# Uses unpaper to clean up pages before OCR, but does not alter the final output
+ # makes it less likely that OCR will try to find text in background noise
+ocrmypdf --clean input.pdf output.pdf
+
+# Correct page rotation
+ocrmypdf --rotate-pages myfile.pdf myfile.pdf
+
+# OCR languages other than English
+ocrmypdf -l fra LeParisien.pdf LeParisien.pdf
+ocrmypdf -l eng+fra Bilingual-English-French.pdf Bilingual-English-French.pdf
+
+# Produce PDF and text file containing OCR text
+ocrmypdf --sidecar output.txt input.pdf output.pdf
+
+# use OCRmyPDF (single images only)
+ocrmypdf --image-dpi 300 image.png myfile.pdf
+
+# Don’t actually OCR my PDF
+ocrmypdf --tesseract-timeout=0 --remove-background input.pdf output.pdf
+
+
+More MAN-Pages
+############################################
+############################################

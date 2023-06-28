@@ -1,0 +1,112 @@
+## Ansible ad_hoc commands Syntax
+## ansible appserverhostgroup -m <modulename> -a <arguments to the module>
+
+# Update Archlinux packages
+ansible all -a "pacman -Syu --noconfirm" -b -K --become-method=sudo
+
+# ansible ad hoc ping example
+ansible multi -m ping -i ansible_hosts --user=vagrant
+ansible multi -m ping -i ansible_hosts --user=vagrant --ask-pass
+
+# ansible ad hoc command to check uptime
+ansible multi -m command -a uptime 
+ansible multi -m shell -a uptime
+
+# How to check the free memory or memory usage of  hosts using ansible ad hoc command
+ansible multi -a "free -m" -i ansible_hosts
+
+# ansible ad hoc command to reboot the system
+ansible all -i inventory -b -B 1 -P 0 -m shell -a "sleep 5 && reboot"
+ansible all -m reboot -a reboot_timeout=3600 -u vagrant -i ansible_hosts -b
+
+#  ansible ad hoc command to get physical memory allocated to the host
+ansible multi -m shell -a "cat /proc/meminfo|head -2" 
+
+# ansible ad hoc command Execute a command as root user (sudo) on host
+ansible multi -m shell -a "cat /etc/passwd|grep -i vagrant" -s --ask-sudo-pass
+ansible multi -m shell -a "cat /etc/passwd|grep -i vagrant" -b -K  # using become module
+
+#  ansible ad hoc command to Execute a command as a different user  (sudo su)
+ansible app -m file -a "path=/opt/oracle/binaries state=directory mode=0755" -i ansible_hosts -b --become-user=weblogic
+
+# Create a unix user group with ansible ad hoc command
+ansible app -s -m group -a "name=weblogic state=present"
+
+# Create a unix user with ansible ad hoc command
+ansible app -m user -a "name=weblogic group=weblogic createhome=yes" -b
+
+# Create a Directory with 755 permission using ansible ad hoc command
+ansible app -m file -a "path=/opt/oracle state=directory mode=0755" -b
+
+# Create a file with 755 permission using ansible ad hoc commands
+ansible app -m file -a "path=/tmp/testfile state=touch mode=0755"
+
+# Change ownership of a file using ansible ad hoc command
+ansible app -m file -a "path=/opt/oracle group=weblogic owner=weblogic" -i ansible_hosts -b
+
+# how to check free disk space of hosts using ansible ad hoc commands
+ansible multi -a "df -h"
+
+# ad hoc command to Install a package using yum module
+ansible multi -s -m yum -a "name=httpd state=installed"
+
+# ad hoc command to Start or stop the service
+# To Start
+ansible multi -s -m service -a "name=httod state=started enabled=yes"
+# To Stop
+ansible multi -s -m service -a "name=httpd state=stop enabled=yes"
+
+# ad hoc command to stop, start, restart service – Ansible SystemD
+ansible webservers -m shell -a "service nginx restart" -b
+ansible webservers -m shell -a "systemctl restart nginx" -b
+# or systemd module
+ansible webservers  -m systemd -a "name=nginx state=reloaded" -i prod-ansible-hosts
+ansible webservers -m systemd -a "name=nginx state=restarted" -i prod-ansible-hosts
+ansible webservers -m systemd -a "name=nginx state=started" -i prod-ansible-hosts
+ansible webservers -m systemd -a "name=nginx state=stopped" -i prod-ansible-hosts
+
+# ansible ad hoc command to check the service status
+ansible testserver -m service -a "name=httpd" -i ansible_hosts -u vagrant
+
+# ansible ad hoc command to copy file – Local to remote
+ansible testserver -m copy -a "src=~/Downloads/index.html dest=/var/www/html owner=apache group=apache mode=0644"
+
+# ansible ad hoc command to copy directory – Local to remote
+ansible testserver -m copy -a "src=~/Downloads/logos dest=/var/www/html/ owner=apache group=apache mode=0644 " -i ansible_hosts -b
+
+# ansible ad hoc command to download a file from URL 
+ansible testserver -m get_url -a "url=https://nodejs.org/dist/v14.17.4/node-v14.17.4-linux-x64.tar.xz dest=/tmp mode=0755" -i prod-ansible-hosts
+
+# ad hoc command to list nfs mounts
+ansible testservers -m shell -a 'df -h -T|grep -i nfs'  -i ansible_hosts
+
+# ansible ad hoc command to check listening ports
+ansible testserver -m listen_ports_facts -i prod-ansible-hosts
+
+# ad hoc command to display memory, cpu and OS distribution and version
+ansible appservers -m setup -i ansible_hosts -a 'filter=ansible_distribution,ansible_distribution_version,ansible_memfree_mb,ansible_memtotal_mb,ansible_processor_cores*,ansible_architecture' 2>/dev/null
+
+# Managing Cron Job and Scheduling with Ansible ad hoc
+#  Run the job every 15 minutes
+ansible multi -s -m cron -a "name='daily-cron-all-servers' minute=*/15 
+job='/path/to/minute-script.sh'"
+
+# Run the job every four hours
+ansible multi -s -m cron -a "name='daily-cron-all-servers' hour=4 
+job='/path/to/hour-script.sh'"
+
+# Enabling a Job to run at system reboot
+ansible multi -s -m cron -a "name='daily-cron-all-servers' special_time=reboot 
+job='/path/to/startup-script.sh'"
+
+# Scheduling a Daily job
+ansible multi -s -m cron -a "name='daily-cron-all-servers' special_time=daily 
+job='/path/to/daily-script.sh'"
+
+# Scheduling a Weekly job
+ansible multi -s -m cron -a "name='daily-cron-all-servers' special_time=weekly 
+job='/path/to/daily-script.sh'"
+
+# Running operations in the background asynchronous with Polling ansible
+ansible multi -s -B 3600 -a "yum -y update" 
+ansible multi -m async_status -a "jid=763350539037"

@@ -1,0 +1,25 @@
+############## Basic ######################
+
+# Create a directory and all its parents
+mkdir -p foo/bar/baz
+
+# Create foo/bar and foo/baz directories
+mkdir -p foo/{bar,baz}
+
+# Create the foo/bar, foo/baz, foo/baz/zip and foo/baz/zap directories
+mkdir -p foo/{bar,baz/{zip,zap}}
+
+# Create dict foo1 foo2 foo3
+mkdir foo{1..3}
+
+# Create foo1/bar foo2/bar foo3/bar
+mkdir -p foo{1..3}/bar
+
+# Create current date as a directory and 1,2,3 in it.
+mkdir -p `date '+%y_%m_%d'`/{1,2,3} 
+
+# Create current $USER as a directory and 1,2,3 in it.
+mkdir -p $USER/{1,2,3} 
+
+# Create dir with parent and change premission
+mkdir -pm 777 /path

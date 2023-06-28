@@ -1,0 +1,41 @@
+# To display everything in <dir>, excluding hidden files:
+ls <dir>
+
+# Lists files in sub-directories as well
+ls -R
+
+# To display everything in <dir>, including hidden files:
+ls -a <dir>
+
+# List files one per line:
+ls -1
+
+# To display everything in <dir>, including hidden files with detailed information:
+ls -al <dir>
+
+# To display all files, along with the size (with unit suffixes) and timestamp
+ls -lh <dir>
+
+# To display files, sorted by size:
+ls -S <dir>
+
+# List all files, with trailing `/` added to directory names:
+ls -F
+
+# Long format list sorted by size (descending):
+ls -lS
+
+# To display directories only:
+ls -ld */ <dir>
+
+# Only list directories:
+ls -d */
+
+# To display directories only, include hidden:
+ls -d .*/ */ <dir>
+
+# Find Folder and List content 
+ls -la $(find /usr -type d -name cdhist)
+
+# To display with information
+ls -la $(which poweroff)

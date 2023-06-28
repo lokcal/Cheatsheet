@@ -1,0 +1,5 @@
+# Show Module snippet
+ansible-doc -s <module>
+
+# Show Module Examples
+ansible-doc <module> then search for EXAMPLES

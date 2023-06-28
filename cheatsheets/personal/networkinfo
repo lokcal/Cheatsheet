@@ -1,0 +1,14 @@
+---
+syntax: bash
+tags: [networking] 
+---
+
+command       cheat    Explanation
+
+fping 	               A High Performance Ping Tool (multihost pinging)
+mtr                    Matt's Traceroute: combined traceroute and ping tool.
+tcpdump
+dig                    DNS Lookup
+ss                     Utility to investigate sockets
+host                   Lookup Domain Name Server
+whois                  A whois lookup will tell you a lot of information about who owns an internet domain

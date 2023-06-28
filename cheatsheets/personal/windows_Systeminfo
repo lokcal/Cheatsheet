@@ -1,0 +1,59 @@
+# Display the current operating system versionDisplay the current operating system version
+VER
+
+# List system configuration
+SYSTEMINFO
+
+# Show the computer’s hostname on the network
+HOSTNAME
+
+# Show all installed device drivers
+DRIVERQUERY
+
+# Display/set system date
+DATE
+
+# Display/set system time
+TIME
+
+# Display Resultant Set of Policy (RSoP) information for a remote user and computer.
+GPRESULT
+
+# Update group policies
+GPUPDATE
+
+# Trace route and provide network latency and packet loss for each router and link in the path
+PATHPING
+
+# Provide various network services
+NET
+
+#
+
+
+# Assign as disk M:\ the path \\gameServ, logging in as “ReadyPlayerOne” and password “player1”
+NET use M: \\gameServ /user:"ReadyPlayerOne" player1
+
+# Find the IP address of any remote host
+TRACERT
+
+# Find IP addresses on a nameserver
+NSLOOKUP
+
+# Manipulate network routing tables
+ROUTE
+
+# Displays network route details
+ROUTE PRINT
+
+# List IP addresses and corresponding physical addresses (Address Resolution Protocol)
+ARP -A
+
+# Configure network interfaces, Windows firewall, routing, and remote access
+NETSH
+
+# Display current TCP/IP network connections and protocol statistics
+NETSTAT
+
+# Shows all MAC addresses of the network adapters
+GETMAC

@@ -1,0 +1,290 @@
+Usage and meaning of NR and FNR
+# For example there are two files:
+# fileA:
+# a
+# b
+# c
+# fileB:
+# d
+# e
+awk 'print FILENAME, NR,FNR,$0}' fileA fileB
+# fileA    1    1    a
+# fileA    2    2    b
+# fileA    3    3    c
+# fileB    4    1    d
+# fileB    5    2    e
+AND gate
+# For example there are two files:
+# fileA:
+# 1    0
+# 2    1
+# 3    1
+# 4    0
+# fileB:
+# 1    0
+# 2    1
+# 3    0
+# 4    1
+
+awk -v OFS='\t' 'NR=FNR{a[$1]=$2;next} NF {print $1,((a[$1]=$2)? $2:"0")}' fileA fileB
+# 1    0
+# 2    1
+# 3    0
+# 4    0
+
+
+
+#############INFO######################
+------- marks.txt------ 		------- employee.txt------
+1) Amit     Physics    80		ajay manager account 45000
+2) Rahul    Maths      90		sunil clerk account 25000
+3) Shyam    Biology    87		varun manager sales 50000
+4) Kedar    English    85		amit manager account 47000
+5) Hari     History    89		tarun peon sales 15000
+######## Basic ######################
+
+# Behaves like cat; print everything
+$ echo "one two three" | awk '{ print }'
+one two three
+
+# Print only the column 1; Seprater stanndard Space
+command | awk '{print $1}'
+
+# Change Sperator to :
+command | awk -F ":" '{print $1}'
+awk -F ":" '{print $1}' /etc/file
+
+# Change seprator and put spaces beetween columns
+command | awk -F ":" '{print $1" "$2}'
+command | awk -F '\t' '{ print $6 }'
+
+#  print the first column of the line wher the pattern matches
+awk '/pattern/{print $1}' file
+# print line where multiple patterns
+awk '/pattern|pattern/{print}'
+
+# print the first column of the line wher the pattern matches(NR)
+awk 'NR==1{print $1}' /etc/*release
+
+# print colum 4 where multiple patterns match
+awk '/pattern|pattern/{print $4}'
+
+# Print second line
+awk 'FNR == 2 {print}'
+
+# print the pattern with tailed line (pattern + 2 lines after)
+awk '/pattern/{n=NR+2} n>=NR' > test.txt
+
+# print the (Begin) first than rest
+awk 'Begin { print "Helllo Wolrd" } ~/file
+
+# CHange the seprator at Output file
+awk 'BEGIN{FS=":"; OFS="-"} {print $1,$2}' /etc/file
+
+# Use the filed separator / and print the last filed ($NF)
+awk -F "/" '/^\// {print $NF}' /etc/file
+
+# Use the filed separator / and print the last filed ($NF) and dont show duplicates (uniq)
+awk -F "/" '/^\// {print $NF}' /etc/file | uniq
+
+# Print loop devices with tab formating and (sum filed $2 and $3 (mathemetic function))
+df | awk '/\/dev/loop/ {print $1"\t"$2 + $3}'
+
+# Print every line with the very first charachter is either  b or c
+awk '$1 ~ /^[b,c]/ {print $0}' /etc/file
+
+# Print every line but dont print until to 3rd charachter of the lines
+awk ' print substr($0, 4)}' numbered.txt
+
+# prints every fifth line.
+awk 'NR % 5 == 0'
+
+# Return only lines greater then 7 characters
+awk 'length($0) >7' /etc/file
+
+# Print last filed if last field ($NF) is /bin/sh
+ps -ef | awk '{if ($NF == "/bin/sh") print $0}'
+
+# Take every number the squeare number of it and Print (for)
+awk 'BEGIN { for(i=1; i<=10; i++) print "The square root of", i, "is", i*i;}'
+
+# Print the line numbers
+awk 'END { print NR}' /etc/file
+
+# Print the line numbers and summ line numbers
+awk 'END { print NR}' /etc/file /etc/file2
+
+# Print all the lines less then 13
+awk 'NR < 13' file
+
+###### Printing Column or Field #####
+
+# print only certain columns from the input field. On executing this code, you get the following result.
+
+awk '{print $3 "\t" $4}' marks.txt
+
+Output
+Physics   80
+Maths     90
+Biology   87
+English   85
+History   89
+-----------------------------------------------------
+# By default, AWK prints all the lines that match pattern.In the example, we are searching form pattern # a. When a pattern match succeeds, it executes a command from the body block
+
+awk '/a/ {print $0}' marks.txt
+
+2) Rahul    Maths     90
+3) Shyam    Biology   87
+4) Kedar    English   85
+5) Hari     History   89
+------------------------------------------------------
+# Printing Columns by Pattern (print the line which has an 'a')
+awk '/a/ {print $3 "\t" $4}' marks.txt
+
+Maths    90
+Biology  87
+English  85
+History  89
+------------------------------------------------------
+
+# Print the lines which matches with the given pattern.
+awk '/manager/ {print}' employee.txt
+
+ajay manager account 45000
+varun manager sales 50000
+amit manager account 47000
+-------------------------------------------------------
+
+# Prints the colum 3 and 4 where, it finds the value 'Speicher'.
+free -h | awk '/^Speicher:/ {printf $3 " " $4}'
+
+# Print iproute with ip line up
+%20s: %s\n just means "print a string with width of 20 characters, then print a colon and a space, then print another string and a newline"
+ip r | awk '{printf("%3s: %s\n", $2, $1)}'
+
+##################### FS ##############################
+FS= FS command contains the field separator character which is used to divide fields on the input line. The default is “white space”, meaning space and tab characters. FS can be reassigned to another character (typically in BEGIN) to change the field separator.
+
+# List only first column data from db.txt file which have field separator as ‘,’. Prints only the Column before the seperator.
+awk ‘BEGIN{FS=”,”}{print $1}’ db.txt
+
+##################### OFS ##############################
+
+# Display only 1st and 4th column and the separator between at output for these columns should be $.
+awk ‘BEGIN{FS=”,”;OFS=” $ “}{print $1,$4}’ db.txt
+
+Output: John $ IBM
+		Barbi $ JHH
+		Mitch $ BofA
+		Tim $ DELL
+		Lisa $ SmartDrive
+
+# Specify output separator character
+printf '1 2 3' | awk 'BEGIN {OFS=":"}; {print $1,$2,$3}'
+
+##################### ORS ##############################
+ORS command stores the output record separator, which separates the output lines when Awk prints them. The default is a newline character. print automatically outputs the contents of ORS at the end of whatever it is given to print.
+
+#Print all the company names in single line which are in 4th column.
+awk -F’,’ ‘BEGIN{ORS=” “}{print $4}’ db.txt
+
+Output: IBM JHH BofA DELL SmartDrive
+
+##################### NF ##############################
+This variable keeps information about total fields in a given row. The final value of a row can be represented with $NF.
+
+# Print number of fields each row in db.txt file.
+awk {'print NF'} file.txt
+
+# Print last field in each row of db.txt file
+awk {'print $NF'} file.txt
+
+###################### NR #############################
+This variable keeps the value of present line number. This will come handy when you want to print line numbers in a file.
+
+# awk command with NR prints all the lines along with the line number.
+awk {'print NR,$0'} employee.txt
+
+1 ajay manager account 45000
+2 sunil clerk account 25000
+3 varun manager sales 50000
+
+# To print the first item along with the row number(NR) separated with ” – “ from each line in geeksforgeeks.txt:
+
+awk '{print NR "- " $1 }' geeksforgeeks.txt
+
+# print the pattern with tailed line (pattern + 2 lines after)
+awk '/pattern/{n=NR+2} n>=NR' > test.txt
+
+-------------------------------------------------------
+
+######### Inserting in specific Line ##########
+
+# insert value 12 in line 2 after bladeServerSlot =
+awk  '{FS=OFS="="}/bladeServerSlot/{$2=12}1'
+
+# Replace a text in a specific Line
+awk 'NR==34 { sub("foo", "bar") }'
+
+or (FNR) file number record
+
+awk 'FNR==34 { sub("foo", "bar") }'
+-------------------------------------------------------
+
+############## Special ##################################
+
+# sum integers from a file or stdin, one integer per line:
+printf '1\n2\n3\n' | awk '{ sum += $1} END {print sum}'
+
+# using specific character as separator to sum integers from a file or stdin
+printf '1:2:3' | awk -F ":" '{print $1+$2+$3}'
+
+# print a multiplication table
+seq 9 | sed 'H;g' | awk -v RS='' '{for(i=1;i<=NF;i++)printf("%dx%d=%d%s", i, NR, i*NR, i==NR?"\n":"\t")}'
+
+
+# Set tab as field separator
+awk -F $'\t'
+
+# Output as tab separated (also as field separator)
+awk -v OFS='\t'
+
+# Print line number and number of characters on each line
+awk '{print NR,length($0);}' filename
+
+# Find number of columns
+awk '{print NF}'
+
+# Reverse column order
+awk '{print $2, $1}'
+
+# Check if there is a comma in a column (e.g. column $1)
+awk '$1~/,/ {print}'
+
+# Split and do for loop
+awk '{split($2, a,",");for (i in a) print $1"\t"a[i]}' filename
+
+# Print filename and last line of all files in directory
+ls|xargs -n1 -I file awk '{s=$0};END{print FILENAME,s}' file
+
+# Add string to the beginning of a column (e.g add "chr" to column $3)
+awk 'BEGIN{OFS="\t"}$3="chr"$3'
+
+# Print field start with string (e.g Linux)
+awk '$1 ~ /^Linux/'
+
+# Sort a row (e.g. 1 40 35 12 23 --> 1 12 23 35 40)
+awk ' {split( $0, a, "\t" ); asort( a ); for( i = 1; i <= length(a); i++ ) printf( "%s\t", a[i] ); printf( "\n" ); }'
+
+##### REMOVE #####
+
+# Remove lines with string (e.g. 'bbo')
+awk '!/bbo/' file
+
+# Remove last column
+awk 'NF{NF-=1};1' file
+
+
+##################################################################################
+#################################################################################

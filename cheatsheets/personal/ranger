@@ -1,0 +1,269 @@
+Navigation
+Ranger uses many of the same keybindings as "vim". For instance, the movement commands mirror vim closely:
+
+j = Move down
+k = Move up
+h = Move to parent directory
+gg = Go to the top of the list
+G = Go to the bottom of the list
+<ctrl>-f = Page down
+<ctrl>-b = Page up
+J = Page down 1/2 page
+K = Page up 1/2 page
+H = Go back through navigation history
+L = Go forward through navigation history
+
+There are also some directory-specific shortcuts to move to common directories:
+
+gh = cd ~
+ge = cd /etc
+gu = cd /usr
+gd = cd /dev
+go = cd /opt
+gv = cd /var
+gm = cd /media
+gM = cd /mnt
+gs = cd /srv
+gr = cd /
+gR = cd to ranger's global configuration directory
+
+
+Working with Files
+Ranger allows you to perform many different operations on files from within its interface. 
+Here are some of the most common:
+
+i = Display file (useful if you'd like to view a text file in a pager instead of editing it)
+l or E = Open file (opens file in default file-handler)
+r = Open file with… (allows you to choose program to use)
+o = Change sort order (follow by character in menu selection)
+z = Change settings (commonly used toggle settings)
+zh = View hidden files
+<space> = Select current file
+t = Tag file (you can perform actions on tagged files)
+cw = Rename current file
+/ = Search for files
+n = Jump to next match
+N = Jump to previous match
+yy = Yank (copy) file
+dd = Mark file for cut operation
+<delete> = Delete selected file
+
+cw                   renaming file
+:rename              renaming file
+
+Tabbed Browsing
+Ranger also incorporates tabbed functionality to allow multiple viewports into the filesystem. 
+Here are the most common tab control keys:
+
+<ctrl>-n = Create new tab
+<ctrl>-w = Close current tab
+<tab> = Next tab
+<shift><tab> = Previous tab
+
+# Toggles / Settings
+
+i	toggle the preview window
+zh	toggle hidden files (e.g. dotfiles)
+zi	toggle literal / full-text previews / meta-info
+zf	toggle image full-size / fit to window
+zP	toggle between full ranger / deer-mode
+zp	toggle file details in deer-mode
+z-	reduce number of parent windows
+z+	increase number of parent windows
+
+Command Interface
+Like vim, ranger also includes a robust command interface. This allows you to manipulate files in more complex ways. 
+The abilities are extensive, so we will only be covering a few:
+
+! = Execute a command from the shell (non-ranger commands)
+: = Execute a ranger command
+du = Measure disk usage of current directory
+chmod = Change permissions of current file
+
+There are a number of flags that you can pass to commands to modify the operation of the commands. 
+They should be used with a dash "-" after typing "!" for shell commands or ":" for ranger commands:
+
+-s = Discard the output of the current command.
+-d = Detach the process and run in the background
+-p = Return the output in ranger's file pager
+-w = Do not return immediately after command execution. Hang until "Enter" is pressed
+-c = Perform command on current file, not the selected files
+Ranger also allows you to target specific files by substituting groups of files for command operations. 
+It accomplishes that by using placeholders that will be expanded with the correct files upon execution:
+
+%f = Substitute highlighted file
+%d = Substitute current directory
+%s = Substitute currently selected files
+%t = Substitute currently tagged files
+For example, if we wanted to change the names of multiple files, we could select them all with the space bar. After that, we can type:
+
+
+>:bulkrename %s
+This is a great way to rename multiple files. It gives you every file you'd like to change in a text editor.
+You simply modify as necessary and then exit out. The file manager will perform your changes when after you confirm.
+
+
+Basic Commands
+
+?	show basic commands in the minibuffer
+du	show selected files, file size
+q / ZZ	close tab or disable (quit) ranger
+Q / ZQ	disable (quit) ranger
+C-r	refresh ranger buffer
+
+Navigation
+
+k/up	up
+j/down	down
+h/-/left	to parent directory
+l/RET/right	to selected directory / open file
+gg	to top
+G	to bottom
+<	to previous directory
+>	to next directory
+gh	to home directory
+C-b	scroll ranger window full page up
+C-f	scroll ranger window full page down
+K/C-u	scroll ranger window half page up
+J/C-d	scroll ranger window half page down
+C-k	scroll preview window up
+C-j	scroll preview window down
+[	previous parent directory
+]	next parent directory
+;M-{	previous marked file / directory
+;M-}	next marked file / directory
+
+Search for a File / Directory
+
+f	search for file / directory
+/	search for file / directory
+
+Copy, Rename/Move or Delete
+When the copy command is called by pressing ;C, and only a single file or directory is selected. 
+Then a you'll be asked to enter a new name. However when it's called with multiple marked files / directories, 
+then a you'll be asked for the path to the target directory.
+
+;C	copy the current/marked file(s) / dir(s)
+R	rename/move the current/marked file(s) / dir(s)
+D	delete the current/marked file(s) / dir(s)
+;d	flag current file/dir for deletion, and select next
+;x	delete flagged file(s) / dir(s)
+
+Subdirectories
+
+I	insert subdirectory from selected folder
+gk	move to prev subdirectory
+gj	move to next subdirectory
+
+
+Marking
+
+t	toggle mark on current file / directory
+;m/C-SPC/TAB	mark current file / dir, and select next
+;u	unmark current file / dir, and select next
+;U	unmark all files
+v	invert all marks
+"	mark files (regexp)
+
+Sorting
+
+on	name
+oN	name (reverse)
+oe	extension
+oE	extension (reverse)
+os	size
+oS	size (reverse)
+ot	modified date/time
+oT	modified date/time (reverse)
+oc	created date/time
+oC	created date/time (reverse)
+zd	sort directories first or last
+
+
+Toggles / Settings
+
+i	toggle the preview window
+zh	toggle hidden files (e.g. dotfiles)
+zi	toggle literal / full-text previews
+zf	toggle image full-size / fit to window
+zP	toggle between full ranger / deer-mode
+zp	toggle file details in deer-mode
+z-	reduce number of parent windows
+z+	increase number of parent windows
+
+Shell
+
+!	run shell command on file
+;&	run async shell command on file
+S	eshell popup window
+
+Other
+
+;+/+	create directory
+;=/=	diff: current file and asks for 2nd file
+;g	revert current buffer, with file on disk
+;k	kill (hide) marked lines, C-r to unhide
+
+Mouse
+
+mouse-1	move to selected directory, or open file and quit ranger
+mouse-3	move to parent directory
+
+
+
+
+
+
+
+
+
+
+Bookmark Navigation
+Ranger makes use of the built-in bookmarks functionality in Emacs. By creating bookmarks with the name ranger-?, where ? can be any single key. This allows for fast navigation, to predefined directories, that are persistent across sessions. A new mark can be set with m, and can be accessed with the tilde key (below Esc) or with the single quote key. A prompt of all directory bookmarks can be accessed by pressing: B.
+
+Key Binding	Description
+`/'	go to bookmark
+m	set bookmark
+um	delete bookmark
+B	show the bookmarks prompt
+Tab and History Usage
+Ranger offers tabs to allow for quick navigation between temporary working directories. These do not persist across sessions, but are useful when navigating to multiple paths in the file system. In addition to tabs, the file navigation history, of the current ranger session, is also saved. This allows for traversal to recently accessed directories. By default, ranger shows the file name of the buffer as a tab. This can be adjusted by modifying the ranger-tabs-style variable.
+
+Key Binding	Description
+gn	create a new tab
+gT	go to previous tab
+gt	go to next tab
+gc	close current tab
+uq	restore the last closed tab
+zz	search through history
+H	history back
+L	history next
+Copy and Paste Functionality
+Ranger utilizes a copy ring, to save a persistent fileset, that can be moved or copied to a target directory. This is consistent with the way the ranger file manager manages file movement. yy specifies to copy the marked or currently hovered files. Additionally a flag denoted as "P" will visually indicate what files are marked for copying. dd likewise specifies that the files will be moved instead of copied. Files marked for movement, are flagged with "M".
+
+Using the universal prefix <C-u> prior to this binding will update the selected files to the current copy register. To check the files in the current copy ring, press p?.
+
+To paste the files / directories most recently added to the copy ring, use pp, or to overwrite existing files, use po.
+
+Key Binding	Description
+yy	mark files to copy
+dd	mark files to move
+pp	paste files in copy ring
+po	paste files in copy ring and overwrite existing
+p?	show the copy contents
+Selected File Actions
+There are additional features that allow for opening a file or directory, while maintaining the previously selected window, before ranger is initiated. These keys will open the current file or all the marked files as described below. In the case of running this in deer, the deer window will not close and a new split / frame will be added as described. This allows the creation of an additional deer window, if the currently selected file, also is a directory for dual pane usage.
+
+Key Binding	Description
+ws	exit ranger and open selected file in horizontal split
+wv	exit ranger and open selected file in vertical split
+wf	exit ranger and open selected file in new frame
+we	open the selected file in external app
+File Sorting and Listing
+Ranger uses dired's default sorting mechanism, but it also adds some additional functionality. The default listing switches that are supplied to dired can be adjusted using the ranger-listing-switches parameter. Once they are set, then all ranger windows will show these parameters.
+
+Additionally, the dired buffer is modified to sort directories to the top. If this is not the desired functionality, then the user can change ranger-listing-dir-first.
+
+The o key provides sorting options for the current buffer. In cases when the variable ranger-persistent-sort is set, then this sorting method is used for all other ranger buffers.
+
+

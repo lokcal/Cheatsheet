@@ -1,0 +1,15 @@
+
+-b = set target bandwidth to n bits/sec (default 1 Mbit/sec).  This setting requires UDP (-u)
+-n, --num n[KM] = number of bytes to transmit (instead of -t)
+-t, --time n = time in seconds to transmit for (default 10 secs)
+
+# Starting Server
+iperf -s
+
+# Starting Client
+iperf -c <Host>
+
+# Check bandwith with GB
+iperf -c <Host> -n 1GB
+iperf -c <Host> -n 10240
+

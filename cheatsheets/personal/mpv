@@ -1,0 +1,26 @@
+---
+tags: [mpv]
+---
+
+########## Basic ###################
+#Welches decoding wird benutzt 
+Decoding info
+
+mpv --msg-level=vd=debug /file 
+
+
+# Decoding unterstützung wird angezeigt
+vdpauinfo
+
+
+#Welches decoding wird benutzt 
+#Decoding info
+
+mpv --msg-level=vd=debug /file 
+
+
+# Decoding unterstützung wird angezeigt
+vdpauinfo
+
+
+

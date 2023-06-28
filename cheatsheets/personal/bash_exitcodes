@@ -1,0 +1,11 @@
+#
+
+	## Exit Codes
+	0	Successful termination
+	1	General Errors like a typo
+	2	Syntax Issue in the shell
+	126	Command invoked cannot execute .It can be Permission problem or command is not an executable
+	127	Command not found .It can be a invalid Command or a typo
+	128	Invalid argument to exit .Valid values for exit is from 0 to 255
+	130	Shell terminated by CTRL +C
+	255*	Exit status out of range	exit -1	exit takes only integer args in the range 0 – 255

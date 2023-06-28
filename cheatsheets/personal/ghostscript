@@ -1,0 +1,9 @@
+######## Basic #################
+
+
+# Convert pdf to PDF/A
+gs -sDEVICE=pdfwrite -dBATCH -dNOPAUSE -dSAFER -sColorConversionStrategy=UseDeviceIndependentColor -dEmbedAllFonts=true -dPrinted=true -dPDFA -sProcessColorModel=DeviceRGB -dPDFACompatibilityPolicy=1 -dDetectDuplicateImages -r150 -dFastWebView=true -sOutputFile=output.pdf input.pdf
+
+gs -dPDFA=3 -dBATCH -dNOPAUSE -sColorConversionStrategy=RGB -sDEVICE=pdfwrite -sOutputFile=output.pdf PDFA_def.ps input.pdf
+
+

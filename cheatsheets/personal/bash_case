@@ -1,0 +1,57 @@
+---
+tags: [ Bash, case ]
+---
+
+# Syntax of Bash Case
+case EXPRESSION in
+CASE1)
+    COMMAND-LIST
+    ;;
+CASE2)
+    COMMAND-LIST
+    ;;
+ 
+ 
+CASEN)
+    COMMAND-LIST
+    ;;
+esac
+
+#  ╭────────────────────────────────╮
+#  │ # To implement a case command: │
+#  ╰────────────────────────────────╯
+case "$1"
+in
+    0) echo "zero found";;
+    1) echo "one found";;
+    2) echo "two found";;
+    3*) echo "something beginning with 3 found";;
+esac
+
+# Another case example
+if [ -z $1 ]; then
+   echo "You must specify a model name. e.g. Fiesta"
+   exit
+fi
+
+case $1 in
+     fiesta|Fiesta|FIESTA)
+        echo "You entered $1"
+        echo "The model $1 is manufactured by Ford"
+        ;;
+     mondeo|Mondeo|MONDEO)
+        echo "You entered $1"
+        echo "The model $1 is manufactured by Ford"
+        ;;
+     astra|Astra|ASTRA)
+        echo "You entered $1"
+        echo "The model $1 is manufactured by Vauxhall"
+        ;;
+     insignia|Insignia|INSIGNIA)
+        echo "You entered $1"
+        echo "The model $1 is manufactured by Vauxhall"
+        ;;
+     *)
+        echo "Sorry, car $1 is not recognised"
+esac
+

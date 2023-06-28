@@ -1,0 +1,19 @@
+####### Basic ########
+
+# Show User account info
+chage -l USERNAME
+
+# Lock Userac­count
+passwd -l USER
+
+# force users pw to expired
+chage -d 0 USERNAME
+
+# Set warning in (10) days
+chage -W 10 USERNAME
+
+# Set last pw change date
+chage -d Year-M­ont­h-Day USERNAME
+
+# Set Expire date of account
+chage -E Year-M­ont­h-Day USERNAME

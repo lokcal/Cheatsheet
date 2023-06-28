@@ -1,0 +1,17 @@
+# To split a large text file into smaller files of 1000 lines each:
+split <file> -l 1000
+
+# To split a large text file into smaller files of 100 lines each:
+split -l 100 .bashrc 
+
+# To split a large binary file into smaller files of 10M each:
+split <file> -b 10M
+
+# split the file in 5 equal file parts
+split -n 5 .bashrc
+
+# split in byte size
+split -b 512 .bashrc
+
+# To consolidate split files into a single file:
+cat x* > <file>

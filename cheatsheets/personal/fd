@@ -1,0 +1,26 @@
+---
+syntax: bash
+tags: [ fd, find ]
+---
+explanation: An alternative to `find`. Aims to be faster and easier to use than `find`.
+
+# Recursively find files matching the given pattern in the current directory:
+fd pattern
+
+# Find files that begin with "foo":
+fd '^foo'
+
+# Find files with a specific extension:
+fd --extension txt
+
+# Find files in a specific directory:
+fd pattern path/to/directory
+
+# Searching for a particular file name:
+fd -g <file name>.<file extension>
+
+# Include ignored and hidden files in the search:
+fd --hidden --no-ignore pattern
+
+# Excluding specific files or directories:
+fd -E <file or directories which should be excluded> <search query>

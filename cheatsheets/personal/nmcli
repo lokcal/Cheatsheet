@@ -1,0 +1,107 @@
+---
+syntax: bash
+tags: [ networking ]
+---
+# Show examples
+man nmcli-examples
+
+# Interactive Editing
+nmcli con edit
+# Networkmanger TUI
+nmtui
+
+# To get a general status -p(pretty)
+nmcli -p general
+
+# reload the configuration profiles
+nmcli con reload
+
+# Review the available devices
+nmcli -p dev status
+
+# List all the configuration of interface
+nmcli con show eth2
+
+# Connect to a wireless access point - Parameters:
+# 	<wiface> -- the name of your wireless interface
+#	<ssid> -- the SSID of the access point
+#	<pass> -- the WiFi password
+nmcli device wifi connect <ssid> password <pass> iface <wiface>
+
+# Disconnect from WiFi - Parameters:
+#	<wiface> -- the name of your wireless interface
+nmcli d wifi disconnect iface <wiface>
+
+# Get WiFi status (enabled / disabled)
+nmcli radio wifi
+
+# Enable / Disable WiFi
+nmcli radio wifi <on|off>
+
+# Show all available WiFi access points
+nmcli dev wifi list
+
+# Refresh the available WiFi connection list
+nmcli dev wifi rescan
+
+# Create a new ethernet connection and assign DHCP IP Address
+nmcli con add con-name eth2 type ethernet ifname eth2 ipv4.method auto
+
+# To create a new connection profile without locking it to a specific device, simply omit the ifname option in the command:
+nmcli connection add type ethernet con-name dyn_ip
+
+# to create a connection named static_ip assigned a static IP address (in this case 192.168.1.200) the following command would be used:
+nmcli con add type ethernet con-name static_ip ifname eno0 ip4 192.168.1.200/24 gw4 192.168.1.1
+
+# Show all available connections
+nmcli con
+
+# Show only active connections
+nmcli con show --active
+
+# Add a dynamic ethernet connection - parameters:
+#	<name> -- the name of the connection
+#	<iface_name> -- the name of the interface
+nmcli con add type ethernet con-name <name> ifname <iface_name>
+
+
+# Disabeling autoconnect for this connection
+nmcli con mod <connection name> connection.autoconnect no
+
+# Enable autoconnect for this connection
+nmcli con mod <connection name> connection.autoconnect yes
+
+# Delete connetion
+nmcli con delete <connection name> 
+
+###### Bridge #######
+
+# creating a bridge with STP disabled (to avoid the bridge being advertised on the network):
+nmcli connection add type bridge ifname br0 stp no
+
+# Making interface enp30s0 a slave to the bridge:
+nmcli connection add type bridge-slave ifname enp30s0 master br0
+
+# Setting the existing connection as down:
+nmcli connection down Connection
+
+# Setting the new bridge as up:
+nmcli connection up bridge-br0
+
+# When the bridge is fully set up, it can be assigned an IP address
+ip addr add dev bridge_name 192.168.66.66/24
+
+##########################
+
+# Import OpenVPN connection settings from file:
+nmcli con import type openvpn file <path_to_ovpn_file>
+
+# Bring up the ethernet connection
+nmcli con up <name>
+
+# To get the current hostname
+nmcli general hostname
+
+# update the hostname
+nmcli general hostname  centos-8.golinuxcloud.com
+

@@ -1,0 +1,40 @@
+#############################################
+# Manpages in Doplhin
+man:/<command>
+
+# log upload to pastebin
+dmesg|nopaste (privatebin site)
+
+# open visudo editor with nano
+EDITOR=nano visudo
+
+# open suedors
+visudo
+
+# Show realpath of file
+realpath file
+
+# info about file
+file <file>
+
+# execute a program periodically, showing output fullscreen 
+watch <command>					# example watch ss -tulpn
+
+# Time gives resource usage and finished time
+time <command>
+
+# Timeouts after 5 sec
+timeout --preserve-status 5 ping google.com
+
+# Timeouts after 8 sec the tailing
+timeout 8s tail -f /var/log/syslog
+
+# Display calender for year 2030 or with month
+cal 2030
+cal june 2030
+
+# Curl own IP-adress
+curl httpbin.org/ip 
+
+# display random cheatsheet in sublime (head -1 = 1 sheet)
+find .config/cheat/cheatsheets/personal -type f | shuf | head -1 | xargs subl3

@@ -1,0 +1,27 @@
+# Discovering network shares
+nmap -p 139 -sT "192.168.1.*"
+
+# check for NetBIOS names with option A.
+nmblookup -A 192.168.1.1
+
+# List smb tree
+smbclient -L \\PUTER:
+smbclient -L //xxx.xxx.xxx.xxx/ -Uuser_name
+
+# Login to the Share
+smbclient //ip
+
+# mount Samba manual 
+mount -t cifs //SERVER/sharename /mnt/mountpoint -o username=username,password=password,workgroup=workgroup,iocharset=utf8,uid=username,gid=group
+
+# mount samba in Fstab
+//SERVER/sharename /mnt/mountpoint cifs _netdev,username=myuser,password=mypass 0 0
+
+# Path for Credentials files (for fstab)
+/etc/samba/credentials/share
+username=myuser
+password=mypass
+
+# chown root:root /etc/samba/credentials
+# chmod 700 /etc/samba/credentials
+# chmod 600 /etc/samba/credentials/share

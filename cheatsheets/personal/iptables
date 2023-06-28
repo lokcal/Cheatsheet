@@ -1,0 +1,163 @@
+############### Syntax #################
+-t (table) -L (list) -v (verbose) -dport (destionation Port) -sport (source Port)
+(dport syntax 8080:8082 = 8080,8081,8082)
+
+############Jump-Target####################
+Accept   = Packages Accepted
+Drop     = Packages Blocked (extern PC dont get notified)
+Rejected = Packages Blocked (extern PC gets info)
+
+-A = Append, -D = Delete, -d destination -p Protocol, -j Jump-Target
+-s source, -i interface,
+
+############### Saving/Restore changes ######################
+iptables-save -f /etc/iptables/iptables.rules
+
+iptables-restore /etc/iptables/iptables.rules
+
+############### Reseting Rules ######################
+iptables -F
+iptables -X
+iptables -t nat -F
+iptables -t nat -X
+iptables -t mangle -F
+iptables -t mangle -X
+iptables -t raw -F
+iptables -t raw -X
+iptables -t security -F
+iptables -t security -X
+iptables -P INPUT ACCEPT
+iptables -P FORWARD ACCEPT
+iptables -P OUTPUT ACCEPT
+
+############ Check existing rules##############
+iptables -L -v
+
+# Check the rules in the NAT table
+iptables -t nat -L -v -n
+
+# Monitor Iptables like Htop
+watch --interval=5 'iptables -nvL | grep -v "0     0"'
+
+# Journalctl for reading LOGs of iptable
+sudo journalctl -f | grep "IN=.*OUT=.*" | less
+
+############ Accepting/Blocking #####################
+
+# Block Specific IP Address in IPtables 
+iptables -A INPUT -s xxx.xxx.xxx.xxx -j DROP
+
+# Block Specific IP Address in IPtables with comment
+iptables -A INPUT -s xxx.xxx.xxx.xxx -j DROP -m comment --comment TEXT
+
+# Block Specific IP Address in IPtables  add to 2nd line of file
+iptables -I INPUT 2 -s xxx.xxx.xxx.xxx -j DROP
+
+# Switch Rule with the new one. If previously was wrong.
+iptables -I INPUT 2 -s xxx.xxx.xxx.xxx -j DROP
+
+# Block Specific IP Address with specific port in IPtables 
+iptables -A INPUT -p tcp -s xxx.xxx.xxx.xxx -j DROP
+
+# Block Connection on Network Interface
+iptables -A INPUT -i eth0 -s xxx.xxx.xxx.xxx -j DROP
+
+# Remove a Rule with Ip Address from Iptables
+iptables -D INPUT -s xxx.xxx.xxx.xxx -j DROP
+
+# Remove rule with Line-number
+iptables -D INPUT 2
+
+# Block Specific Port (Outgoing) on IPtables 
+iptables -A OUTPUT -p tcp --dport xxx -j DROP
+
+# Allow incoming connections by port 
+iptables -A INPUT -p tcp --dport xxx -j ACCEPT
+
+# Allow Specific Network Range on Particular Port on IPtables
+iptables -A OUTPUT -p tcp -d 192.168.100.0/24 --dport 22 -j ACCEPT
+
+# Block Incoming Ping Requests on IPtables
+iptables -A INPUT -p icmp -i eth0 -j DROP
+
+# for multiple ports (--match multiport --dports xxx,xxx)
+iptables -A INPUT -p tcp --match multiport --dports 110,143,993,995 -j ACCEPT
+
+#################### Forwarding ###############################
+
+# Setup Port Forwarding in IPtables
+iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 25 -j REDIRECT --to-port 2525
+
+##################### LOG ######################################
+
+# Enable logging for an rule
+
+iptables -A INPUT -p tcp -m tcp --tcp-flags FIN,SYN FIN,SYN -j LOG
+iptables -A INPUT -p tcp -m tcp --tcp-flags FIN,SYN FIN,SYN -j DROP
+
+
+# Show hit for rules with auto refresh
+watch --interval 0 'iptables -nvL | grep -v "0     0"'
+
+# Show hit for rule with auto refresh and highlight any changes since the last refresh
+watch -d -n 2 iptables -nvL
+
+# Block the port 902 and we hide this port from nmap.
+iptables -A INPUT -i eth0 -p tcp --dport 902 -j REJECT --reject-with icmp-port-unreachable
+
+# Note, --reject-with accept:
+#	icmp-net-unreachable
+#	icmp-host-unreachable
+#	icmp-port-unreachable <- Hide a port to nmap
+#	icmp-proto-unreachable
+#	icmp-net-prohibited
+#	icmp-host-prohibited or
+#	icmp-admin-prohibited
+#	tcp-reset
+
+# Add a comment to a rule:
+iptables ... -m comment --comment "This rule is here for this reason"
+
+
+# To remove or insert a rule:
+# 1) Show all rules
+iptables -L INPUT --line-numbers
+# OR iptables -nL --line-numbers
+
+# Chain INPUT (policy ACCEPT)
+#     num  target prot opt source destination
+#     1    ACCEPT     udp  --  anywhere  anywhere             udp dpt:domain
+#     2    ACCEPT     tcp  --  anywhere  anywhere             tcp dpt:domain
+#     3    ACCEPT     udp  --  anywhere  anywhere             udp dpt:bootps
+#     4    ACCEPT     tcp  --  anywhere  anywhere             tcp dpt:bootps
+#
+ 2.b) OR INSERT a rule.
+iptables -I INPUT {LINE_NUMBER} -i eth1 -p tcp --dport 21 -s 123.123.123.123 -j ACCEPT -m comment --comment "This rule is here for this reason"
+
+####################################################################################
+fertig
+
+# iptables
+# Program that allows configuration of tables, chains and rules provided by the Linux kernel firewall.
+# More information: <https://www.netfilter.org/projects/iptables/>.
+
+# View chains, rules, and packet/byte counters for the filter table:
+sudo iptables -vnL
+
+# Set chain policy rule:
+sudo iptables -P chain rule
+
+# Append rule to chain policy for IP:
+sudo iptables -A chain -s ip -j rule
+
+# Append rule to chain policy for IP considering protocol and port:
+sudo iptables -A chain -s ip -p protocol --dport port -j rule
+
+# Delete chain rule:
+sudo iptables -D chain rule_line_number
+
+# Save iptables configuration of a given table to a file:
+sudo iptables-save -t tablename > path/to/iptables_file
+
+# Restore iptables configuration from a file:
+sudo iptables-restore < path/to/iptables_file

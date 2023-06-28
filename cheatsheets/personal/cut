@@ -1,0 +1,15 @@
+# To cut out the third field of text or stdoutput that is delimited by a #:
+shows field (f)3 after delitmer
+cut -d '#' -f3
+
+# To cut out the  sec and fieldl of the text that is delited by a ,
+cut -d, -f 2,3 file
+
+# cut the first 10 characters of line including space
+echo " text" | cut -c 1-10
+
+#  cut only the 5th field delimited with space
+echo " text" | cut -d ' '  f5
+
+# cut only the last field (reversed)
+cut -d'.' -f 1 | rev

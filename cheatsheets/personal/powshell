@@ -1,0 +1,186 @@
+# Basic commands
+Lists all available commands
+Get-Command
+
+Displays help information for a command
+Get-Help <command>
+
+Lists the properties and methods of an object
+Get-Member
+
+Lists all running processes
+Get-Process
+
+Lists all installed services
+Get-Service
+
+Retrieves information from Windows Management Instrumentation (WMI)
+Get-WmiObject
+
+Clears the console screen
+Clear-Host
+
+# Working with files and directories
+Lists the files and folders in the current directory
+Get-ChildItem
+
+Changes the current directory
+Set-Location
+
+Creates a new file or directory
+New-Item
+
+Copies a file or directory
+Copy-Item
+
+Deletes a file or directory
+Remove-Item
+
+Renames a file or directory
+Rename-Item
+
+Moves a file or directory
+Move-Item
+
+Checks if a file or directory exists
+Test-Path
+
+# Working with variables
+Assigns a value to a variable
+$variable = <value>
+
+Displays the value of a variable
+$variable
+
+Clears the value of a variable
+Clear-Variable
+
+# Working with arrays
+Creates a new object
+New-Object
+
+Creates an empty array
+@()
+
+Creates an array with the specified values
+@(<value1>, <value2>, ...)
+
+Accesses the element at the specified index
+$array[index]
+
+Gets the number of elements in the array
+$array.length
+
+# Conditional statements
+Executes a command if the condition is true
+if (<condition>) { <command> }
+
+Executes a command if the condition is true, and another command if the condition is false
+if (<condition>) { <command> } else { <command> }
+
+Executes a command based on the value of an expression
+switch (<expression>) { <case1> { <command> } <case2> { <command> } ... }
+
+# Loops
+Executes a command for each item in a collection
+foreach (<item> in <collection>) { <command> }
+
+Executes a command while the condition is true
+while (<condition>) { <command> }
+
+Executes a command at least once, and then repeats while the condition is true
+do { <command> } while (<condition>)
+
+Executes a command for a specified number of times
+for (<initialization>; <condition>; <increment>) { <command> }
+
+# Other useful commands
+Measures the time it takes to run a command
+Measure-Command
+
+Writes output to a file
+Out-File
+
+Selects specified properties of an object
+Select-Object
+
+Sorts objects by specified properties
+Sort-Object
+
+Formats output as a list
+Format-List
+
+Formats output as a table
+Format-Table
+
+Lists all defined aliases
+Get-Alias
+
+Creates a new alias
+New-Alias
+
+Removes an alias
+Remove-Alias
+
+
+
+# Basic system information
+Displays the operating system name, version, and build number
+Get-CimInstance Win32_OperatingSystem | Select-Object Caption, Version, BuildNumber
+
+Displays the computer name
+$env:COMPUTERNAME
+
+Displays the username
+$env:USERNAME
+
+Displays the IP addresses of the computer
+Get-NetIPAddress | Where-Object { $_.InterfaceAlias -ne "Loopback Pseudo-Interface 1" } | Select-Object IPAddress
+
+Displays the MAC addresses of the computer
+Get-NetAdapter | Select-Object Name, MacAddress
+
+# CPU information
+Displays the number of processors and cores
+Get-CimInstance Win32_ComputerSystem | Select-Object NumberOfProcessors, NumberOfLogicalProcessors
+
+Displays the CPU model and speed
+Get-CimInstance Win32_Processor | Select-Object Name, MaxClockSpeed
+
+# Memory information
+Displays the total physical memory installed
+Get-CimInstance Win32_ComputerSystem | Select-Object TotalPhysicalMemory
+
+Displays the amount of free and used memory
+Get-CimInstance Win32_OperatingSystem | Select-Object FreePhysicalMemory, TotalVisibleMemorySize
+
+# Disk information
+Displays the list of disks and their properties
+Get-PhysicalDisk | Select-Object MediaType, MediaTypeDescription, Model, Size
+
+Displays the list of volumes and their properties
+Get-Volume | Select-Object DriveLetter, FileSystemLabel, FileSystem, SizeRemaining, Size
+
+# Network information
+Displays the list of network adapters and their properties
+Get-NetAdapter | Select-Object Name, InterfaceDescription, Status, LinkSpeed, IPAddress
+
+Displays the list of network connections and their properties
+Get-NetConnectionProfile | Select-Object Name, IPv4Connectivity, IPv6Connectivity, NetworkCategory
+
+# Windows updates information
+Displays the list of installed updates
+Get-Hotfix
+
+Displays the list of available updates
+Get-WindowsUpdate
+
+# System uptime information
+Displays the system uptime
+(Get-CimInstance Win32_OperatingSystem).LastBootUpTime
+
+# Displays the last modified date of a file
+Get-Item <path-to-file> | Select-Object LastWriteTime
+
+Converts the LastBootUpTime to a readable format
+(Get-Date) - (Get-CimInstance Win32_OperatingSystem).LastBootUpTime

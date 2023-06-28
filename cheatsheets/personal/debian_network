@@ -1,0 +1,25 @@
+# Static ip
+
+source /etc/network/interface
+
+# The loopback network interface
+auto lo
+iface lo inet loopback
+
+# The primary network interface
+allow-hotplug eth0
+iface eth0 inet static
+      address 10.1.1.125
+      netmask 255.0.0.0
+      gateway 10.1.1.1
+
+# Dhcp
+source /etc/network/interfaces.d
+
+# The loopback network interface
+auto lo
+iface lo inet loopback
+
+# The primary network interface
+allow-hotplug eth0
+iface eth0 inet dhcp

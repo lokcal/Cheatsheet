@@ -1,0 +1,50 @@
+# To download a single file
+wget http://path.to.the/file
+
+# Download File with Different Name
+wget -O wget.zip http://ftp.gnu.org/gnu/wget/wget2-2.0.0.tar.gz
+
+# To download a file into a directory
+wget -P path/to/directory http://path.to.the/file
+
+# To continue an aborted downloaded
+wget -c http://path.to.the/file
+
+# Downlo­ading Files recusively only jpg,png files
+wget -r -A jpg,png http://url.com/dir/
+
+# Downlo­ading Files recusively everthing except jpg,png
+wget -r -R jpg,png http://url.com/dir/
+
+# Downloading only if file is newer
+wget -N http://url/file
+
+# To download multiples files with multiple URLs
+wget URL1 URL2
+
+# To parse a file that contains a list of URLs to fetch each one
+wget -i url_list.txt
+
+# To mirror a whole page locally
+wget -pk http://path.to.the/page.html
+
+# To mirror a whole site locally
+wget -mk http://site.tl/
+
+# To download files according to a pattern
+wget http://www.myserver.com/files-{1..15}.tar.bz2
+
+# To download all the files in a directory with a specific extension if directory indexing is enabled
+wget -r -l1 -A.extension http://myserver.com/directory
+
+# Download all PDF file from webseite
+wget -m -A '*.pdf' -nd -e robots=off http://url
+
+# Allows you to download just the headers of responses (-S --spider) and display them on Stdout (-O -).
+wget -S --spider -O - http://google.com
+
+# Download via Ftp
+wget --ftp-user=U­SERNAME --ftp-­passwo­rd=PASSWORD ftp://ftp.url.com/filename.tar.gz
+
+# Change the User-Agent to 'User-Agent: toto'
+wget -U 'toto' http://google.com

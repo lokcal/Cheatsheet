@@ -1,0 +1,70 @@
+############# Basic ##########################
+
+# Display the contents of a file
+cat test1.txt
+
+# without using cat
+< file
+
+# without using cat 2 files
+< file < file 2
+
+# Create text fiile
+cat > test.txt 
+crtl + c
+
+# Append Text to Existing File
+cat >> test1.txt
+crtl + c
+
+# Display Contents of Multiple Files
+cat test1.txt test2.txt
+
+# Create one file from many
+cat test1 test2 test3 > file.txt
+
+# Display contents with line numbers
+cat -n /path/to/foo
+
+# Display the Contents in Reverse Order
+tac test3.txt
+
+# Display contents with line numbers (blank lines excluded)
+cat -b test.txt
+
+# Merge two text dokument to one
+cat foo1.txt foo2.txt > foo.txt
+
+# Append File Contents to Another File
+cat test1.txt >> test3.txt
+
+# More and Less Options (Manage Large Files)
+cat test4.txt | less
+
+# Show the End of Line
+cat -e test1.txt
+
+# Show TAB Separated Lines
+cat -t test4.txt
+#
+# Remove Blank Lines
+cat -s test4.txt
+
+
+
+#Pass multi-line string to a file in Bash
+$ cat <<EOF > print.sh
+#!/bin/bash
+echo \$PWD
+echo $PWD
+EOF
+
+# Pass multi-line string to a pipe in Bash
+$ cat <<EOF | grep 'b' | tee b.txt
+foo
+bar
+baz
+EOF
+
+
+##########################################

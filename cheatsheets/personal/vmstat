@@ -1,0 +1,24 @@
+# vmstat
+# Report information about processes, memory, paging, block IO, traps, disks and CPU activity.
+# More information: <https://linux.die.net/man/8/vmstat>.
+
+# Display virtual memory statistics:
+vmstat
+
+# List Active and Inactive Memory
+vmstat -a
+
+# Display reports every 2 seconds for 5 times:
+vmstat 2 5
+
+# Vmstat with Timestamps
+vmstat -t 1 5
+
+# Statistics of Various Counter
+vmstat -s
+
+# Monitor Linux Disks Statistics
+vmstat -d
+
+# Display Statistics in Megabytes
+vmstat -S M 1 5

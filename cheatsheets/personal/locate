@@ -1,0 +1,13 @@
+################## Basic ####################
+
+# Update search Database
+updatedb
+
+# search for basename Test (Search for the word Test)
+locate --basename Test
+
+# Search for files with test
+locate test
+
+#############################################
+#############################################

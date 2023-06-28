@@ -1,0 +1,28 @@
+---
+tags: [ ssh ]
+---
+explanation: ssh-add — adds private key identities to the OpenSSH authentication agent
+
+# To add private key:
+ssh-add <keyfile>
+
+# To load resident keys from FIDO2 authenticator:
+ssh-add -K
+
+# To store a GitHub SSH passphrase in your keychain:
+ssh-add -K ~/.ssh/github_rsa
+
+# To list all public keys:
+ssh-add -L
+
+# To list fingerprints of all keys:
+ssh-add -l
+
+# To delete key:
+ssh-add -d <keyfile>
+
+# Delete all cached private keys
+ssh-add -D
+
+# Set up a maximum lifetime for identities/private keys.Examples of lifetime:• 600 = 600 seconds (10 minutes)• 23m = 23 minutes• 1h45 = 1 hour 45 minutes
+ssh-add -t lifetime

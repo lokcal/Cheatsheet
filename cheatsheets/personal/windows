@@ -1,0 +1,76 @@
+# mounting share
+net user x: \\ip\path
+
+# Force register of every pc on the network to register the dns
+ipconfig /registerdns
+
+
+###########################################
+| 	 Domaincontroller / AD            |
+###########################################
+# Look if repliication of AD is correct
+repadmin /showreps
+
+# Finding errors on Domaincontroller
+dcdiag
+
+# Find errors on Domaincontroller with more Verbose
+dcdiag /v
+
+# Find erros in all Domaincontroller
+dcdiag /e
+
+# Output to file
+dcdiag /v >C:\temp\dcdiag.txt
+
+###########################################
+|                DNS          		  |
+###########################################
+
+# Test DNS if DC gets ip
+nletst /dnsgetdc:<domain>
+
+# Test DNS if DC gets ip
+nltest /dnsgetdc:<domain>.de (FQDN)
+
+# list DC in the domain
+nltst /dclist:<domainname>
+
+# Register dns new on DNS Server
+nltest /dsregdns
+
+# Check Vertrauenstelleung 
+nltest /domain_trust
+
+# Check vertrauenstellung of the Domaincontrollers
+nltest /sc_query:<domain>
+
+# Verify vertrauenstellung of the Domaincontrollers
+nltest /sc_verify:<domain>
+
+# Reset the vertraungstellung of the Domaincontollers
+nltest /sc_reset:<domain>
+
+#########################################
+|
+#########################################
+
+# Show last repilcation connections
+repadmin /showreps
+
+# Show last repilcation connections limit to spezific server
+repadmin /showreps <server>
+
+# Show Summary
+repadmin /replsummary
+
+# Show replications Queue
+repadmin /queue
+
+# Show replications Queue limit to server
+repadmin /queue <server>
+
+# Start replication of the domaincontroller
+repadmin /syscall
+
+

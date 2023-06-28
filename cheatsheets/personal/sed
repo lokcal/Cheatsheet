@@ -1,0 +1,479 @@
+https://gist.github.com/ssstonebraker/6140154
+https://cheatsheet.dennyzhang.com/cheatsheet-sed-a4
+https://likegeeks.com/sed-linux/
+https://linuxhint.com/50_sed_command_examples/
+https://www.linuxtechi.com/20-sed-command-examples-linux-users/
+https://www.folkstalk.com/2012/01/sed-command-in-unix-examples.html
+https://www.fastwebhost.in/blog/how-to-use-sed-command-in-unix-with-examples/
+
+# count lines (emulates "wc -l")
+ sed -n '$='
+
+# print first line of file (emulates "head -1")
+sed q
+
+# print first 10 lines of file (emulates behavior of "head")
+sed 10q
+
+# View lines minus lines between line starting with pattern and end of file
+sed '/start/,$ d' file.txt
+
+# View lines except lines between line starting with pattern and line ending with pattern
+sed -rn '/start/,/end/ !p' file.txt
+
+# Print until you encounter pattern then quit
+sed '/start/q' file.txt
+
+# Print a particular line (e.g. 123th line)
+sed -n -e '123p'
+
+# Print/get/trim a range of line (e.g. line 500-5000)
+sed -n 500,5000p filename
+
+# Print every nth lines
+sed -n '0~3p' filename
+
+# Print every odd # lines
+sed -n '1~2p'
+
+# Print every third line including the first line
+sed -n '1p;0~3p'
+
+# Print a number of lines (e.g. line 10th to line 33 rd)
+sed -n '10,33p' <filename
+
+# Add string to beginning of file (e.g. "[")
+sed -i '1s/^/[/' file
+
+# Change delimiter
+sed 's=/=\\/=g'
+
+# Add string at certain line number (e.g. add 'something' to line 1 and line 3)
+sed -e '1isomething' -e '3isomething'
+
+# Add string to end of file (e.g. "]")
+sed '$s/$/]/' filename
+
+# Add newline to the end
+sed '$a\'
+
+# Add string to beginning of every line (e.g. 'bbo')
+sed -e 's/^/bbo/' file
+
+# Add string to end of each line (e.g. "}")
+sed -e 's/$/\}\]/' filename
+
+# Add \n every nth character (e.g. every 4th character)
+sed 's/.\{4\}/&\n/g'
+
+# Concatenate/combine/join files with a separator and nextline (e.g separate by ",")
+sed -s '$a,' *.json > all.json
+
+## Replace ###
+
+# replace 1st occurrences of "day" with "night" on every line and output in cli
+sed 's/day/night/' file.txt
+
+# replace 1st occurrences of "day" with "night" on every line and save it
+sed -i 's/day/night/' file.txt
+
+# To replace all occurrences of "day" with "night" on every lines
+sed -i 's/day/night/g' file.txt
+
+# To replace all occurrences of "day" with "night" on every line read from orginale file and write to a new file
+sed 's/day/night/g' file.txt <orginal_file >output_file
+
+# To replace all occurrences of WORD "day" with "night" on every lines
+sed -i 's/ day/ night/g' file.txt
+
+# If you want to find and replace a string that contains the delimiter character (/) you’ll need to use the backslash (\) to escape the slash. For example to replace /bin/bash with /usr/bin/zsh you would use
+sed -i 's/\/bin\/bash/\/usr\/bin\/zsh/g' file.txt
+
+# The easier and much more readable option is to use another delimiter character. Most people use the vertical bar (|) or colon (:) but you can use any other character:
+sed -i 's|/bin/bash|/usr/bin/zsh|g' file.txt
+
+# We can run multiple SED commands by using -e option, as shown in the below example
+sed -e 's/unix/linux/' -e 's/testing/testingSED/' sample.txt
+sed -e 's/unix/linux/ ; s/testing/testingSED/' sample.txt
+
+# replace 1st occurrences of ]]day" with "night" on every line:
+sed 's/day/night/1' file.txt
+
+# To replace all occurrences of "day" with "night" within file.txt:
+sed -i 's/day/night/g' file.txt
+
+# replace 1st occurrences of "day" with "night" on the 2st line:
+sed '2s/day/night/1' file.txt
+
+# We can replace a string in multiple range of lines of a file. From the below example,the string will replace in 2nd and 3rd lines.
+sed '2,3 s/unix/linux/' sample.txt
+
+# Replacement on all lines except line 5
+sed '5!/s/foo/bar/' file.txt
+
+# use the I flag for case insensitive
+sed 's/foo/linux/gI' file.txt
+
+# replace occurrences starting from 2(second)rd occurence
+sed 's/foo/bar/g2' file.txt
+
+# replace all occurrences on every 2nd line
+sed -e 's/foo/bar/g;n' file.txt
+
+# replace 2nd occurrences on every 2nd line
+sed -e 's/foo/bar/2;n' file.txt
+
+# To replace all occurrences of "u character" with "aeio" within file.txt:
+sed -i 's/[aeio]/u/g' file.txt
+
+# To replace all occurrences of "u character" with first line character "i or o" within file.txt:
+sed -i 's/^[io]/u/g' file.txt
+
+# To replace all occurrences of "day" with "night" from 2nd line to the end of file:
+sed -i '2,$s/day/night/g' file.txt
+
+# To replace all occurrences of "day" with "night" from 2nd line to the end of file on the 2nd occurence
+sed -i '2,$s/day/night/2' file.txt
+
+# To replace all occurrences of "day" with "night" in specific line within (file.txt (-i))
+sed -i '34s/day/night/g' file.txt
+
+# To replace all occurrences of "day" with "night" on stdin:
+echo 'It is daytime' | sed 's/day/night/g'
+
+# In allen Zeilen, die "total" enthalten, alt" durch "neu" ersetzen:
+sed '/total/s/alt/neu/g'
+
+# Zwischen "START" und "END" alle Vorkommnisse von alt" durch "neu" ersetzen:
+sed '/START/,/END/s/alt/neu/g'
+
+# In allen Zeilen außer 10-30 "alt" durch "neu" ersetzen:
+sed '10,30!s/alt/neu/g'
+
+# Replace all occurences of "day" and "night" to "sunny" (and)
+sed 's/day\|nigh/hallo/g'  # \|  (escape with backslash then | for and}
+sed -r 's/day|nigh/hallo/g' # -r dont need backslash
+
+######################### Add/Insert pattern ###############################
+# Add a Text in a specific Line
+sed '15i avatar' Makefile.txt
+sed -i '34s/AAA/BBB/' file_name
+
+# Add a Text in a specific Line and (save in Orginal File (-i))
+sed -i '15i avatar' Makefile.txt
+
+# To add a line after a matching pattern:
+sed '/happily ever after/a\The end.'
+
+# Add character in the beginning of a match
+sed '/match/ s/./(ADD&/'
+
+# Add character at the beginning and last character of the match
+sed '/match/ s/./ADD&/ ; /match/ s/$/ADD/'
+
+# To insert a line before a matching pattern:
+sed '/Once upon a time/i\Chapter 1'
+
+# If there is a match in the line insert a line after that line
+sed 's/Linux/&\nUbuntu/' os.txt
+
+# If there is a match in the line insert a the word after the pattern (tab /t)
+sed 's/Linux/&\tUbuntu/' os.txt
+
+# If there is a match in the line insert a the word after the pattern (with space)
+sed 's/Linux/&\ Ubuntu/' os.txt
+
+# Insert an empty line after pattern (after each line containing comment in this case)
+sed '/^#/G' file.txt
+
+# Insert contents of file after a certain line
+sed '5 r newfile.txt' file.txt
+
+# Append text after lines containing regex (AFTER FOO)
+sed '/foo/a\AFTER FOO' file.txt
+
+# Insert text after lines containing regex (BEFORE FOO)
+sed '/foo/i\BEFORE FOO' file.txt
+
+#  merge (join) lines in pairs
+sed '$!N;s/\n/ /'
+
+##### Remove #####
+
+# To remove a pattern
+sed 's/pattern//g' file
+
+# To remove (delete) line with the pattern
+sed '/Foo/d' file
+
+# To remove a specific character, say 'a'
+sed 's/a//' file
+
+# To remove 1st character in every line
+sed 's/^.//' file
+
+# To remove last character of every line
+sed 's/.$//' file
+
+# To remove the 1st and last character of every line in the same command:
+Syntax for and (;)
+sed 's/.//;s/.$//' file
+
+# To Remove the 2nd occurens
+sed 's/a//2' file
+
+# To remove first character only if it is a specific character
+sed 's/^F//' file
+
+# to remove (delete) first character
+sed -r 's/^(.)//'
+
+# To remove last character only if it is a specific character:
+sed 's/x$//' file
+
+# To remove 1st 3 characters of every line
+sed 's/...//' file
+
+# To remove 1st n characters of every line
+sed -r 's/.{4}//' file
+
+# To remove last n characters of every line
+sed -r 's/.{3}$//' file
+
+# Remove newline\ nextline
+sed ':a;N;$!ba;s/\n//g'
+
+# Remove (delete) the line of occurence and the next following line
+sed '/pattern/{N;d;}' file.txt
+
+# To remove everything except the 1st n characters in every line
+sed -r 's/(.{3}).*/\1/' file
+
+# To remove everything except the last n characters in a file
+sed -r 's/.*(.{3})/\1/' file
+
+# To remove multiple characters present in a file
+sed 's/[aoe]//g' file
+
+# To delete only nth occurrence of a character in every line
+sed 's/u//2' file
+
+# To delete everything in a line followed by a character
+sed 's/a.*//' file
+
+# To remove all digits present in every line of a file
+sed 's/[a-z]//g' file
+
+# To remove everything other than the lower case alphabets
+sed 's/[^a-z]//g' file
+
+# To remove all alpha-numeric characters present in every line
+sed 's/[a-zA-Z0-9]//g' file
+
+# To remove a character irrespective of the case
+sed 's/[uU]//g' file
+
+# To remove leading spaces
+sed -i -r 's/^\s+//g' file.txt
+
+# Remove leading whitespace and tabs
+sed -e 's/^[ \t]*//'
+
+# Remove only leading whitespace
+sed 's/ *//'
+
+# Remove ending commas
+sed 's/,$//g'
+
+# remove all comments behind lines
+sed "/s\s*#*//g" /file
+
+# Remove comments between lines starting with these two keywords. Empty lines will be put there instead
+sed -E '/start/,/end/ s/#.*//' file.txt
+
+# Delete (remove) comments starting with # (no empty lines left behind)
+sed -E '/^#/d' file
+
+# rempve only  tcontig from file/text
+echo '(SAMPLEID-tcontigXXXX:YYYYY,(SAMPLEID-tcontigXXXX:YYYYY,SAMPLEID-tcontigXXXX:YYYY......))' | sed 's/tcontig[^:]*//g'
+
+######################### Remove Lines ###############################
+# Delete TEST range of lines, from 2nd line till 4th line
+sed '2,4d' file
+
+# To remove empty lines and print results to stdout:
+sed '/^$/d' file.txt
+sed '/^\s*$/d' file.txt
+
+# Delete lines other than the specified range, line other than 2nd till 4th here
+ sed '2,4!d' file
+
+# Delete the first line AND the last line of a file, i.e, the header and trailer line of a file
+sed '1d;$d' file
+
+# Delete the last line or the trailer line of the file
+sed '$d' file
+
+# Delete a particular line, 3rd line in this case
+sed '3d' file
+
+# Delete all lines beginning with a particular character, 'L' in this case
+sed '/^L/d' file
+
+# Delete all lines ending with a particular character, 'x' in this case
+sed '/x$/d' file
+
+# Delete all lines ending with either x or X,  i.e case-insensitive delete
+sed '/[xX]$/d' file
+
+# Delete all lines which are entirely in capital letters
+sed '/^[A-Z]*$/d' file
+
+# Delete the lines containing the pattern 'Unix
+sed '/Unix/d' file
+
+# Delete the lines NOT containing the pattern 'Unix
+sed '/Unix/!d' file
+
+# Delete the lines containing the pattern 'Unix' OR 'Linux':
+sed '/Unix\|Linux/d' file
+
+# Delete the lines starting from the 1st line till encountering the pattern 'Linux
+ sed '1,/Linux/d' file
+
+# Delete the lines starting from the pattern 'Linux' till the last line
+sed '/Linux/,$d' file
+
+# Delete everthing in front of pattern (DE)
+sed -e 's/^.*\(DE.*\).*$/\1/' simple_L.Caliskan2.txt
+
+# Delete the last line ONLY if it contains the pattern 'AIX'
+sed '${/AIX/d;}' file
+
+# Delete the last line ONLY if it contains either the pattern 'AIX' or 'HPUX'
+sed '${/AIX\|HPUX/d;}' file
+
+# Delete the lines containing the pattern 'Solaris' only if it is present in the lines from 1 to 4.
+sed '1,4{/Solaris/d;}' file
+
+# Delete the line containing the pattern 'Unix' and also the nextline
+sed '/Unix/{N;d;}' file
+
+# Delete only the nextline containing the pattern 'Unix', not the very line:
+sed '/Unix/{N;s/\n.*//;}' file
+
+# Delete the line containing the pattern 'Linux', also the line before the pattern
+sed -n '/Linux/{s/.*//;x;d;};x;p;${x;p;}' file | sed '/^$/d'
+
+# Delete the line containing the pattern 'Linux', the line before, the line after
+sed -n '/Linux/{N;s/.*//;x;d;};x;p;${x;p;}' file | sed '/^$/d'
+
+# Delete everything until a pattern and everything after another pattern from a line
+sed 's/^.*\(consectetuer.*elit\).*$/\1/' file
+---------------------------------------------------------------------
+   Decoded the sed s/find/replace/ syntax:
+
+- s/^.* -- substitute starting at the beginning of the line (^) followed by anything (.*) up to...
+- \( - start a named block
+- consectetuer.*elit\. - match the first word, everything (.*) up to the last word (in this case,including the trailing (escaped)dot) you want to match
+- \) - end the named block
+- match everything else (.*) to the end of the line ($)
+- / - end the substitute find section
+- \1 - replace with the name block between the \( and the \) above
+- / - end the replace
+---------------------------------------------------------------------
+
+####################################################################
+# Replace all lowercase with uppercase
+sed 's/a[a-z]/\u&/g' file
+
+# Replace all uppercase with lowercase
+sed 's/a[a-z]/\L&/g' file
+
+# To replace newlines in multiple lines
+sed ':a;N;$!ba;s/\n//g'  file.txt
+
+# Insert a line before a matching pattern:
+sed '/Once upon a time/i\Chapter 1'
+
+# Add a line after a matching pattern:
+sed '/happily ever after/a\The end.'
+
+https://www.thegeekstuff.com/2009/09/unix-sed-tutorial-printing-file-lines-using-address-and-patterns/#:~:text=Printing%20Operation%20in%20Sed,use%20%2Dn%20command%20with%20sed.
+http://sed.sourceforge.net/sed1line.txt
+# Output specific lines
+sed -n '4p' coleridge.txt
+cat text.txt | sed '9!d'  [Print line 9]
+cat text.txt | sed -n'9p' [Print line 9]
+
+# Output specific multiple lines with (-e)
+sed -n -e '1,4p' -e '31,34p' coleridge.txt
+
+# Output only line 4 and 6
+sed -n '4p;6p' test
+
+# Output specific lines
+The first number indicates the starting line. The second number tells sed which lines after the starting line we want to see. The number 2 means every second line, 3 means every third line, and so on.
+(The number 2 means every second line, 3 means every third line, and so on.)
+sed -n '1~2p' coleridge.txt
+
+# Output specific Range line
+sed -n '1,4p' coleridge.txt
+sed -n '1,+4p' coleridge.txt
+sed '9,12!d' coleridge.txt     [Print line 9-12]
+sed -n '11,$ !p' coleridge.txt [Print first 10 lines]
+sed -n '2,$p' text [print 2 to last line]
+
+# Output specific Range exept line 4
+sed -n '1~4p' coleridge.txt
+
+# extrct all lines that start with “And.”
+caret (^) represents the start of the line, We’ll enclose our search term in forward slashes (/)
+sed -n '/^And /p' coleridge.txt
+
+
+# Switch the first two words
+sed -E 's_([a-zA-Z0-9_]*) ([a-zA-Z0-9_]*)_\2 \1_' f1
+
+# Insert a space between lowercase/Uppercase characters using & (which represents the regex match)
+sed 's/[a-zA-Z]/& /g' file.txt
+
+# Remove duplicate words separated by a single space (but not triplicate)
+sed -E 's_([a-zA-Z0-9_]+) \1_\1_ig' f1
+
+# Search and replace for pattern, write just the lines with the replacements in a new file
+sed 's_foo_bar_w replaced.txt' file.txt
+
+# Replace all after match using pattern
+sed "s/bash.*/python script/g"
+
+# Copy all the comments (starting with #) to a new file
+sed -E '/^#/w comments.txt' file.txt
+
+# Print every second line (substitute ~3 for third line, etc)
+sed -n '1~2p' file.txt
+
+# Edit file in place but also create a backup
+sed -i.bak 's/hello/HELLO/' file.txt
+
+# Append two extra lines after regex match
+sed -E '/^#/G G' file.txt
+
+
+
+
+
+
+
+
+##### Basic commands:######
+5d - delete - Delete line 5.
+5p - print. - print line 5 (you should call sed with -n option when using print to only print the specified lines)
+5q - quit - after line 5 quit
+5a\Appended - append - after line 5. Note the backward slash in front of 'a'
+5c\Changed - change - change line 5 to 'Changed'
+5i\Before - insert - insert before line 5.
+5r newfile.txt - read - put the contents of file 'newfile.txt' after line 5
+5w written.txt - write - write line 5 to 'written.txt'
+5s/foo/bar - substitute - on line 5 search for foo and replace with bar
+

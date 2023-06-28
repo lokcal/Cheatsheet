@@ -1,0 +1,30 @@
+# lspci
+# List all PCI devices.
+
+# Show a brief list of devices:
+lspci
+
+# Display Verbose Mode
+lspci -v
+
+# DIsplay Very Verbose Mode All Details
+lspci -vv
+
+# List PCI Devices In Tree Format
+lspci -tv
+
+# Display drivers and modules handling each device:
+lspci -k
+
+# Show a specific device:
+lspci -s 00:18.3
+
+# Show a specific device with very verbose
+lspci -vv -s 01:00.0
+
+# Dump info in a readable form:
+lspci -vm
+
+which drivers are running for a particular device graphics drivers, for example:
+
+lspci -v | grep -A 20 VGA

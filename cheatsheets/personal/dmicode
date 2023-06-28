@@ -1,0 +1,14 @@
+# Show Harware info
+sudo dmicode
+
+# Show info DMI type 0 (Bios)
+sudo dmicode -t 0
+
+# Show memory
+dmicode -t memory or -t 17
+
+# Show motherboard
+dmicode -t baseboard
+
+
+

@@ -1,0 +1,8 @@
+# To kill a process using it's full process name
+pkill <processname>
+
+# To kill a process by it's partial name
+pkill -f <string>
+
+# To kill process with PID
+ pkill -9 $"{pidof godofwar)"

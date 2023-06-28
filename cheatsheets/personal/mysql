@@ -1,0 +1,228 @@
+############### bearbeiten ###########
+
+# MySQL installation configuration (pw for user etc)
+mysql_secure_installation
+
+# To connect to a database
+mysql -h localhost -u root -p
+
+# Login into mysql
+mysql -u username -p
+
+# To backup all databases
+mysqldump --all-databases --all-routines -u root -p > ~/fulldump.sql
+
+# To restore all databases
+mysql -u root -p  < ~/fulldump.sql
+
+# Use/enter the Database
+Use Database;
+
+######################### Select ################################
+# Show users
+SELECT * from mysql.user;
+
+# SELECT everything from Table
+SELECT * FROM table_name;
+
+# Fetch all the records with all attributes from a table.
+SELECT column1, column2,…. FROM table_name;
+
+# Fetch all the records with all attributes from table Costumer.
+SELECT * FROM customer;
+
+# Select statement where 
+SELECT `nachname` , `vorname`  FROM testadressen WHERE vorname = 'Fischer'
+
+# Select statement where with or
+SELECT `nachname` , `vorname`, `anrede`, `familienstand` FROM testadressen WHERE anrede = 'Herr' OR familienstand= 'single'
+
+# Select statement where with and
+SELECT `nachname` , `vorname`, `anrede`, `familienstand` FROM testadressen WHERE anrede = 'Frau' AND familienstand = 'single'
+
+######################### Create / Insert ################################
+
+# To create a database in utf8 charset
+CREATE DATABASE owa CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+# Create Table
+The basic syntax of the CREATE TABLE statement is as follows −
+
+CREATE TABLE table_name(
+   column1 datatype,
+   column2 datatype,
+   column3 datatype,
+   .....
+   columnN datatype,
+   PRIMARY KEY( one or more columns )
+);
+### Example
+ CREATE TABLE CUSTOMERS(
+   ID   INT              NOT NULL,
+   NAME VARCHAR (20)     NOT NULL,
+   AGE  INT              NOT NULL,
+   ADDRESS  CHAR (25) ,
+   SALARY   DECIMAL (18, 2),       
+   PRIMARY KEY (ID)
+);
+
+CREATE TABLE recipes (
+  recipe_id INT NOT NULL,
+  recipe_name VARCHAR(30) NOT NULL,
+  PRIMARY KEY (recipe_id),
+  UNIQUE (recipe_name)
+);
+
+INSERT INTO recipes 
+    (recipe_id, recipe_name) 
+VALUES 
+    (1,"Tacos"),
+    (2,"Tomato Soup"),
+    (3,"Grilled Cheese");
+
+# Create User only (BEARBEITEN CREATE und Grant bereich)
+CREATE USER 'newuser'@'localhost' IDENTIFIED BY 'password';
+
+# Create user with privileges
+mysql -uroot -p
+CREATE USER 'newuser'@'localhost' IDENTIFIED BY 'changeme';
+GRANT ALL PRIVILEGES ON * . * TO 'newuser'@'localhost';
+FLUSH PRIVILEGES;
+
+######################### Grant/Privileges ######################
+Here is a short list of other common possible permissions that users can enjoy.
+
+ALL PRIVILEGES- as we saw previously, this would allow a MySQL user full access to a designated database,
+(or if no database is selected, global access across the system)
+CREATE- allows them to create new tables or databases
+DROP- allows them to them to delete tables or databases
+DELETE- allows them to delete rows from tables
+INSERT- allows them to insert rows into tables
+SELECT- allows them to use the SELECT command to read through databases
+UPDATE- allow them to update table rows
+GRANT OPTION- allows them to grant or remove other users’ privileges
+
+# grant the user full access to all the databases, including the tables
+# To grant CREATE permissions for all databases * and all tables * to the user we created in the previous tutorial, test user, use the following command:
+GRANT ALL PRIVILEGES ON * . * TO 'tecmint'@'localhost';
+
+# Grant rights on the given database
+GRANT ALL PRIVILEGES ON database.* TO 'user'@'localhost'IDENTIFIED BY 'password' WITH GRANT OPTION;
+
+# Grant a specific user permission
+GRANT permission_type ON database_name.table_name TO 'username'@'localhost';
+
+# Additionally, you can assign permissions to all the tables in a database with a single asterisk symbol
+GRANT permission_type ON database_name.* TO 'username'@'localhost';
+
+# assign SELECT permissions to ‘tecmint‘ user on all tables of the database testdb
+GRANT SELECT ON testdb.* TO 'tecmint'@'localhost';
+
+# Rssign multiple permissions at a go by separating them with a comma as shown
+GRANT INSERT, UPDATE ON testdb.* TO 'tecmint'@'localhost';
+
+# Reload all the privileges 
+FLUSH PRIVILEGES
+################################################################
+
+######################### Insert ###############################
+# INSERT value into into Table
+INSERT INTO tbl_name (col1,col2) VALUES(15,col1*2);
+
+# inserts a new record in the "Customers" table
+INSERT INTO Customers (CustomerName, ContactName, Address, City, PostalCode, Country)
+VALUES ('Cardinal', 'Tom B. Erichsen', 'Skagen 21', 'Stavanger', '4006', 'Norway');
+
+# will insert a new record, but only insert data in the "CustomerName", "City", and "Country"
+# columns (CustomerID will be updated automatically):
+INSERT INTO Customers (CustomerName, City, Country) VALUES ('Cardinal', 'Stavanger', 'Norway');
+
+######################### Drop #################################
+# Delete/Drop User
+DROP USER [IF EXISTS] account_name [,account_name2]...;
+DROP USER account_name [,account_name2];
+DROP USER dbadmin@localhost;
+
+################################################################
+
+######################### Delete ###############################
+# Delete value from table
+DELETE FROM tbl_name WHERE user = 'jcole';
+
+# Statement sorts customers by customer names alphabetically and deletes the first 10 customers:
+DELETE FROM customers ORDER BY customerName LIMIT 10;
+ 
+# To delete all rows from the employees table
+DELETE FROM table_name;
+
+################################################################
+
+
+######################### Update ################################
+# updates the first customer (CustomerID = 1) with a new contact person and a new city.
+UPDATE Customers SET ContactName = 'Alfred Schmidt', City= 'Frankfurt' WHERE CustomerID = 1;
+
+# date the contactname to "Juan" for all records where country is "Mexico"
+UPDATE Customers SET ContactName='Juan' WHERE Country='Mexico';
+################################################################
+
+######################### Alter ################################
+# Change root Password 
+ALTER USER 'root'@'localhost' IDENTIFIED BY 'PASSWORD_HERE';
+
+# Basic UPDATE Statement
+UPDATE tbl_name SET col1 = "example";
+
+################################################################
+
+######################### Show #################################
+# Show Database
+SHOW DATABASES;
+
+# Show Database with Databasename
+SHOW DATABASES text_string;
+SHOW DATABASE CUSTOMER;
+
+# Shows all databases named CUSTOMER
+SHOW DATABASE CUST%;
+
+
+# To list the privileges granted to the account that you are using to connect to the server. Any of the 3 statements will work. 
+SHOW GRANTS FOR CURRENT_USER();
+SHOW GRANTS;
+SHOW GRANTS FOR CURRENT_USER;
+
+# To check stored procedure
+SHOW PROCEDURE STATUS;
+
+# To check stored function
+SHOW FUNCTION STATUS;
+#################################################################
+
+######################### Revoke ################################
+# revoke permissions from a user
+REVOKE permission_type ON database_name.table_name FROM 'username'@'localhost';
+
+# revoke INSERT permissions from the user ‘tecmint’, 
+REVOKE INSERT ON testdb.* FROM tecmint'@'localhost';
+FLUSH PRIVILEGES
+
+#################################################################
+
+###################### Order by ##################################
+#The ORDER BY keyword sorts the records in ascending order by default.
+#To sort the records in descending order, use the DESC keyword.
+SELECT column1, column2, ... FROM table_name ORDER BY column1, column2, ... ASC|DESC;
+
+
+# Selects all customers from the "Customers" table, sorted by the "Country" column:
+SELECT * FROM Customers ORDER BY Country;
+
+# Selects all customers from the "Customers" table, sorted by the "Country" and the "CustomerName" column
+SELECT * FROM Customers ORDER BY Country, CustomerName;
+
+# Select nachname and vorname from testadressen order by nachname
+SELECT `nachname` , `vorname` FROM testadressen ORDER BY nachname
+
+#################################################################
+

@@ -1,0 +1,570 @@
+############ Commandlist cheat ############################
+cheat name
+
+######## individually commands ############################
+
+special   		= Single command list
+uname	  		= Kernel info
+redirect  		= Stderr, stdout, stdin
+bash	  		= Logic Operator 
+Shell			= Shell commands
+export			= Export/environment commands
+variable		= Special variable commands
+audit			= Show audits command (Vulnerability)
+apropos     = searches for man pages that contain a phrase
+whatis      = shows a one-line summary of a command, taken from its man page
+
+
+
+######## (USER) ############################
+
+userinfo      = User informaion
+chage     		= User Account configuration
+passwd        = Password, faillog
+adduser   		= Adding User
+deluser   		= Deleting User
+usermod   		= Modding User/Account
+last          = display the list of all the users logged in and out
+
+######## (GROUP) ############################
+
+gpasswd   		= Adding/Del User from group
+groups	  		= Info Group commands
+groupeadd 		= Adding Group
+groupdel  		= Deleting Group 
+groupemod 		= Modding Group
+
+######### Premission #######################################
+
+chgrp     		= Group change
+chmod         = change file mode (chmod +x , chmod 777, etc) 
+chown         = Change owner
+
+######### Search #############################################
+ripgrep        = line-oriented search tool that recursively searches your current directory for a regex pattern
+
+######### File #############################################
+stat	  		   = Display file status, creation date, etc
+converting		 = Converting files pdf,jpg etc
+ocrmypdf  		 = Converting PDF
+shuf           = generate random permutations (shuffle)
+
+######### Editing ##########################################
+nohup          = run a command immune to hangups, with output to a non-tty
+
+######### Systemchecking tools #############################
+systeminfo (ind)   = Command for systeminfo and config / Hardware
+networkinfo        = Sheet with diffrent network information commands
+journalctl         = Systemlog
+lsof               = List open files
+proc               = Exploring filesystem (cat sysinfos)
+lastlog            = Shows the last log of all User/Service or specific User
+udevadm            = udev management tool
+dmesg              = Print or control the kernel ring buffer
+
+######### Monitor #####################################
+autorandr      = multimonitor profile
+
+######### Module #####################################
+module         = Sheet module
+
+######### Converting #######################################
+
+
+
+######### filesystem Info#############################
+udisksctl
+lsblk
+blkid
+hdparm
+smartctl
+fdisk
+cfdisk
+
+
+
+
+######## Commonly available command-line tools for Linux distros listed somewhat categorically ######
+# Help
+man - format and display the on-line manual pages (tldr, die, manned)
+info - read info docs (tldr, die, manned)
+whatis - search the whatis database for complete words (tldr, die, manned)
+apropos - search the whatis database for string (tldr, die, manned)
+
+# Terminal
+printf - format and print data (tldr, manned)
+printenv - print all or part of environment (tldr, die, manned)
+clear - clear the terminal screen (tldr, die, manned)
+tty - print the file name of the terminal connected to standard input (tldr, die, manned)
+stty - change and print terminal line settings (tldr, die, manned)
+setterm - set terminal attributes (manned)
+screen - screen manager with VT100/ANSI terminal emulation (tldr, die, manned)
+cd - Change the current working directory (tldr, manned)
+alias - define or display aliases (tldr, manned)
+unalias - remove alias definitions (tldr, manned)
+locale - get locale-specific information (tldr, manned)
+tput - initialize a terminal or query terminfo database (tldr, manned)
+reset - terminal initialization (tldr, manned)
+tset - terminal initialization (manned)
+getopts - parse utility options (manned)
+read - read from standard input into shell variables (tldr, manned)
+true - do nothing, successfully (tldr, manned)
+false - do nothing, unsuccessfully (tldr, manned)
+
+# History
+fc - process the command history list (tldr, manned)
+history - GNU History Library (tldr, manned)
+
+# Typescripts
+script - make typescript of terminal session (tldr, manned)
+scriptreplay - play back typescripts, using timing information (tldr, manned)
+scriptlive - re-run session typescripts, using timing information (manned)
+
+# Hardware
+# Hardware Information
+lshw - list hardware information (tldr, die, manned)
+lscpu - list CPU architecture information (tldr, die, manned)
+cat /proc/cpuinfo
+lspci - list all PCI devices (tldr, die, manned)
+lsusb - list USB device info (tldr, die, manned)
+free - display amount of free and used memory in the system (tldr, die, manned)
+lsmem - list the ranges of available memory with their online status (manned)
+nproc - print the number of processing units available (tldr, manned)
+
+# Hardware Configuration
+chcpu - configure CPUs (tldr, die, manned)
+chmem - configure memory (manned)
+eject - eject removable media (tldr, manned)
+
+# System
+# System Information
+uname - print system information (tldr, die, manned)
+arch - print machine hardware name (same as uname -m) (tldr, manned)
+setarch - change reported architecture in new program environment and/or set personality flags (manned)
+last - show listing of last logged in users / last reboot (tldr, die, manned)
+lslogins - display information about known users in the system
+uptime - tell how long the system has been running (tldr, die, manned)
+runlevel - output previous and current runlevel (die, manned)
+dmesg - print or control the kernel ring buffer (tldr, die, manned)
+logger - enter messages into the system log (tldr, manned)
+
+# System State
+login - sign on (tldr, die, manned)
+newgrp - log in to a new group (tldr, manned)
+sulogin - single-user login (manned)
+reboot - reboot or stop the system (tldr, die, manned)
+shutdown - bring the system down (tldr, die, manned)
+poweroff - reboot or stop the system (tldr, die, manned)
+rtcwake - enter a system sleep state until specified wakeup time (tldr, manned)
+telinit - change system runlevel (die, manned)
+ctrlaltdel - set the function of the Ctrl-Alt-Del combination (tldr, manned)
+
+# System Date/Time
+date - print or set the system date and time (tldr, die, manned)
+cal - displays a calendar (tldr, die, manned)
+calendar - reminder service (holidays, meetings, ...) (tldr, die, manned)
+sleep - delay for a specified amount of time (tldr, die, manned)
+hwclock - time clocks utility (tldr, manned)
+
+# Namespaces
+nsenter - run program in different namespaces (tldr, manned)
+lsns - list namespaces (tldr, manned)
+unshare - run program in new namespaces (tldr, manned)
+
+# Users/Groups
+# Users
+# User Information
+logname - print current user's login name (tldr, die, manned)
+id - print real and effective user and group IDs (tldr, die, manned)
+whoami - print effective userid. same as id -un (tldr, die, manned)
+w - show who is logged on and what they are doing (tldr, die, manned)
+who - show who is logged on (tldr, die, manned)
+utmpdump - dump UTMP and WTMP files in raw format (tldr, manned)
+users - print the user names of users currently logged in to the current host (tldr, die, manned)
+finger - user information lookup program (tldr, die, manned)
+pinky - lightweight finger (tldr, manned)
+
+# User Management
+useradd - create a new user or update default new user information (tldr, die, manned)
+newusers - update and create new users in batch (die, manned)
+usermod - modify a user account (tldr, die, manned)
+userdel - delete a user account and related files (tldr, die, manned)
+passwd - update user's authentication (tldr, die, manned)
+chsh - change your (or another user's) login shell (tldr, die, manned)
+chpasswd - update passwords in batch mode (tldr, die, manned)
+vipw - edit the password file (tldr, manned)
+vigr - edit the group file (manned)
+chfn - change your (or another user's) finger information (tldr, die, manned)
+
+# User Communication
+wall - write a message to all users (tldr, manned)
+mesg - display (or do not display) messages from other users (tldr, manned)
+write - send a message to another user (tldr, die, manned)
+
+# User Substituion/Masquerading
+su - run a shell with substitute user and group IDs (tldr, die, manned)
+runuser - run a shell with substitute user and group IDs (tldr, die, manned)
+setpriv - run a program with different Linux privilege settings (manned)
+sudo - execute a command as another user (tldr, die, manned)
+visudo - edit the sudoers file (tldr, die, manned)
+sudoreplay - replay sudo session logs (die, manned)
+sudoreplay -l user millert - list sessions ran by user millert
+sudoreplay -l user bob command vi - list sessions run by user bob with a command containing the string vi
+
+# Groups
+groups - print the groups a user is in (tldr, die, manned)
+groupadd - create a new group (tldr, die, manned)
+groupmod - modify a group definition on the system (tldr, die, manned)
+groupdel - delete a group (tldr, die, manned)
+
+# Processes/Tasks/Commands
+# Process Information
+strace -p <pid> -p <pid> ... - trace one or more currently running process IDs (tldr, die, manned)
+ps - report a snapshot of the current processes (tldr, die, manned)
+pgrep - look up processes based on name and other attributes (tldr, die, manned)
+pgrep -a <pattern> - list complete command line
+pgrep -f <pattern> - use full process name to match
+top - display Linux tasks (tldr, die, manned)
+htop - interactive process viewer (tldr, die, manned)
+iotop - simple top-like I/O monitor (tldr, die, manned)
+pstree - display a tree of processes (tldr, die, manned)
+taskset - retrieve or set a process's CPU affinity (tldr, die, manned)
+fuser - show which processes use the named files, sockets, or filesystems (tldr, die, manned)
+
+# Update Process Information
+renice - alter priority of running processes (tldr, die, manned)
+chrt - manipulate real-time attributes of a process (tldr, die, manned)
+choom - display and adjust OOM-killer score (manned)
+prlimit - get and set process resource limits (tldr, manned)
+Kill/Signal Process
+kill - terminate a process (tldr, die, manned)
+killall - kill processes by name (tldr, die, manned)
+pkill - signal processes based on name and other attributes (tldr, die, manned)
+
+# Run Command
+xargs - build and execute command lines from standard input (tldr, manned)
+time - time a simple command or give resource usage (tldr, die, manned)
+timeout - run a command with a time limit (tldr, die, manned)
+setsid - run a program in a new session (tldr, manned)
+strace - run a command and trace system calls and signals (tldr, die, manned)
+nice - run a command with modified scheduling priority (tldr, die, manned)
+nohup - run a command immune to hangups, with output to a non-tty (tldr, die, manned)
+env - run a command in a modified environment (tldr, die, manned)
+watch - run a command periodically, displaying its output (tldr, die, manned)
+daemonize - run a program as a Unix daemon (tldr, die, manned)
+
+# Jobs/Schedule Command
+fg - run jobs in the foreground (tldr, manned)
+bg - run jobs in the background (tldr, manned)
+jobs - display status of jobs in the current session (tldr, manned)
+wait - wait for process to change state (tldr, manned)
+at - executes commands at a specified time (tldr, die, manned)
+atq - list pending jobs (tldr, die, manned)
+atrm - remove jobs by ID (tldr, die, manned)
+batch - executes commands when system load levels permit (tldr, die, manned)
+cron
+crontab - maintain crontab files for individual users (tldr, die, manned)
+
+# Inter-Process Communication
+ipcmk - make various IPC resources (tldr, manned)
+ipcs - show information on IPC facilities (tldr, manned)
+lsipc - show information on IPC facilities currently employed in the system (manned)
+ipcrm - remove certain IPC resources (tldr, manned)
+
+# Networking
+# Network Configuration
+ip - show / manipulate routing, devices, policy routing and tunnels (tldr, die, manned)
+iptunnel - creates, deletes, and displays configured tunnels (die, manned)
+ifconfig - configure a network interface (tldr, die, manned)
+replaced by ip addr, ip link, and ip -s link
+route - show / manipulate the IP routing table (tldr, die, manned)
+replaced by ip route
+iptables - administration tool for IPv4/IPv6 packet filtering and NAT (tldr, die, manned)
+ip6tables - administration tool for IPv6 packet filtering and NAT (die, manned)
+ipset - administration tool for IP sets (tldr, die, manned)
+tc - show / manipulate traffic control settings (die, manned)
+
+# Remote Administration
+ssh - OpenSSH SSH client (remote login program) (tldr, die, manned)
+scp - secure copy (remote file copy program) (tldr, die, manned)
+sftp - secure file transfer program (tldr, die, manned)
+ssh-agent - authentication agent (tldr, die, manned)
+ssh-add - adds RSA or DSA identities to the authentication agent (tldr, die, manned)
+ssh-keygen - authentication key generation, management and conversion (tldr, die, manned)
+telnet - user interface to the TELNET protocol (tldr, die, manned)
+
+# Transfer
+wget - non-interactive network downloader (tldr, die, manned)
+curl - transfer a URL (tldr, die, manned)
+curl -O - download a file
+ftp - Internet file transfer program (tldr, die, manned)
+
+# DNS/WHOIS
+dig - DNS lookup utility (tldr, die, manned)
+host - DNS lookup utility (tldr, die, manned)
+nslookup - Internet name servers interactively (tldr, die, manned)
+hostname - show or set the system's host name (tldr, die, manned)
+hostname -I - all addresses for the host
+hostname -i - addresses for the host name
+domainname - show or set the system's NIS/YP domain name (die, manned)
+dnsdomainname - show the system's DNS domain name (die, manned)
+whois - client for the whois service (tldr, die, manned)
+
+# Investigation/Discovery/Exploration
+ping - send ICMP ECHO_REQUEST to network hosts (tldr, die, manned)
+ping6 (IPv6) (tldr, die, manned)
+ss - another utility to investigate sockets (tldr, die, manned)
+netstat - Print network connections, routing tables, interface statistics, masquerade connections, and multicast memberships. This program is mostly obsolete. (tldr, die, manned)
+replacement for netstat is ss
+replacement for netstat -r is ip route
+replacement for netstat -i is ip -s link
+replacement for netstat -g is ip maddr.
+traceroute - print the route packets trace to network host (tldr, die, manned)
+tracepath - traces path to a network host discovering MTU along this path (tldr, die, manned)
+nc / netcat - arbitrary TCP and UDP connections and listens (tldr, die, manned)
+nmap - Network exploration tool and security / port scanner (tldr, die, manned)
+tcpdump - dump traffic on a network (tldr, die, manned)
+
+# Streams/Pipes
+tee - read from standard input and write to standard output and files (tldr, die, manned)
+sed - stream editor for filtering and transforming text (tldr, die, manned)
+awk - pattern scanning and processing language (tldr, die, manned)
+
+# Filesystems
+# Information
+cat /proc/filesystems - list filesystems your kernel supports
+df - report filesystem disk space usage (tldr, die, manned)
+stat -f - display file or file system status (tldr, die, manned)
+findfs - find a filesystem by label or UUID (tldr, die, manned)
+findmnt - list all mounted filesytems or search for a filesystem (tldr, die, manned)
+
+# Block Devices
+lsblk - list block devices (tldr, die, manned)
+blkid - command-line utility to locate/print block device attributes (tldr, die, manned)
+blkdiscard - discard sectors on a device (tldr, manned)
+blkzone - run zone command on a device (manned)
+blockdev - call block device ioctls from the command line (manned)
+losetup - set up and control loop devices (tldr, manned)
+raw - bind a Linux raw character device (tldr, manned)
+zramctl - set up and control zram devices (tldr, manned)
+
+# Partitions
+fdisk - partition table manipulator for Linux (tldr, die, manned)
+fdisk -l - display partitions and exit
+cfdisk - display or manipulate a disk partition table (tldr, die, manned)
+parted - a partition manipulation program (tldr, die, manned)
+addpart - tell the kernel about the existence of a partition (tldr, manned)
+resizepart - tell the kernel about the new size of a partition (manned)
+delpart - tell the kernel to forget about a partition (manned)
+partx - tell the kernel about the presence and numbering of on-disk partitions (tldr, manned)
+sfdisk - display or manipulate a disk partition table (manned)
+
+# Mounting
+mount - mount a filesystem (tldr, die, manned)
+mountpoint - see if a directory or file is a mountpoint (tldr, manned)
+unmount - unmount a filesystem (tldr, die, manned)
+
+# Repair/Create/Check/Debug
+fsck - check and repair a Linux filesystem (tldr, die, manned)
+mkfs - build a Linux filesystem (tldr, die, manned)
+ext2/ext3/ext4
+mke2fs - create an ext2/ext3/ext4 filesystem (tldr, die, manned)
+debugfs - ext2/ext3/ext4 file system debugger (tldr, die, manned)
+e2fsck - check a Linux ext2/ext3/ext4 file system (tldr, die, manned)
+e2image - Save critical ext2/ext3/ext4 filesystem metadata to a file ([tldr](https://github.com/ tldr-pages/tldr/blob/main/pages/linux/e2image.md), die, manned)
+fsfreeze - suspend access to a filesystem (Ext3/4, ReiserFS, JFS, XFS) (manned)
+fstrim - discard unused blocks on a mounted filesystem (tldr, manned)
+wipefs - wipe a signature from a device (tldr, manned)
+
+# Swaps
+mkswap - set up a Linux swap area (tldr, manned)
+swaplabel - print or change the label or UUID of a swap area (manned)
+swapon - start swapping to file/device (tldr, manned)
+swapoff - stop swapping to file/device (tldr, manned)
+
+# Files/Directories
+# Creation
+mkdir - make directories (tldr, die, manned)
+mkdir -p - make directory and any missing parent directories
+ln - make links between files (tldr, die, manned)
+link - create a link to a file/directory (tldr, die, manned)
+fallocate - preallocate or deallocate space to a file (tldr, manned)
+mktemp - create a temporary file or directory (tldr, manned)
+mkfifo - make FIFOs (named pipes) (tldr, manned)
+
+# Search
+which - shows the full path of (shell) commands (tldr, die, manned)
+whereis - locate the binary, source, and manual page files for a command (tldr, die, manned)
+find - search for files in a directory hierarchy (tldr, die, manned)
+grep - print lines matching a pattern (tldr, die, manned)
+look - display lines beginning with a given string (manned)
+namei - follow a pathname until a terminal point is found (tldr, manned)
+
+# Move/Rename/Copy
+mv - move (rename) files/directories (tldr, die, manned)
+rename - rename multiple files at once (tldr, die, manned)
+cp - copy files/directories (tldr, die, manned)
+dd - convert and copy a file (tldr, die, manned)
+install - copy files and set attributes (tldr, manned)
+hardlink - link multiple copies of a file (manned)
+
+# Removal/Shredding
+rm - remove files/directories (tldr, die, manned)
+unlink - call the unlink function to remove the specified file (tldr, manned)
+rmdir - remove empty directories (tldr, die, manned)
+shred - overwrite a file to hide its contents, and optionally delete it (tldr, die, manned)
+truncate - shrink or extend the size of a file to the specified size (tldr, manned)
+
+# Information
+ls - list directory contents (tldr, die, manned)
+dir - list directory contents (same as ls -Cb)
+vdir - list directory contents (same as ls -lb)
+dircolors - set up color for ls
+lsof - list open files (tldr, die, manned)
+stat - display file or file system status (tldr, die, manned)
+basename - strip directory and suffix from filenames (tldr, die, manned)
+dirname - strip non-directory suffix from file name (tldr, die, manned)
+pathchk - check whether file names are valid or portable (tldr, manned)
+pwd - print name of current/working directory (tldr, die, manned)
+du - estimate file space usage (tldr, die, manned)
+fincore - count pages of file contents in core (manned)
+wc - print newline, word, and byte counts for each file (tldr, die, manned)
+file - determine file type (tldr, die, manned)
+test - check file types and compare values (tldr, manned)
+
+# Permissions/Locks/Timestamps
+touch - change file timestamps (tldr, die, manned)
+touch -m - update the modification timestamp
+chmod - change file mode bits (tldr, die, manned)
+chown - change file owner and group (tldr, die, manned)
+chgrp - change group ownership (tldr, die, manned)
+flock - manage locks from shell scripts (tldr, manned)
+lslocks - list local system locks (tldr, manned)
+chattr - change file attributes on a Linux file system (tldr, die, manned)
+lsattr - list file attributes on a Linux second extended file system (tldr, die, manned)
+
+# Viewing
+less - Less is a program similar to more, but which allows backward movement in the file as well as forward movement. (tldr, die, manned)
+lesskey specify key bindings for less (die, manned)
+cat - concatenate files and print on the standard output (tldr, die, manned)
+tac - concatenate and print files in reverse (tldr, die, manned)
+tail - output the last part of files (tldr, die, manned)
+head - output the first part of files (tldr, die, manned)
+xxd - make a hexdump or do the reverse (tldr, die, manned)
+hexdump - display file contents in hexadecimal, decimal, octal, or ascii (tldr, manned)
+od - dump files in octal and other formats (tldr, manned)
+
+# Text Manipulation
+rev - reverse lines characterwise (tldr, manned)
+uniq - report or omit duplicate lines (tldr, die, manned)
+tr - translate or delete characters (tldr, die, manned)
+cut - remove sections from each line of files (tldr, die, manned)
+paste - merge lines of files (tldr, die, manned)
+sort - sort lines of text files (tldr, die, manned)
+  comm - compare two sorted files line by line (tldr, die, manned)
+  tsort - perform topological sort (tldr, die, manned)
+shuf - generate random permutation (tldr, manned)
+join - join lines of two files on a common field (tldr, die, manned)
+fmt - simple optimal text formatter (tldr, die, manned)
+fold - wrap each input line to fit in specified widt (tldr, die, manned)
+expand - convert tabs to spaces (tldr, die, manned)
+unexpand - convert spaces to tabs (tldr, die, manned)
+column - columnate lists (tldr, die, manned)
+  (printf "PERM LINKS OWNER GROUP SIZE MONTH DAY HH:MM/YEAR NAME\n" \ -l | se> ; ls -l | sed 1d) | column -t
+colrm - remove columns from a file (tldr, die, manned)
+nl - number lines of files (tldr, die, manned)
+split - split a file into pieces (tldr, manned)
+csplit - split a file into sections determined by context lines (tldr, die, manned)
+
+# Comparison
+diff - compare files line by line (tldr, die, manned)
+cmp - compare files byte by byte (tldr, die, manned)
+
+# Checksums/Message Digests/Hashes
+chksum - checksum and count the bytes in a file (tldr, die, manned)
+sha512sum - compute and check SHA512 message digest (tldr, die, manned)
+sha384sum - compute and check SHA384 message digest (tldr, die, manned)
+sha256sum - compute and check SHA256 message digest (tldr, die, manned)
+sha224sum - compute and check SHA224 message digest (tldr, die, manned)
+sha1sum - compute and check SHA1 message digest (tldr, die, manned)
+b2sum - compute and check BLAKE2 message digest (tldr, manned)
+md5sum - compute and check MD5 message digest (tldr, die, manned)
+
+# Encoding/Decoding
+base32 - base32 encode/decode data and print to standard output (tldr, manned)
+base64 - base64 encode/decode data and print to standard output (tldr, die, manned)
+
+# Encryption/Decryption
+gpg - OpenPGP encryption and signing tool (tldr, die, manned)
+
+# Compression/Decompression/Backups/Archives
+rsync - a fast, versatile, remote (and local) file-copying tool (tldr, die, manned)
+logrotate - rotates, compresses, and mails system logs (die, manned)
+tar (tape archiver) - an archiving utility (tldr, die, manned)
+tar -cf archive.tar foo bar - create archive.tar with files foo and bar
+tar -tvf archive.tar - list all files in archive.tar
+tar -xf - extract all files from archive.tar
+gzip - compress files using Lempel-Ziv coding (LZ77) .gz (tldr, die, manned)
+gunzip - expand files (tldr, die, manned)
+zless - file perusal filter for crt viewing of compressed text (tldr, die, manned)
+zgrep - search possibly compressed files for a regular expression (tldr, die, manned)
+zdiff - compare compressed files line by line (die, manned)
+zcmp - compare compressed files byte by byte (die, manned)
+zcat - uncompresses either a list of files on the command line or its standard input and writes the uncompressed data on standard output. identical to gunzip -c (tldr, die, manned)
+bzip2 - a block-sorting file compressor (tldr, die, manned)
+bunzip2 - decompresses all specified files (die, manned)
+bzcat - decompresses all specified files to the standard output (die, manned)
+bzless - file perusal filter for crt viewing of bzip2 compressed text (die, manned)
+bzgrep - search possibly bzip2 compressed files for a regular expression (tldr, die, manned)
+bzdiff - compare bzip2 compressed files (die, manned)
+zip - package and compress (archive) files (tldr, die, manned)
+unzip - list, test and extract compressed files in a ZIP archive (tldr, die, manned)
+zipinfo - list detailed information about a ZIP archive (tldr, die, manned)
+zipgrep - search files in a ZIP archive for lines matching a pattern (tldr, die, manned)
+cpio - copy files to and from archives (tldr, die, manned)
+
+# Special Utilities
+bc - an arbitrary precision calculator language (tldr, manned)
+numfmt - convert numbers from/to human-readable strings (tldr, manned)
+yes - output a string repeatedly until killed (tldr, manned)
+seq - print a sequence of numbers (tldr, die, manned)
+expr - evaluate expressions (tldr, die, manned)
+factor - factor numbers (tldr, die, manned)
+uuidgen - create a new UUID value (tldr, manned)
+uuidparse - a utility to parse unique identifiers (manned)
+mcookie - generate magic cookies for xauth (tldr, manned)
+
+# Bash Builtin Commands
+https://www.gnu.org/software/bash/manual/html_node/Builtin-Index.html
+
+ Special Parameters
+https://www.gnu.org/software/bash/manual/html_node/Special-Parameters.html
+
+$* - Expands to the positional parameters, starting from one using $IFS
+$IFS - input field separator
+$@ - Expands to the positional parameters, starting from one
+$# - Expands to the number of positional parameters in decimal
+$? - Expands to the exit status of the most recently executed foreground pipeline
+$$ - Expands to the process ID of the shell
+$! - Expands to the process ID of the job most recently placed into the background
+$0 - Expands to the name of the shell or shell script
+$1, $2, ... - Expands to position parameter
+
+# Daemons
+init - upstart process management daemon (die)
+inetd - Internet service daemon (die)
+atd - run jobs queued for later execution (die)
+crond - daemon to execute scheduled commands (die)
+useraud - user authentication daemon (die)
+fingerd - remote user information server (die)
+ntpd - Network Time Protocol (NTP) daemon which sets and maintains the system time of day in synchronism with Internet standard time servers (die)
+sshd - OpenSSH SSH daemon for accepting incoming client connections (die)
+httpd - Apache Hypertext Transfer Protocol Server (die)
+mountd - NFS mount daemon (die)
+git daemon - a really simply server for git daemons (die)
+telnetd - DARPA telnet protocol server (die)
+ftpd - DARPA Internet File Transfer Protocol server (die)
+uuidd - UUID generation daemon (tldr, manned)
+
+#A subset of the list of currently running processes without a tty will contain most currently running daemons:
+ps -eo 'tty,pid,pgid,user,group,args,etime,pcpu' | grep ^?

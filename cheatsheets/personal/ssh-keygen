@@ -1,0 +1,62 @@
+###
+#protocol
+rsa best if u cant use Ed25519
+
+Ed25519 stronger, but not yet widely supported
+Ed22519 KDF rounds
+-a 1000 Took about ~20s.
+-a 100 Varies between ~3.5s to ~6s.
+Higher numbers result in slower passphrase verification,
+increasing the resistance to brute-force password cracking should the private-key be stolen.
+
+# To generate an SSH key:
+ssh-keygen -t rsa
+
+# To generate a rsa 4096-bit SSH key:
+ssh-keygen -t rsa -b 4096
+
+# To generate a 4096 bit RSA key with a passphase and comment containing the user and hostname
+ssh-keygen -t rsa -b 4096 -C "$USER@$HOSTNAME" -P passphrase
+
+# To generate a ed25519 100 SSH key to specific path:
+ssh-keygen -t ed25519 -a 100 -f ~/.ssh/id_ed25519_pi1
+
+# To update a passphrase on a key
+ssh-keygen -p -P old_passphrase -N new_passphrase -f /path/to/keyfile
+
+# To remove a passphrase on a key
+ssh-keygen -p -P old_passphrase -N '' -f /path/to/keyfile
+
+# Append key to Server authorized_keys
+cat id_rsa.pub >> ~/.ssh/authorized_keys
+
+# Append key to the remote Server authorized_keys
+cat id_rsa.pub | ssh user@server 'cat>> ~/.ssh/authorized_keys'
+
+# Generate Pubkey from Privatekey
+ssh-keygen -y -f ~/.ssh/id_rsa > ~/.ssh/id_rsa.pub
+
+# Remove Hostkey from known_host file
+ssh-keygen -R [ip/hostname]
+
+# Search for some IP address or hostname from ~/.ssh/known_hosts (logged-in host)
+ssh-keygen -F [ip/hostname]
+
+# Change the comment of the key file ~/.ssh/id_rsa
+ssh-keygen -c -f ~/.ssh/id_rsa
+
+# Change passphrase of private key ~/.ssh/id_rsa
+ssh-keygen -p -f ~/.ssh/id_rsa
+
+# To print the fingerprint of a public key:
+ssh-keygen -lf <keyfile>
+
+# To print the Github-style (MD5) fingerprint of a public key:
+ssh-keygen -E md5 -lf <keyfile>
+
+# To download resident keys from a FIDO2 authenticator to the current directory:
+ssh-keygen -K
+
+# To view the public key associated with a private key:
+ssh-keygen -y -f <private-key-file> > <public-key-file>
+ssh-keygen -y -f ~/.ssh/private-key > ~/.ssh/public-key.pub

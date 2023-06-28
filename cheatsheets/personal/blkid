@@ -1,0 +1,5 @@
+# list UID
+sudo blkid
+
+# print block device properties
+sudo blkid /dev/sda

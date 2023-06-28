@@ -1,0 +1,32 @@
+---
+syntax: bash
+tags: [cht, cht.sh, cheatsheet]
+---
+explanation: curl cheatsheet
+
+# Help
+$ curl cht.sh/:help
+
+# Show cheat sheats
+curl cht.sh/command
+
+# show tar
+curl cht.sh/tar
+
+# show systemctl
+curl cht.sh/systemctl
+
+# show find exec commands
+curl cht.sh/find~exec
+
+# Ask any question using cht.sh or curl cht.sh: /go/zip+lists (use /,+ when curling)
+curl cht.sh/if+-z
+
+# Learn any* programming language not leaving your shell
+cht.sh lua/:learn
+
+# descirption of command
+curl cht.sh/bash/:describe
+
+# show function examples
+curl cht.sh/python/func

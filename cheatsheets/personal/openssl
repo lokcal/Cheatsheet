@@ -1,0 +1,164 @@
+###### compllete befehl einfügen#####
+
+# oneliner
+openssl req -x509 -newkey rsa:4096 -sha256 -keyout key.key -out cert.pem -days 365
+openssl req -newkey rsa:4096 -nodes -keyout server.key -x509 -days 365 -out server.crt -subj "/CN=example.com" -sha256
+
+# To create a 2048-bit private key:
+openssl genrsa -out server.key 4096
+
+# To create the Certificate Signing Request (CSR):
+openssl req -new -key server.key -out server.csr
+
+# To create a self-signed x509 certificate
+openssl req -x509 -sha256 -days 365 -key key.pem -in csr.csr -out certificate.pem
+
+# Review the created certificate
+openssl x509 -text -noout -in certificate.pem
+
+## (The above commands may be run in sequence to generate a self-signed SSL certificate.)
+
+# To create the Certificate without secret on the privatekey
+openssl req -x509 -newkey rsa:4096 -sha256 -nodes -keyout key.pem -out certificate.pem -days 365 
+
+# To create the Certificate with secret on the privatekey
+openssl req -x509 -newkey rsa:4096 -sha256 -keyout key.pem -out certificate.pem -days 365 
+
+# To sign a certificate using a private key and CSR:
+openssl req -x509 -in server.csr -signkey server.key -out server.crt -days 365
+
+# export public key
+openssl rsa -in privkey.pem -pubout > key.pub
+
+# check certificate of the webservice
+openssl s_client -showcerts -connect <domäne/ip>
+
+# To show certificate information for a certificate signing request
+openssl req -text -noout -in server.csr
+
+# To show certificate information for generated certificate
+openssl x509 -text -noout -in server.crt 
+
+# To get the sha256 fingerprint of a certificate
+openssl x509 -in server.crt -noout -sha256 -fingerprint
+
+# To view certificate expiration:
+echo | openssl s_client -connect <hostname>:443 2> /dev/null | \
+awk '/-----BEGIN/,/END CERTIFICATE-----/' | \
+openssl x509 -noout -enddate
+
+# Remove a passphrase from a private key
+openssl rsa -in privateKey.pem -out newPrivateKey.pem
+
+
+# Generate Diffie-Hellman parameters:
+openssl dhparam -outform PEM -out dhparams.pem 2048
+
+# High-quality options for openssl for symmetric (secret key) encryption
+  
+This is what knowledgable people consider a good set of options for 
+symmetric encryption with openssl to give you a high-quality result.
+Also, always remember that the result is only as good as the password
+you use. You must use a strong password otherwise encryption is meaningless.
+
+openssl enc -e -aes-256-cbc \
+  -salt \
+  -pbkdf2 \
+  -iter 1000000 \
+  -md sha512 \
+  -base64 \
+  -in somefile \
+  -out somefile.enc # to encrypt
+
+openssl enc -d -aes-256-cbc \
+  -salt \
+  -pbkdf2 \
+  -iter 1000000 \
+  -md sha512 \
+  -base64 \
+  -in somefile.enc \
+  -out somefile # to decrypt
+
+# extract server certificates
+openssl s_client -host google.com -port 443 -prexit -showcerts < <(true)
+
+########################################################
+
+# Create pfx file from certificate and private key 
+openssl pkcs12 -export -out domain.name.pfx -inkey domain.name.key -in domain.name.crt
+
+# create an serverscertificate and convert to pfx
+openssl req -newkey rsa:2048 -nodes -keyout server.key -x509 -days 365 -out server.crt -subj "/CN=example.com" && openssl pkcs12 -export -out server.pfx -inkey server.key -in server.crt
+
+# Create pfx file from certificate and private key  with root CA
+openssl pkcs12 -export -out domain.name.pfx -inkey domain.name.key -in domain.name.crt -in intermediate.crt -in rootca.crt
+
+############# Extract .crt and .key files from .pfx file ###########################
+# The .pfx file, which is in a PKCS#12 format, contains the SSL certificate (public keys) and the corresponding private keys. 
+# Sometimes, you might have to import the certificate and private keys separately in an unencrypted plain text format to use it on another system
+
+# 1. extract the private key
+openssl pkcs12 -in [yourfile.pfx] -nocerts -out [drlive.key]
+
+# 2. extract the certificate
+openssl pkcs12 -in [yourfile.pfx] -clcerts -nokeys -out [drlive.crt]
+
+# extract the CA chain
+openssl pkcs12 -in [yourfile.pfx] -cacerts -nokeys -out [ca-chain.pem]
+
+# 3. decrypt the private key
+openssl rsa -in [drlive.key] -out [drlive-decrypted.key]
+################# Converting Using OpenSSL ###########################################
+
+# Convert a DER file (.crt .cer .der) to PEM
+openssl x509 -inform der -in certificate.cer -out certificate.pem
+
+# Convert PEM Certificate file to DER
+openssl x509 -in CERT.pem -outform DER -out CERT.der
+
+# Convert PEM Certificate(s) to PFX
+openssl pkcs12 -in CERTS.pem -nokeys -export -out CERTS.pfx
+
+# Convert a PKCS#12 file (.pfx .p12) containing a private key and certificates to PEM
+openssl pkcs12 -in keyStore.pfx -out keyStore.pem -nodes
+You can add -nocerts to only output the private key or add -nokeys to only output the certificates.
+
+# Convert a PEM certificate file and a private key to PKCS#12 (.pfx .p12)
+openssl pkcs12 -export -out certificate.pfx -inkey privateKey.key -in certificate.crt -certfile CACert.crt
+
+# Convert .pfx file to .pem format
+openssl rsa -in [keyfile-encrypted.key] -outform PEM -out [keyfile-encrypted-pem.key]
+
+########### Checking Using OpenSSL ########################
+
+# To check if file is PEM format
+openssl x509 -in FILE
+
+# To check if file is DER format
+openssl x509 -in FILE -inform DER
+
+# To check if file is PFX format
+openssl pkcs12 -in FILE -nodes
+
+# Check a Certificate Signing Request (CSR)
+openssl req -text -noout -verify -in CSR.csr
+
+# Check a private key
+openssl rsa -in privateKey.key -check
+
+# Check a certificate
+openssl x509 -in certificate.crt -text -noout
+
+# Check a PKCS#12 file (.pfx or .p12)
+openssl pkcs12 -info -in keyStore.p12
+
+
+############### Debugging Using OpenSSL #####################
+
+# Check an MD5 hash of the public key to ensure that it matches with what is in a CSR or private key
+openssl x509 -noout -modulus -in certificate.crt | openssl md5
+openssl rsa -noout -modulus -in privateKey.key | openssl md5
+openssl req -noout -modulus -in CSR.csr | openssl md5
+
+# Check an SSL connection. All the certificates (including Intermediates) should be displayed
+openssl s_client -connect www.paypal.com:443

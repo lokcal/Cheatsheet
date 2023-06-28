@@ -1,0 +1,115 @@
+---
+tags: [ job, scheduler, periodic ]
+---
+# set a shell
+SHELL=/bin/bash
+
+# set a PATH
+PATH=/usr/bin:/usr/sbin:/usr/local/bin
+
+# incorrect way of seeting PATH
+PATH=$PATH:/do/not/do/this
+
+# List Crontab Entries
+crontab -l
+
+# Edit Crontab Entries
+crontab -e
+
+# List Scheduled Cron Jobs of user
+crontab -u username -l
+
+# Remove Crontab Entry
+crontab -r
+
+# Prompt Before Deleting Crontab
+crontab -i -r
+
+
+# Special Strings for Common Schedule
+Strings	Meanings
+@reboot	Command will run when the system reboot.
+@daily	Once per day or may use @midnight.
+@weekly	Once per week.
+@yearly	Once per year. we can use the @annually keyword also.
+
+# crontab format
+* * * * *  command_to_execute
+- - - - -
+| | | | |
+| | | | +- day of week (0 - 7) (where sunday is 0 and 7)
+| | | +--- month (1 - 12)
+| | +----- day (1 - 31)
+| +------- hour (0 - 23)
++--------- minute (0 - 59)
+
+# example entries
+# every 15 min
+*/15 * * * * /home/user/command.sh
+
+# every midnight
+0 0 * * * /home/user/command.sh
+
+# every Saturday at 8:05 AM
+5 8 * * 6 /home/user/command.sh
+
+# At 04:05 ot (only) February
+5 4 * 2 * /home/user/command.sh
+
+# At minute 5 on day-of-month 4 in January
+5 * 4 1 * /home/user/command.sh
+
+
+# Multiple Commands with Double ampersand(&&)
+crontab -e
+@daily <command1> && <command2>
+
+# Disable Email Notification
+crontab -e
+* * * * * >/dev/null 2>&1
+
+# compute your crontab periodicity format online
+https://crontab.guru/
+
+# be careful with % sign (percent), it has special meaning, see https://crontab.guru/ for explanation
+% signs must be escaped such as \%
+
+
+
+https://crontab.guru/
+https://www.tutorialspoint.com/unix_commands/crontab.htm
+
+https://www.ubuntupit.com/amazing-linux-crontab-commands-for-the-sysadmins/
+
+
+
+1. Planen Sie eine Cron, die täglich um 5 Uhr morgens ausgeführt wird
+
+0 5 * * * /scripts/job.sh
+2. Planen Sie eine Cron-Ausführung zweimal täglich um 6 Uhr und 6 Uhr
+
+0 6,18 * * * /scripts/job.sh
+3. Planen Sie eine Cron, die jede Minute ausgeführt werden soll
+
+* * * * * /scripts/job.sh
+4. Planen Sie einen Cron, der jeden Montag um 7 Uhr ausgeführt wird.
+
+0 19 * * mon /scripts/job.sh
+5. Planen Sie die Ausführung eines Cron alle 15 Minuten.
+
+*/10 * * * * /scripts/job.sh
+6. Planen Sie die Ausführung eines Cron in ausgewählten Monaten
+
+* * * feb,jun,oct * /script/job.sh
+7. Führen Sie das Shell-Skript aus /home/script/backup.sh am 4. März um 7:25 Uhr
+
+25 7 4 3 * /home/script/backup.sh
+8. Planen Sie einen Cron, der alle 30 Sekunden ausgeführt wird
+
+Da wir im Crontab keine Kontrolle über Sekunden haben, können wir dies durch den folgenden zweistufigen Prozess erreichen.
+
+Planen wir zunächst eine Aufgabe, die jede Minute ausgeführt wird.
+* * * * * /home/scripts/script.sh
+Jetzt lasst uns verwenden sleep Befehl, um die Ausführung für 30 Sekunden anzuhalten.
+* * * * * sleep 30; /home/scripts/script.sh
+Die obige Aufgabe stoppt die Ausführung für 30 Sekunden und wird erneut fortgesetzt.

@@ -1,0 +1,48 @@
+
+# Adding mount and premission
+vim /etc/export
+
+# UPDATE EXPORTS
+# After editing /etc/exports
+exportfs -arv
+
+# To view the current loaded exports state in more detail
+exportfs -v
+
+# LIST EXPORTS
+# showmount -e
+Export list for myserver:
+/export/home       10.1.0.0/24
+
+# SHOW CLIENTS
+showmount 
+
+# Restricting NFS to interfaces/IPs
+/etc/nfs.conf
+[nfsd]
+host=192.168.1.123
+ # Alternatively, use the hostname.
+ # host=myhostname
+
+### Client
+
+# For NFSv3 use this command to show the server's exported file systems:
+showmount -e servername
+
+# For NFSv4 mount the root NFS directory and look around for available mounts:
+mount server:/ /mountpoint/on/client
+
+# Then mount omitting the server's NFS export root:
+mount -t nfs -o vers=4 servername:/music /mountpoint/on/client
+
+# If mount fails try including the server's export root (required for Debian/RHEL/SLES, some distributions need -t nfs4 instead of -t nfs):
+mount -t nfs -o vers=4 servername:/srv/nfs/music /mountpoint/on/client
+
+### Tips and tricks
+## Performance tuning
+
+# When using NFS on a network with a significant number of clients one may increase the default NFS threads from 8 to 16 or even a higher,
+# depending on the server/network requirements:
+/etc/nfs.conf
+[nfsd]
+threads=16

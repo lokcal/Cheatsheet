@@ -1,0 +1,28 @@
+# The sleep command pauses for an amount of time defined by NUMBER.
+
+# Delays for 10 seconds
+sleep 10
+
+# Delay Linux Command Execution
+date '+%r'; sleep 5; date '+%r'
+
+# Make a Command to Wait N Minutes
+date '+%r'; sleep 1m; date '+%r'
+
+# Make Command Sleep for X Minutes and Seconds
+date '+%r'; sleep 1m 20s; date '+%r'
+date '+%r'; sleep 2s 3s; date '+%r'
+
+# Simulate Alarm Clock Using sleep Command
+sleep 5; cvlc alarm.mp3
+
+# Simulate Digital Clock with sleep Command
+#!/bin/bash
+while [ 1 ]
+do
+	clear
+	tput cup 5 30
+	date '+%r'
+	sleep 1
+done
+
