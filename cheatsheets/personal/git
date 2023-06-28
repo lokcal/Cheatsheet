@@ -36,6 +36,7 @@ https://[your-username]:[some-api-token]@github.com/Kovah/a-private-test.git
 git init
 git add . or (file)
 git commit -m "first commit"
+git branch -M main
 git remote add origin http://ip:port/NAME/example.git
 git remote add origin gitea://ip:port/NAME/example.git
 git push --set-upstream origin master
@@ -45,6 +46,7 @@ git push - u origin master
 git init
 git add . or (file)
 git commit -m "first commit"
+git branch -M main
 curl -i -H "Authorization: Bearer <token>" https://api.github.com/user/repos -d '{"name":"<repo-name>","private":true}'
 git push --set-upstream origin git:github.com:<username>/<repo-name>.git // git=:github... is ssh
 git push - u origin master
@@ -54,6 +56,7 @@ create at github a repo
 git init
 git add . or (file)
 git commit -m "first commit"
+git branch -M main
 git push --set-upstream origin git:github.com:<username>/<repo-name>.git // git=:github... is ssh
 git push - u origin master
 
