@@ -54,7 +54,13 @@ whoami
 who -u
 
 # Shows all users who are logged on the system and what they are doing.
-w 
+w
+
+# shows information about known users in the system
+lslogins
+
+# Shows information of known users
+lslogins -u <username>
 
 # Shows all id of the user
 id username
@@ -74,8 +80,9 @@ last
 # show all the users who were present at a specified time,
 last -ap now
 
-# Shows information of known users
-lslogins -u
+
+# display a list of the last failed login attempts on the system
+lastb
 
 # find the details of a recent login of all users or of a given user as follows
 lastlog
