@@ -1,0 +1,8 @@
+---
+syntax: bash
+tags: [ vew, keyboard ]
+---
+
+# Show which key is pressed
+wev
+

@@ -25,10 +25,10 @@ pacman -Syu --noconfirm
 # To update system ignoring VLC package
 pacman -Syu --ignore=vlc
 
-# Install packages from a list 
+# Install packages from a list
 pacman -S --needed - < pkglist.txt
 
-# Overwriite (force) package 
+# Overwriite (force) package
 pacman -S package-name --overwrite '*'
 pacman -S package-name --overwrite /usr/bin/statio
 sudo pacman -S --overwrite \* <package_name>
@@ -36,11 +36,15 @@ sudo pacman -S --overwrite \* <package_name>
 # Download a package without installing it
 pacman -Sw package_name
 
-# Reinstalling all packages 
+# Reinstalling all packages
 pacman -Qqn | pacman -S -
 
 # To install a package from builded package file (.tar.xz) (manually)
 pacman -U <file name/file url>
+
+#################### update mirrors #####################
+# update mirror with https Germany
+sudo reflector --country DE --age 24 --protocol https --sort score --save /etc/pacman.d/mirrorlistb
 
 ######################## Cache #############################
 
@@ -123,8 +127,8 @@ pacman -Qdtt
 # To list all packages explicitly installed and not required as dependencies:
 pacman -Qet
 
-# To retrieve a list of the files installed by a package: 
-pacman -Ql <package name> 
+# To retrieve a list of the files installed by a package:
+pacman -Ql <package name>
 
 # To list the commands provided by an installed package
 pacman -Ql <package name> | sed -n -e 's/.*\/bin\///p' | tail -n +2

@@ -1,6 +1,6 @@
 ---
 syntax: bash
-tags: [networking,wol, wake on lan] 
+tags: [networking,wol, wake on lan]
 ---
 
 # Send wol package
@@ -8,13 +8,23 @@ debian: wakeonlan <mac>
 redhat: wol <mac>
 centos: wol <mac>
 fedora: wol <mac>
+________________________
+p   Wake on PHY activity
+u   Wake on unicast messages
+m   Wake on multicast messages
+b   Wake on broadcast messages
+a   Wake on ARP
+g   Wake on MagicPacket™
+s   Enable SecureOn™ password for MagicPacket™
+d   Disable (wake on nothing). This option clears all previous options.
+
 
 # check if Intraface has Wake-on-LAN on
 ethtool interface | grep Wake-on
 
 
 # Enable wol
-# The Wake-on values define what activity triggers wake up: d (disabled), p (PHY activity), u (unicast activity), m (multicast activity), b (broadcast activity), 
+# The Wake-on values define what activity triggers wake up: d (disabled), p (PHY activity), u (unicast activity), m (multicast activity), b (broadcast activity),
 # a (ARP activity), and g (magic packet activity). The value g is required for WoL to work, if not, the following command enables the WoL feature in the driver:
 ethtool -s interface wol g
 

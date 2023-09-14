@@ -113,7 +113,7 @@ package() {
 This function generates the `pkgver` variable for -git/-svn packages.
 -   Leave `pkgver` empty while writing the PKGBUILD. Afterwards run `makepkg` or `makechrootpkg` to generate the real pkgver.
 -   `pkgver` cannot contain spaces or hyphens (-). Using sed to correct this is common.
- 
+
 #### prepare() | **Only needed when a modification needs to be made to source**
 A preparation function. We can make changes to the files in this function. A common use is to patch files.
 
@@ -129,3 +129,11 @@ The main function for packaging the source. Here we install the necessary files 
     **You can ignore warnings about the buildarch variable not starting with an underscore**
 -   Make sure your package works and installs properly by [testing your PKGBUILD in a clean chroot](https://archstrike.org/wiki/contributing/chroot).
 -   Make sure `pkgname` is the same with the folder the package is in.
+
+
+
+
+## Spezific commithast in pkgbuild
+commit-id=05d8130f8cd86220f505bcd3fbfec4648719a642
+source=("https://chromium.googlesource.com/chromium/src.git/+archive/${commit-id}.tar.gz")
+

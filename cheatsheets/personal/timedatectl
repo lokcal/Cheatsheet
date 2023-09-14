@@ -1,2 +1,5 @@
 # Set timezone
 timedatectl set-timezone Europe/Paris
+
+# show time of newyork
+TZ=America/New_York date

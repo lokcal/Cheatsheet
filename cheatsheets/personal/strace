@@ -1,3 +1,7 @@
+---
+syntax: bash
+tags: [ strace, performance, monitor ]
+---
 # To strace a command:
 strace <command>
 

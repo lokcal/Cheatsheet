@@ -138,6 +138,19 @@ jq 'map(select(.name == "foo"))'
 # Add + 1 to all items
 jq 'map(.+1)'
 
+
+# select the value in id 4
+jq -r 'map(select(.id == 4))[].body'
+# .....
+# ......
+# {
+  #   "postId": 1,
+  #   "id": 4,
+  #   "name": "vero eaque aliquid doloribus et culpa",
+  #   "email": "Hayden@althea.biz",
+  #   "body": "harum non quasi et ratione\ntempore iure ex voluptates in ratione\nharum architecto fugit inventore cupiditate\nvoluptates magni quo et"
+  # }
+
 # Delete 2 items
 jq 'del(.[1, 2])'
 

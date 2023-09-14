@@ -1,3 +1,9 @@
+---
+syntax: bash
+tags: [ iostat, monitoring ]
+---
+explanation: for storage I/O statistics
+
 # iostat
 # Report statistics for devices and partitions.
 

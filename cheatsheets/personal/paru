@@ -1,3 +1,8 @@
-
 # rebuild package
 paru --rebuild <package>
+
+# install Package with PKGBUILD
+paru -ui (in current folder)
+
+# edit pgkbuild while downloading
+paru --fm nvim <package>
