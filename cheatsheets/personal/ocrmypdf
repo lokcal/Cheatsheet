@@ -39,3 +39,13 @@ ocrmypdf --tesseract-timeout=0 --remove-background input.pdf output.pdf
 More MAN-Pages
 ############################################
 ############################################
+#EXAMPLE
+
+# pdfA_converter*****
+find . -printf '%p' -name '*.pdf' -exec ocrmypdf '{}' '{}' -l deu --author '******' --title ' ' --deskew --jobs 4 \;
+
+# pdfA_converter_*****_render_sandwich
+find . -printf '%p' -name '*.pdf' -exec ocrmypdf '{}' '{}' -l deu --pdf-renderer sandwich --author '*****' --title ' ' --deskew --jobs 4 \;
+
+# pdfA_converter_******_render_hocr
+find . -printf '%p' -name '*.pdf' -exec ocrmypdf '{}' '{}' -l deu --pdf-renderer hocr --author '******' --title ' ' --deskew --jobs 4 \;
