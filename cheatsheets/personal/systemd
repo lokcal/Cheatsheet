@@ -1,3 +1,9 @@
+---
+syntax: bash
+tags: [ systemd-analyze, security, audit ]
+---
+explanation: systemd-analyze
+
 ############## Basic #######################
 
 # Unit file locations
@@ -28,6 +34,13 @@ systemd-analyze
 systemd-analyze blame
 
 ########### security ########################
+# https://www.redhat.com/sysadmin/mastering-systemd
+
+# Do not change systemd units ever. Those changes will get undone the next time you update. Use overrides instead.
+# E.g. if you want to add sandboxing to foo.service, then create a directory /etc/systemd/system/foo.service.d and put a file override.conf (name does not matter, extension does) into it.
+# Add the relevant section headers (the lines that start with [ and end with ]) in there followed by the lines you want to add to said section.
+# Run sytemctl daemon-reload once you are happy. Use systemctl cat foo.service to check whether the override file was picked up and which settings are now applied to too.service. Restart the service again to test once you are happy.
+
 # Security option/info in manpages for service file hardening
 man systemd.exec
 

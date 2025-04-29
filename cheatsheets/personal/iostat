@@ -1,6 +1,6 @@
 ---
 syntax: bash
-tags: [ iostat, monitoring ]
+tags: [ iostat, monitoring, hdd ]
 ---
 explanation: for storage I/O statistics
 

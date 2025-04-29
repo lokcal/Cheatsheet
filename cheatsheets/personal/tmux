@@ -1,14 +1,23 @@
 # To start tmux:
 tmux
 
-# To detach from tmux:
+# To create ssh session
+ssh <host> -t tmux
+
+# To attach to ssh session
+ssh <host> -t tmux a
+
+# To detach from inside tmux:
 Ctrl-b d
 
 # To restore tmux session:
 tmux attach
 
-# To detach an already attached session (great if you are moving devices with different screen resolutions):
+# To attached to default session
 tmux attach -d 
+
+# To attach to a session
+tmux attach -d -t(session)
 
 # To display session:
 tmux ls
@@ -53,3 +62,13 @@ Ctrl-b "
 
 # To swap windows:
 Ctrl-b :swap-window -s [0-9] -t [0-9]
+
+# Some tmux pane control commands:
+Ctrl-B
+#   Panes (splits), Press Ctrl+B, then input the following symbol:
+#   %  horizontal split
+#   "  vertical split
+#   o  swap panes
+#   q  show pane numbers
+#   x  kill pane
+#   space - toggle between layouts

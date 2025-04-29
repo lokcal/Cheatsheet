@@ -3,6 +3,30 @@ syntax: bash
 tags: [ Bash ]
 ---
 
+# Debug script
+bash -x <filename>
+
+# Start an interactive shell session without loading startup configs:
+bash --norc
+
+# Execute specific [c]ommands:
+bash -c "echo 'bash is executed'"
+
+# Execute a specific script:
+bash path/to/script.sh
+
+# Execute a specific script while printing each command before executing it:
+bash -x path/to/script.sh
+
+# Execute a specific script and stop at the first [e]rror:
+bash -e path/to/script.sh
+
+# Execute specific commands from `stdin`:
+echo "echo 'bash is executed'" | bash
+
+# Run bash script via url (use with caution)
+bash -c "$(wget -qLO - https://........)
+
 ########### Generate numbers
 
 # Generate number 4-100 with seq

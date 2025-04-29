@@ -475,6 +475,7 @@ bufdo %s/something/somethingelse/g	 Search something in all the open buffers and
 :%s/old/new/gc                Replace all occurences with confirmation
 :%s/^/hello/g                 Replace the begining of each line by hello
 :%s/$/Harry/g                 Replace the end of each line by Harry
+:%s/text *$/text              Replace text until end and replad with new text
 :%s/onward/forward/gi         Replace onward by forward, case unsensitive
 :%s/\./_/g 		                Replace all dots with underscore
 :%s/ *$//g                    Delete all white spaces

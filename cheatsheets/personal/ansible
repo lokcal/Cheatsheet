@@ -9,6 +9,8 @@ https://docs.ansible.com/ansible/latest/user_guide/playbooks_loops.html#
 https://docs.ansible.com/ansible/latest/reference_appendices/YAMLSyntax.html
 https://cheat.readthedocs.io/en/latest/ansible/#
 
+# INFO: setting over CLI (ask-pass etc)
+
 # Generate Ansible Roles template
 ansible-galaxy init (name)
 

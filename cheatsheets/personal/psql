@@ -2,6 +2,8 @@
 tags: [ database, Postgres, psql ]
 ---
 
+# pgcli = pqsl with autocomplete tool
+
 # psql is the PostgreSQL terminal interface. The following commands were tested on version 9.5.
 # Connection options:
 # -U username (if not specified current OS user is used).
@@ -92,6 +94,41 @@ ALTER USER my_user CREATEDB;
 \connect Databasename
 \c Databasename
 
+#### Revoke #####
+# remove a role from a group
+REVOKE staff FROM john;
+
+# revoke all privileges on a table from a user
+REVOKE ALL PRIVILEGES ON TABLE table_name FROM user_name;
+
+# revoke a specific privilege, such as SELECT, on a table from a user:
+REVOKE SELECT ON TABLE table_name FROM user_name;
+
+# Revoke Privileges on All Tables in a Schema
+REVOKE SELECT ON ALL TABLES IN SCHEMA schema_name FROM user_name;
+
+# revoke the CONNECT privilege on a database from a user:
+REVOKE CONNECT ON DATABASE database_name FROM user_name;
+
+# revoke the USAGE privilege on a sequence from a user:
+REVOKE USAGE ON SEQUENCE sequence_name FROM user_name;
+
+# revoke the USAGE privilege on a schema from a user:
+REVOKE USAGE ON SCHEMA schema_name FROM user_name;
+
+# revoke the EXECUTE privilege on a function from a user:
+REVOKE EXECUTE ON FUNCTION function_name FROM user_name;
+
+# revoke all privileges on a table from a role:
+REVOKE ALL PRIVILEGES ON TABLE table_name FROM role_name;
+
+# The PUBLIC role represents all users. To revoke a privilege from all users:
+REVOKE SELECT ON TABLE table_name FROM PUBLIC;
+
+# revoke the ability of a user to grant privileges they possess to others, you can use the GRANT OPTION FOR clause:
+REVOKE GRANT OPTION FOR ALL PRIVILEGES ON TABLE table_name FROM user_name;
+
+
 #### List #####################
 
 # List all the databases
@@ -113,20 +150,12 @@ ALTER USER my_user CREATEDB;
 # Get detailed information on a table.
 \d+ table_name
 
-# List all users:
+# List all users(roles):
 \du
 
 # To describe a table
 \d table_name
 
-#### Drop  ####
-
-
-# delete a database
-DROP DATABASE [IF EXISTS] Databasename;
-
-# delete a database
-sudo -u postgres psql -h localhost -p 5432 -U postgres -c "DROP DATABASE kaizen;"
 
 # quiting Postgres
 \q
@@ -218,6 +247,24 @@ ALTER TABLE table_name ADD COLUMN new_column_name TYPE;
 # Drop a column in a table:
 ALTER TABLE table_name DROP COLUMN column_name;
 
+# delete a database
+DROP DATABASE [IF EXISTS] Databasename;
+
+# Drop a table and its dependent objects:
+DROP TABLE [IF EXISTS] table_name CASCADE;
+
+# delete a database
+sudo -u postgres psql -h localhost -p 5432 -U postgres -c "DROP DATABASE kaizen;"
+
+# drop the user:
+DROP ROLE user_name;
+
+# drop all objects owned by the user:
+DROP OWNED BY user_name;
+
+# If the user owns any objects, you can reassign ownership to another user before dropping the role:
+REASSIGN OWNED BY user_name TO new_user_name;
+
 # Rename a column:
 ALTER TABLE table_name RENAME column_name TO new_column_name;
 
@@ -235,10 +282,6 @@ DROP CONSTRAINT primary_key_constraint_name;
 ALTER TABLE table_name RENAME TO new_table_name;
 
 #### Drop #########
-
-# Drop a table and its dependent objects:
-DROP TABLE [IF EXISTS] table_name CASCADE;
-
 
 #### Modifying data #### 
 
@@ -288,12 +331,21 @@ SELECT * FROM table1
 INTERSECT
 SELECT * FROM table2;
 
-############### Backup & Restore ##########################
+############### Backup ##########################
 # Backup single Table
 psql -U <username> -t <table_name> -d <dbname> -1 -f <filename>.sql
 
 # backup database named `anitya`, add CREATE statement
 sudo -u postgres pg_dump -C anitya > anitya.dump
+
+# backup database named `anitya`, add CREATE statement with gzip
+sudo -u postgres pg_dump -C anitya > anitya.dump | gzip -9 > postgres-backup.sql.gz
+
+# Backup All Databases
+pg_dumpall -U myuser -h localhost -p 5432 > /backups/all_databases_backup.sql 
+
+# Backup All Databases with gzip
+pg_dumpall -U myuser -h localhost -p 5432 > /backups/all_databases_backup.sql | gzip -9 > postgres-backup.sql.gz
 
 # Backup Databse
 psql -U <username> -d <dbname> -1 -f <filename>.sql
@@ -302,14 +354,32 @@ pg_dump -U <username> -W <password> -d <dbname> > output.sql/dump/bak
 pg_dump -h <host> -p <port> <db_name> | gzip /backup.gz
 pg_dump tecmintdb | gzip > tecmintdb.gz
 
-# restore database
-sudo -u postgres pqsql -f anitya.dump
-
 # Backup Remote PostgreSQL
  pg_dump -U tecmint -h 10.10.20.10 -p 5432 tecmintdb > tecmintdb.sql
 
 # dump a database directly from one server to another, use the pg_dump and psql utilities as shown.
  pg_dump -U tecmint -h 10.10.20.10 tecmintdb | pqsl -U tecmint -h 10.10.20.30 tecmintdb
+
+ #### Restore ######
+
+# Restore from a Plain-Text Backup
+psql -U <username> -h <host> -p <port> -d <database_name> -f /path/to/backup/file.sql
+
+# Restore All Databases (if pg_dumpall used)
+psql -U <username> -h <host> -p <port> -f /path/to/backup/all_databases_backup.sql
+
+# Restore a Specific Table (You need to ensure that the target database and schema exist)
+psql -U <username> -h <host> -p <port> -d <database_name> -f /path/to/backup/table_backup.sql
+
+#### Handling Ownership and Permissions (When restoring databases, you might encounter issues related to ownership or permissions. You can handle this by)
+ALTER DATABASE <database_name> OWNER TO <username>;
+
+# Check the Restore Process
+psql -U myuser -h localhost -p 5432 -d mydatabase
+SELECT * FROM your_table LIMIT 10;
+
+# restore database
+sudo -u postgres pqsql -f anitya.dump
 
 # The split command allows you to split the output into smaller files that are acceptable in size to the underlying file system. 
 # For example, to make chunks of 1 megabyte:
@@ -325,27 +395,26 @@ psql -f fileName.backup postgres
 psql -h host_name -p port_number database_name < database.sql
 gunzip -c filename.gz | psql dbname
 
-# Backup all Database (pg_dumpall) in Docker with gzipped
-docker exec -t <containername> pg_dumpall -c -U <username> | gzip > ./dump_$(date +"%Y-%m-%d_%H_%M_%S").gz
-
-# Back up all Docker PostgreSQL databases
-docker exec -i postgres /usr/bin/pg_dumpall -U <postgresql_user> > postgres-backup.sql
-
-# The Docker backup command for a local or remote PostgreSQL database is:
-docker exec -i postgres /usr/bin/pg_dump -U <postgresql_user> <postgresql_database> > postgres-backup.sql 
-
-# Back up and compress a Docker PostgreSQL database with gzip
-docker exec -i postgres /usr/bin/pg_dump -U <postgresql_user> <postgresql_database> | gzip -9 > postgres-backup.sql.gz 
-
-# Example when using a PostgreSQL password
-docker exec -i -e PGPASSWORD=<postgresql_password> postgres /usr/bin/pg_dump -U <postgresql_user> <postgresql_database> | gzip -9 > postgres-backup.sql.gz 
-
-# Back up PostgreSQL inside docker container
-docker exec <postgresql_container> /bin/bash -c "/usr/bin/pg_dump -U <postgresql_user> <postgresql_database>" | gzip -9 > postgres-backup.sql.gz  
-
 # Restore Database in Docker with gzipped
 # first gunzip for unzipping
 cat your_dump.sql | docker exec -i your-db-container psql -U <username>
+
+### With pg_restore
+# Ensure the Database Exists (If the database where you want to restore the backup does not exist, you'll need to create it first)
+createdb -U <username> -h <host> -p <port> <database_name>
+
+# Use pg_restore to Restore the Database
+pg_restore -U <username> -h <host> -p <port> -d <database_name> /path/to/backup/file.sqlc
+
+# Optional pg_restore Flags
+#-c: Drop the existing objects in the database before creating new ones from the backup. This is useful if you want to overwrite the current state of the database.
+pg_restore -U myuser -h localhost -p 5432 -d mydatabase -c /backups/mydatabase_backup.sqlc
+
+# -v: Enable verbose mode to see more detailed output during the restoration process.
+pg_restore -U myuser -h localhost -p 5432 -d mydatabase -v /backups/mydatabase_backup.sqlc
+
+# -j <num>: Use parallelism with <num> jobs to speed up the restore process on larger databases.
+pg_restore -U myuser -h localhost -p 5432 -d mydatabase -j 4 /backups/mydatabase_backup.sqlc
 
 #### Performance ######
 

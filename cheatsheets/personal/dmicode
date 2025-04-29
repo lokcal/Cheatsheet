@@ -9,6 +9,3 @@ dmicode -t memory or -t 17
 
 # Show motherboard
 dmicode -t baseboard
-
-
-

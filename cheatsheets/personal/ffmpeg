@@ -26,6 +26,12 @@ ffmpeg -r 18 -pattern_type glob -i '*.png' -b:v 21000k -s hd1080 -vcodec vp9 -an
 # Combine video and audio into one file
 ffmpeg -i video.ext -i audio.ext -c:v copy -c:a copy output.ext
 
+# Convert WebM to MP4
+ffmpeg -i input_file.webm -c:v libx264 -c:a aac -f mp4 output_file.mp4
+
+# Convert WebM to MKV
+ffmpeg -i input_file.webm -c:v libx264 -c:a aac output_file.mkv
+
 # High-quality encoding
 ffmpeg -i in.mp4 -preset slower -crf 18 out.mp4 #The lower crf, the higher the quality (range: 0-51). The default value is 23, and visually lossless compression corresponds to -crf 18
 
@@ -76,6 +82,9 @@ ffmpeg -i in.mov -vf "transpose=1" out.mov
 ffmpeg -i "path_to_playlist.m3u8" -c copy -bsf:a aac_adtstoasc out.mp4
 # If you get a "Protocol 'https not on whitelist 'file,crypto'!" error, add the protocol_whitelist option:
 ffmpeg -protocol_whitelist "file,http,https,tcp,tls" -i "path_to_playlist.m3u8" -c copy -bsf:a aac_adtstoasc out.mp4
+
+# Export without audio
+ffmpeg -i input.mp4 -c:v copy -an output.mp4
 
 #Mute some of the audio
 # To replace the first 90 seconds of audio with silence:

@@ -1,3 +1,10 @@
+---
+syntax: bash
+tags: [ jq]
+---
+explanation: 
+
+
 #
 https://www.baeldung.com/linux/jq-command-json
 https://stedolan.github.io/jq/tutorial/
@@ -125,6 +132,9 @@ jq -r '(map(keys) | add | unique | sort) as $cols \
 #
 #     => 2,,1
 #      ,4,3
+
+# Select specific object
+http "https://animechan.xyz/api/quotes/anime?title=naruto" | jq '.[] | select(.character == "Pain")'
 
 # Filter a list of objects
 jq 'map(select(.name == "foo"))'

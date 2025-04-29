@@ -1,0 +1,41 @@
+---
+syntax: bash
+tags: [ atool, archiv ]
+---
+explanation: Manage archives of various formats.
+
+# List files in a zip archive:
+atool --list path/to/archive.zip
+
+# Unpack a tar.gz archive into a new subdirectory (or current directory if it contains only one file):
+atool --extract path/to/archive.tar.gz
+
+# Create a new 7zip archive with two files:
+atool --add path/to/archive.7z path/to/file1 path/to/file2 ...
+
+# Extract all zip and rar archives in the current directory:
+atool --each --extract *.zip *.rar
+
+# To extract all files from archive 'foobar.tar.gz' to a subdirectory (or the current directory if it only contains one file):
+aunpack foobar.tar.gz
+
+# To extract all files from all '.tar.gz' archives in the current directory:
+aunpack -e *.tar.gz
+
+# To create a zip archive of two files 'foo' and 'bar':
+apack myarchive.zip foo bar
+
+# To display the file 'baz' in the archive 'myarchive.zip' through a pager:
+acat -p myarchive.zip baz
+
+# To list contents of the rar archive 'stuff.rar':
+als stuff.rar
+
+# To create three archives, 'dir1.tar.gz', 'dir2.tar.gz' and 'dir3.tar.gz', so that the first one contains all files in dir1, the second all in dir2 and the third all dir3:
+apack -e -F .tar.gz dir1 dir2 dir3
+
+# To show all differences between version 2.4.17 and 2.4.18 of the kernel:
+adiff linux-2.4.17.tar.gz linux-2.4.18.tar.gz
+
+# To repack all .tar.gz archives in the current directory to .tar.7z (the old archive will be kept untouched):
+arepack -F.tar.7z -e *.tar.gz

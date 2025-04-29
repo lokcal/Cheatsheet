@@ -108,24 +108,6 @@ cat backup.sql | docker exec -i CONTAINER /usr/bin/mysql -u root --password=root
 gunzip < backup.sql.gz | docker exec -i CONTAINER /usr/bin/mysql -u root -pPASSWORD DATABASE
 bunzip2 < backup.sql.bz2 | docker exec -i CONTAINER /usr/bin/mysql -u root -pPASSWORD DATABASE
 
-# Backup all Database (pg_dumpall) in Docker with gzipped
-docker exec -t <containername> pg_dumpall -c -U <username> | gzip > ./dump_$(date +"%Y-%m-%d_%H_%M_%S").gz
-
-# Back up all Docker PostgreSQL databases
-docker exec -i postgres /usr/bin/pg_dumpall -U <postgresql_user> > postgres-backup.sql
-
-# The Docker backup command for a local or remote PostgreSQL database is:
-docker exec -i postgres /usr/bin/pg_dump -U <postgresql_user> <postgresql_database> > postgres-backup.sql 
-
-# Back up and compress a Docker PostgreSQL database with gzip
-docker exec -i postgres /usr/bin/pg_dump -U <postgresql_user> <postgresql_database> | gzip -9 > postgres-backup.sql.gz 
-
-# Example when using a PostgreSQL password
-docker exec -i -e PGPASSWORD=<postgresql_password> postgres /usr/bin/pg_dump -U <postgresql_user> <postgresql_database> | gzip -9 > postgres-backup.sql.gz 
-
-# Back up PostgreSQL inside docker container
-docker exec <postgresql_container> /bin/bash -c "/usr/bin/pg_dump -U <postgresql_user> <postgresql_database>" | gzip -9 > postgres-backup.sql.gz  
-
 # Restore Database in Docker with gzipped
 # first gunzip for unzipping
 cat your_dump.sql | docker exec -i your-db-container psql -U <username>

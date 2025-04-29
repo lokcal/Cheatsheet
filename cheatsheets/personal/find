@@ -20,10 +20,14 @@ exec: executes binary
 
 ##################### Basic #################################################
 
+# List all sub directory/file in the current directory
+find .
+
+# List all sub directory/file in the current directory with grep
+find . | grep <pattern>
+
 # Find all the files whose name is tecmint.txt in a current working directory.
 find . -name tecmint.txt
-
-find . | grep <pattern>
 
 # Find all the files under /home directory with name tecmint.txt.
 find /home -name tecmint.txt
@@ -64,6 +68,20 @@ find . -type l --user=username -ls
 # To filter for file (search for mama file without archiv name in it)
 find . ! -iname "*archive*" -iname "*mama*"
 
+# Edit all files under current directory (e.g. replace 'www' with 'ww')
+find . -name '*.php' -exec sed -i 's/www/w/g' {} \;
+## if there are no subdirectory
+replace "www" "w" -- *
+## a space before *
+
+# Find and output only filename (e.g. "mso")
+find mso*/ -name M* -printf "%f\n"
+
+######################### Rename ############################################
+
+# Find in current every folder that contains foo and change to bar
+find . -type d -exec rename 's/foo/bar/g' {} \;
+
 ####################### User & Groups #########################################
 
 # To find all files that belongs to user Tecmint under /home directory.
@@ -74,7 +92,6 @@ find /home -user tecmint -iname "*.txt"
 
 # To find all files that belongs to group Developer under /home directory.
 find /home -group developer
-
 
  ####################### Premission #########################################
 
@@ -92,11 +109,6 @@ find / -type f -perm 0777 -print -exec chmod 644 {} \;
 
 # Find all 777 permission directories and use chmod command to set permissions to 755.
 find / -type d -perm 777 -print -exec chmod 755 {} \;
-
-######################### Rename ############################################
-# Find in current every folder that contains foo and change to bar
-find . -type d -exec rename 's/foo/bar/g' {} \;
-
 
 ######################### Remove ############################################
 
@@ -120,7 +132,8 @@ find /tmp -type d -empty
 # To find all hidden files, use below command
 find /tmp -type f -name ".*"
 
-###################### Modified & Accessed ##################################
+###################### Modified & Accessed stats ##################################
+
 # To find all files modified on the 7th of June, 2007:
 find . -type f -newermt 2007-06-07 ! -newermt 2007-06-08
 
@@ -150,7 +163,11 @@ find . -type f -newerat 2008-09-29 ! -newerat 2008-09-30
 
 # files which had their permission changed on the same day:
 find . -type f -newerct 2008-09-29 ! -newerct 2008-09-30
+
 ###################### Size + delete ################################################
+
+# Find large files in the system (e.g. >4G)
+find / -type f -size +4G
 
 # To find all 50MB files, use
 find / -size 50M

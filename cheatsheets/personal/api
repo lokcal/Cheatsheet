@@ -1,0 +1,4 @@
+
+# Select specific object
+http "https://animechan.xyz/api/quotes/anime?title=naruto" | jq '.[] | select(.character == "Pain")'
+

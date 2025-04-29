@@ -7,6 +7,9 @@ cheat -e <command>
 # To list available cheatsheets
 cheat -l
 
+# Previev cheat list
+cheat -l | fzf --preview="cheat {1}"
+
 # To search available cheatsheets
 cheat -s <command>
 

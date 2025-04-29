@@ -5,6 +5,12 @@
 # Connect to an FTP server:
 lftp --user username ftp.example.com
 
+# conecto to to server via ssh connection
+lftp sftp://hostname
+
+# connect to FTP Server via port 22
+lftp -u user,password sftp://host
+
 # Use SSL/TLS encryption to connect to an FTP server:
 lftp -e "set ftp:ssl-force true" -u username,password ftp.example.com
 

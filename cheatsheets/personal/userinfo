@@ -80,6 +80,8 @@ last
 # show all the users who were present at a specified time,
 last -ap now
 
+# read wtmp file
+sudo lastb -f /var/log/wtmp
 
 # display a list of the last failed login attempts on the system
 lastb

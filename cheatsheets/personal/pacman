@@ -25,7 +25,7 @@ pacman -Syu --noconfirm
 # To update system ignoring VLC package
 pacman -Syu --ignore=vlc
 
-# Install packages from a list
+# Install packages from a list (file)
 pacman -S --needed - < pkglist.txt
 
 # Overwriite (force) package
@@ -42,9 +42,14 @@ pacman -Qqn | pacman -S -
 # To install a package from builded package file (.tar.xz) (manually)
 pacman -U <file name/file url>
 
+# Downgrade
+sudo pacman -U https://archive.archlinux.org/packages/w/wireplumber/wireplumber-0.4.17-1-x86_64.pkg.tar.zst 
+https://archive.archlinux.org/packages/l/libwireplumber/libwireplumber-0.4.17-1-x86_64.pkg.tar.zst
+
+
 #################### update mirrors #####################
 # update mirror with https Germany
-sudo reflector --country DE --age 24 --protocol https --sort score --save /etc/pacman.d/mirrorlistb
+sudo reflector --country DE --age 24 --protocol https --sort score --save /etc/pacman.d/mirrorlist
 
 ######################## Cache #############################
 

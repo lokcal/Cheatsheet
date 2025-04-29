@@ -23,6 +23,9 @@ ps auxww
 # Search for a process that matches a string:
 ps aux | grep string
 
+# Search for a process with hierarchy
+ps auxf
+
 # List all processes of the current user in extra full format:
 ps --user $(id -u) -F
 
@@ -34,6 +37,12 @@ ps -o ppid= -p pid
 
 # Sort processes by memory consumption:
 ps --sort size
+
+# To find out how long a process (program or application) has been running,
+ps -eo pid,comm,etime
+
+# To find out how long a process (program or application) has been running Example processes
+ps -eo pid,comm,etime | grep "process_name"
 
 # alternativ to ps -a
 pgrep brave

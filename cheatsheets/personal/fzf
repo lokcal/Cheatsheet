@@ -29,6 +29,9 @@ fzf --preview 'cat {}'
 # fzf preview with wraped to 70% right
 fzf --preview="cat {}" --preview-window=right:70%:wrap
 
+# Preview Window
+find dir/ | fzf --preview 'cat {}'
+
 # list cheat list with preview
 cheat -l | fzf --preview="cheat {1}"
 
@@ -37,6 +40,19 @@ git log --graph --color=always --abbrev-commit --pretty=format:'%C(auto)%h%d %s 
 
 # Search words in the directory
 grep . <word> | fzf
+
+# Select and Kill Processes
+kill -9 $(ps aux | fzf | awk '{print $2}')
+
+# Filter Git Branches
+git branch | fzf
+
+# Using fzf with Other Commands
+ls -l $(fzf)  # List the details of a selected file
+
+# Searching through your browser history (FireFox)
+# After navigating to that sqlite directory, execute:
+sqlite3 places.sqlite "SELECT url FROM moz_places" | fzf
 
 ## Search syntax
 # Unless otherwise specified, fzf starts in "extended-search mode" where you can type in multiple search terms delimited by spaces. e.g. ^music .mp3$ sbtrkt !fire
@@ -54,8 +70,11 @@ sbtrkt	fuzzy-match			Items that match sbtrkt
 # - You can select multiple items with TAB key
 vim **<TAB>
 
-# run edidot with fzf
+# run edidor with fzf
 nvim $(fzf)
+
+# run edidor with fzf preview
+nvim $(fzf --preview="bat --color=always {}")
 
 # open video files (ex. mp4)
 mpv $(fzf --query ".mp4")
@@ -77,7 +96,7 @@ cd **<TAB>
 cd ~/github/fzf**<TAB>
 
 # Can select multiple processes with <TAB> or <Shift-TAB> keys
-kill -9 <TAB>
+kill -9 ** <TAB>
 
 ## Host names
 # The names are extracted from /etc/hosts and ~/.ssh/config.

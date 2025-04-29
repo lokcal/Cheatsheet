@@ -1,8 +1,30 @@
 # rebuild package
 paru --rebuild <package>
 
-# install Package with PKGBUILD
-paru -ui (in current folder)
+# List "available" AUR updates
+paru -Qua
+
+# Update a "specific" package
+paru -Su <package>
+
+# Build and install a PKGBUILD in the current directory
+paru -Ui
+
+# Download `PKGBUILD` and other package source files from the AUR or ABS:
+paru --getpkgbuild package_name
+paru -G package_name
 
 # edit pgkbuild while downloading
 paru --fm nvim <package>
+
+# Upgrade AUR packages:
+paru -Sua
+
+# Get information about a package:
+paru -Si package_name
+
+# Display the `PKGBUILD` file of a package:
+paru --getpkgbuild --print package_name
+
+# install downloaded PKGBUILD
+makepkg -si

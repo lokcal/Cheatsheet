@@ -1,0 +1,8 @@
+--
+notifyication server
+
+# Send message via curl with auth
+curl -d "Backup successful 😀" -u user:pw https://ntfy.lokcal.de/mytopic
+
+
+https://docs.ntfy.sh/config/#users-and-roles

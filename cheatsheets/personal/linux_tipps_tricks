@@ -1,2 +1,16 @@
 # reset root pw via grub
 at boot press e. Navigate to linux /vmlinuz ..... and add rw init=/bin/bash and start
+
+# How to Clear RAM Memory Cache in Linux?
+# Clearing PageCache
+sudo sync; echo 1 > /proc/sys/vm/drop_caches
+
+# Clearing Dentries and Inodes
+sudo sync; echo 2 > /proc/sys/vm/drop_caches
+
+# Clearing PageCache, Dentries, and Inodes
+sudo sync; echo 3 > /proc/sys/vm/drop_caches 
+
+# How to Clear Swap Space in linux
+sudo swapoff -a
+sudo swapon -a

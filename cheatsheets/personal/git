@@ -39,7 +39,6 @@ git commit -m "first commit"
 git branch -M main
 git remote add origin http://ip:port/NAME/example.git
 git remote add origin gitea://ip:port/NAME/example.git
-git push --set-upstream origin master
 git push - u origin master
 
 # Create repository and push (github) over Api with fined-token

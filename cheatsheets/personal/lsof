@@ -31,6 +31,9 @@ sudo lsof -i6
 # List all open sockets
 lsof -i
 
+# Find which process use network
+lsof -iTCP
+
 # Find which program is using the port 80
 lsof -i TCP:80
 

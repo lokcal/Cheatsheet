@@ -58,7 +58,7 @@ sed '$s/$/]/' filename
 sed '$a\'
 
 # Add string to beginning of every line (e.g. 'bbo')
-sed -e 's/^/bbo/' file
+sed -e 's/^/bbo/' filename
 
 # Add string to end of each line (e.g. "}")
 sed -e 's/$/\}\]/' filename
@@ -164,6 +164,7 @@ sed -i '15i avatar' Makefile.txt
 
 # To add a line after a matching pattern:
 sed '/happily ever after/a\The end.'
+sed '/hello*/a world' filename
 
 # Add character in the beginning of a match
 sed '/match/ s/./(ADD&/'
@@ -185,6 +186,9 @@ sed 's/Linux/&\ Ubuntu/' os.txt
 
 # Insert an empty line after pattern (after each line containing comment in this case)
 sed '/^#/G' file.txt
+
+# Inserting Spaces or Blank Lines in a file To insert two blank Lines
+sed 'G;G' tecmint.txt
 
 # Insert contents of file after a certain line
 sed '5 r newfile.txt' file.txt
@@ -284,6 +288,9 @@ sed 's/ *//'
 
 # Remove ending commas
 sed 's/,$//g'
+
+# Removing ^M in a file
+sed -i 's/\r//' myfile.txt
 
 # remove all comments behind lines
 sed "/s\s*#*//g" /file
@@ -463,8 +470,9 @@ sed -E '/^#/G G' file.txt
 
 
 
-
-
+#### Escape##
+#Escape = 
+sed -i 's/layout\ =\ dwindle/layout\ =\ master/' ~/file
 
 ##### Basic commands:######
 5d - delete - Delete line 5.

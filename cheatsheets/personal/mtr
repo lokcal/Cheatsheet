@@ -1,6 +1,6 @@
 ---
 syntax: bash
-tags: [networking,mtr,trace] 
+tags: [networking,mtr,trace,ping] 
 ---
 explanation: Matt's Traceroute: combined traceroute and ping tool.
 

@@ -1,0 +1,62 @@
+# test.json
+{
+  "countries": [
+    {
+      "code": "sm",
+      "name": "San Marino",
+      "population": 33881
+    },
+    {
+      "code": "mc",
+      "name": "Monaco",
+      "population": 39050
+    }
+  ]
+}
+
+# Querying with "jq"
+# get the name of the first country:
+
+$ cat test.json | jq '.countries[0].name'
+"San Marino"
+
+# get the name of all countries:
+$ cat test.json | jq '.countries[].name'
+"San Marino"
+"Monaco"
+
+# get the name of the second code
+$ cat test.json | jq '.countries[1].code'
+"mc"
+
+# gron
+# cat test.json | gron
+json = {};
+json.countries = [];
+json.countries[0] = {};
+json.countries[0].code = "sm";
+json.countries[0].name = "San Marino";
+json.countries[0].population = 33881;
+json.countries[1] = {};
+json.countries[1].code = "mc";
+json.countries[1].name = "Monaco";
+json.countries[1].population = 39050;
+# ...could be grepped by any key or value, like this:
+
+# cat test.json | gron | grep code
+json.countries[0].code = "sm";
+json.countries[1].code = "mc";
+# And the coolest part is that this operation is reversible, you can “ungron” gronned data:
+
+# cat test.json | gron | grep code | gron -u
+{
+  "countries": [
+    {
+      "code": "sm"
+    },
+    {
+      "code": "mc"
+    }
+  ]
+}
+# Pro tip: the first thing you should do after install gron is to alias “ungron” on your shell, like this: alias ungron="gron -u", and so you can easily get in the flow to gron ➤ grep ➤ ungron.
