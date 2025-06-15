@@ -1,6 +1,6 @@
 ---
 syntax: bash
-tags: [ arp, ip neigh, networking ]
+tags: [ arp, ip neigh, network]
 ---
 
 # To view neighbors (using ARP and NDP):

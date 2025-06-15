@@ -1,6 +1,6 @@
 ---
 syntax: bash
-tags: [networking,tcpdump,trace] 
+tags: [network,tcpdump,trace] 
 ---
 explanation: TCPDump is a packet analyzer. It allows the user to intercept and display TCP/IP
 and other packets being transmitted or received over a network.

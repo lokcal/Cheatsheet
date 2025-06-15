@@ -1,3 +1,9 @@
+---
+syntax: bash
+tags: [ ssh,ssh-keygen, key generation]
+---
+explanation: Generate ssh keys used for authentication, password-less logins, and other things.
+
 ###
 #protocol
 rsa best if u cant use Ed25519

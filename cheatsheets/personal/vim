@@ -634,6 +634,13 @@ Format String	      Example output
 # Format json file in n/vim
 :%!jq .
 
+# join multiple line and put comma between words (apple,banana(grapefruit,ananas,bike))
+5JV:’<,’>s/ /,/g<CR>
+#example:apple
+         banana
+         grapefruit
+         ananas
+         bike
 
 # Netman
 :edit sftp://myhost/myfile.txt

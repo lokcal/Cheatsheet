@@ -1,6 +1,6 @@
 ---
 syntax: bash
-tags: [ networking ]
+tags: [ networking, route ]
 ---
 # To display routing table IP addresses instead of host names:
 route -n

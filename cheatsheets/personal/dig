@@ -1,6 +1,6 @@
 ---
 syntax: bash
-tags: [networking,dig,dns] 
+tags: [network,dig,dns] 
 ---
 explanation: DNS Lookup utility.
 

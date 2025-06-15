@@ -241,6 +241,9 @@ GROUP BY column_1
 HAVING condition;
 
 #### Alter #########
+# Change a PostgreSQL user password.
+ALTER USER user_name WITH PASSWORD 'new_password';
+
 # Add a new column to a table:
 ALTER TABLE table_name ADD COLUMN new_column_name TYPE;
 
@@ -405,6 +408,8 @@ createdb -U <username> -h <host> -p <port> <database_name>
 
 # Use pg_restore to Restore the Database
 pg_restore -U <username> -h <host> -p <port> -d <database_name> /path/to/backup/file.sqlc
+
+docker exec postgres-container pg_restore -U postgres -d database_name /path
 
 # Optional pg_restore Flags
 #-c: Drop the existing objects in the database before creating new ones from the backup. This is useful if you want to overwrite the current state of the database.
